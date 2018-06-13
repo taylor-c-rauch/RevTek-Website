@@ -47,6 +47,7 @@ export default class ContractSubmission extends Component {
         skills: [],
         clicked: true
       })
+    }
 
     render() {
       if (this.state.clicked === false) {
