@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^1.2.1",
     "antd": "^3.6.2",
+    "antd-init": "^2.0.6",
     "css-font-roboto": "^1.0.0",
     "firebase": "^5.0.4",
     "react": "^16.4.0",
