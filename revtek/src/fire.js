@@ -8,6 +8,6 @@ var config = {
   storageBucket: "revtek-website.appspot.com",
   messagingSenderId: "818197254936"
 };
-firebase.initializeApp(config);
+const fire = firebase.initializeApp(config);
 
 export default fire;
