@@ -8,6 +8,7 @@ import Profile from "./profilepage";
 import Statistics from "./Statistics";
 import UserList from "./UserList";
 import Homepage from "./Homepage";
+import BiddingPage from "./BiddingPage";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 
 export default class Router extends Component {
@@ -37,8 +38,11 @@ export default class Router extends Component {
                             path="/statistics"
                             render={() => <Statistics />} />
                         <Route
-                            path="/user-list-admin"
+                            path="/user-list"
                             render={() => <UserList />} />
+                        <Route
+                            path="/contract-bidding"
+                            render={() => <BiddingPage />} />
                     </div>
                 </BrowserRouter>
             </div>
