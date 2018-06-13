@@ -2,6 +2,7 @@ import "./App.js";
 import Background from "./homepage-pic.jpg";
 import "./Homepage.css";
 import React, { Component } from "react";
+import TopBar from "./top-bar";
 
 import { Card, Row, Col, Button, Meta } from "antd";
 
@@ -9,6 +10,7 @@ export default class Homepage extends Component {
   render() {
     return (
       <div>
+        <TopBar status="home" />
         <section
           style={{
             backgroundImage: `url(${Background})`,

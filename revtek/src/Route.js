@@ -7,6 +7,7 @@ import DailyChallenge from "./DailyChallenge";
 import Profile from "./profilepage";
 import Statistics from "./Statistics";
 import UserList from "./UserList";
+import Homepage from "./Homepage";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 
 export default class Router extends Component {
@@ -16,28 +17,28 @@ export default class Router extends Component {
 
                 <BrowserRouter>
                     <div>
-                        <Redirect to="/profile" />
+                        <Redirect to="/home" />
                         <Route
-                            path="/"
-                            render={() => null} />
+                            path="/home"
+                            render={() => <Homepage />} />
                         <Route
                             path="/challenge-manager"
-                            render={() => (<ChallengeManager />)} />
+                            render={() => <ChallengeManager />} />
                         <Route
                             path="/contract-submission"
-                            render={() => (<Contract />)} />
+                            render={() => <Contract />} />
                         <Route
                             path="/daily-challenge"
-                            render={() => (<DailyChallenge />)} />
+                            render={() => <DailyChallenge />} />
                         <Route
                             path="/profile"
-                            render={() => (<Profile />)} />
+                            render={() => <Profile />} />
                         <Route
                             path="/statistics"
-                            render={() => (<Statistics />)} />
+                            render={() => <Statistics />} />
                         <Route
                             path="/user-list-admin"
-                            render={() => (<UserList />)} />
+                            render={() => <UserList />} />
                     </div>
                 </BrowserRouter>
             </div>
