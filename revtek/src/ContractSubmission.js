@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-// import firebase from './firebase.js';
+import fire from './fire.js';
 
 import { Form, Input, Card } from 'antd';
 const FormItem = Form.Item;
 
-export default class Contract extends Component {
+export default class ContractSubmission extends Component {
   constructor() {
       super();
       this.state = {
-        name: "",
-        company: "", 
-        details: "",
-        items: [], 
+        client: "",
+        email: "", 
+        project: "",
+        description: "",
+        interns: "",
+        skills: "",
       }
     }
   
@@ -23,47 +25,26 @@ export default class Contract extends Component {
     }
   
     // When the submit button is clicked, the user input gets put on firebase
-    // handleSubmit=e => {
-    //   e.preventDefault();
-    //   const itemsRef = firebase.database().ref('items');
-    //   const item = {
-    //     name: this.state.name,
-    //     company: this.state.company, 
-    //     details: this.state.details,
-    //   }
-    //   itemsRef.push(item);
-    //   this.setState({
-    //     name: '', 
-    //     company: '', 
-    //     details: '',
-    //   })
-    // }
-    
-  // retrieves the contract information from firebase so it can be rendered on the screen
-//    componentDidMount() {
-//      const itemsRef = firebase.database().ref('items');
-//      itemsRef.on('value', (snapshot) => {
-//        let items = snapshot.val(); 
-//        let newState = []; 
-//        for (let item in items) {
-//          newState.push({
-//            id: item, 
-//            name: items[item].name, 
-//            company: items[item].company, 
-//            details: items[item].details,
-//          }); 
-//        }
-//        this.setState({
-//          items: newState
-//        });
-//      });
-//    }
-
-  //  removes contracts 
-//   removeItem(itemId) {
-//     const itemRef = firebase.database().ref(`/items/${itemId}`);
-//     itemRef.remove();
-//   }
+    handleSubmit=e => {
+      e.preventDefault();
+      const contractname = this.state.project.split(' ').join('-')
+      const contractsRef = fire.database().ref('contracts/' + contractname).set({
+        client: this.state.client,
+        email: this.state.email, 
+        project: this.state.project, 
+        desciption: this.state.description,
+        interns: this.state.interns, 
+        skills: this.state.skills        
+      });
+      this.setState({
+        client: '', 
+        email: '', 
+        project: '', 
+        description: '',
+        interns: '', 
+        skills: '',
+      })
+    }
 
     render() {
       return (
@@ -72,42 +53,30 @@ export default class Contract extends Component {
             <section className="add-contract">
             <Form onSubmit={this.handleSubmit} className="login-form">
               <FormItem>
-                <Input name="name" placeholder="Client Name" onChange={this.handleChange} value={this.state.name}/>
+                <Input name="client" placeholder="Client Name" onChange={this.handleChange} value={this.state.client}/>
               </FormItem>
               <br/>
               <FormItem>
-                <Input name="email" placeholder="Email" onChange={this.handleChange} value={this.state.company}/>
+                <Input name="email" placeholder="Email" onChange={this.handleChange} value={this.state.email}/>
               </FormItem>
               <br/>
               <FormItem>
-                <Input name="description" placeholder="Project Description" onChange={this.handleChange} value={this.state.details}/>
+                <Input name="project" placeholder="Project Name" onChange={this.handleChange} value={this.state.project}/>
               </FormItem>
               <br/>
               <FormItem>
-                <Input name="interns" placeholder="Number of Interns Needed" onChange={this.handleChange} value={this.state.details}/>
+                <Input name="description" placeholder="Project Description" onChange={this.handleChange} value={this.state.description}/>
               </FormItem>
               <br/>
               <FormItem>
-                <Input name="skills" placeholder="Preferred Intern Skills" onChange={this.handleChange} value={this.state.details}/>
+                <Input name="interns" placeholder="Number of Interns Needed" onChange={this.handleChange} value={this.state.interns}/>
+              </FormItem>
+              <br/>
+              <FormItem>
+                <Input name="skills" placeholder="Preferred Intern Skills" onChange={this.handleChange} value={this.state.skills}/>
               </FormItem>
               <button>Submit Contract </button>
             </Form>
-            </section>
-
-            {/* displays what the users' entered */}
-            <section className="display-contract">
-              <div className="wrapper">
-                {this.state.items.map((item) => {
-                    return ( 
-                        <Card className="card" style={{ height: 150, width: 350 }}>
-                          <p>Name: {item.name}</p>
-                          <p>Company: {item.company}</p>
-                          <p>Company Details: {item.details}</p>
-                          <button onClick={() => this.removeItem(item.id)}>Remove Contract</button>
-                        </Card>
-                    )
-                  })}
-              </div>
             </section>
           </div>
       );
