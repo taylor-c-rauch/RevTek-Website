@@ -12,8 +12,9 @@ export default class ContractSubmission extends Component {
         email: "", 
         project: "",
         description: "",
-        interns: "",
-        skills: "",
+        numinterns: "",
+        skills: [],
+        clicked: false, 
       }
     }
   
@@ -33,7 +34,7 @@ export default class ContractSubmission extends Component {
         email: this.state.email, 
         project: this.state.project, 
         desciption: this.state.description,
-        interns: this.state.interns, 
+        numinterns: this.state.numinterns, 
         skills: this.state.skills        
       });
       this.setState({
@@ -41,13 +42,19 @@ export default class ContractSubmission extends Component {
         email: '', 
         project: '', 
         description: '',
-        interns: '', 
+        numinterns: '', 
         skills: '',
       })
     }
 
+    handleClick=e => {
+      e.preventDefault();
+      this.setState({clicked: true})
+    }
+
     render() {
-      return (
+      if (this.state.clicked === false) {
+        return (
           <div className="contract">
             {/* renders a form where users can input their contract information */}
             <section className="add-contract">
@@ -69,16 +76,25 @@ export default class ContractSubmission extends Component {
               </FormItem>
               <br/>
               <FormItem>
-                <Input name="interns" placeholder="Number of Interns Needed" onChange={this.handleChange} value={this.state.interns}/>
+                <Input name="numinterns" placeholder="Number of Interns Needed" onChange={this.handleChange} value={this.state.numinterns}/>
               </FormItem>
               <br/>
               <FormItem>
                 <Input name="skills" placeholder="Preferred Intern Skills" onChange={this.handleChange} value={this.state.skills}/>
               </FormItem>
-              <button>Submit Contract </button>
+              <button onClick={this.handleClick}>Submit Contract </button>
             </Form>
             </section>
           </div>
-      );
+        );
+      }
+      else {
+        return (
+          <div style={{ background: '#ECECEC', padding: '30px' }}>
+            <h1>Thank you for submitting a contract!</h1> 
+            <h3> We will get back to you as soon as possible </h3> 
+          </div>
+        )
+      }
     }
 }
