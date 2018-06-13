@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import fire from './fire.js';
+import TopBar from "./top-bar";
 
 import { Form, Input, Card } from 'antd';
 const FormItem = Form.Item;
@@ -45,7 +46,10 @@ export default class ContractSubmission extends Component {
         numinterns: '', 
         skills: '',
       })
+
     }
+  }
+
 
     handleClick=e => {
       e.preventDefault();
@@ -56,6 +60,7 @@ export default class ContractSubmission extends Component {
       if (this.state.clicked === false) {
         return (
           <div className="contract">
+           <TopBar status="home" />
             {/* renders a form where users can input their contract information */}
             <section className="add-contract">
             <Form className="login-form">
@@ -97,4 +102,5 @@ export default class ContractSubmission extends Component {
         )
       }
     }
+
 }
