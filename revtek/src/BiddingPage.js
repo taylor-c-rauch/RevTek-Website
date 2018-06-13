@@ -53,7 +53,7 @@ export default class BiddingPage extends React.Component {
         return (
             <div style={{ background: '#ECECEC', padding: '10px' }}>
                 <Layout>
-                    <Header id="Header">Header</Header>
+
                     <Content>
                         <Card title="LIZERD SKUAD" extra={<a href="#">Edit</a>} style={{ width: 1027 }}>
                             <p>Hello we are Lizerd Skuad</p>

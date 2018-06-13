@@ -60,7 +60,7 @@ export default class ContractSubmission extends Component {
     if (this.state.clicked === false) {
       return (
         <div className="contract">
-          <TopBar status="home" />
+
           {/* renders a form where users can input their contract information */}
           <section className="add-contract">
             <Form className="login-form">

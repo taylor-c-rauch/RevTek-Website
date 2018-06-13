@@ -12,6 +12,10 @@ import BiddingPage from "./BiddingPage";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 
 export default class Router extends Component {
+    constructor() {
+        super();
+        this.state = { status: "intern" };
+    }
     render() {
         return (
             <div>
@@ -21,28 +25,28 @@ export default class Router extends Component {
                         <Redirect to="/home" />
                         <Route
                             path="/home"
-                            render={() => <Homepage />} />
+                            render={() => (<div><TopBar status="home" /> <Homepage /></div>)} />
                         <Route
                             path="/challenge-manager"
-                            render={() => <ChallengeManager />} />
+                            render={() => (<div><TopBar status="admin" /> <ChallengeManager /></div>)} />
                         <Route
                             path="/contract-submission"
-                            render={() => <Contract />} />
+                            render={() => (<div><TopBar status="home" /> <Contract /></div>)} />
                         <Route
                             path="/daily-challenge"
-                            render={() => <DailyChallenge />} />
+                            render={() => (<div><TopBar status={this.state.status} /> <DailyChallenge /></div>)} />
                         <Route
                             path="/profile"
-                            render={() => <Profile />} />
+                            render={() => (<div><TopBar status={this.state.status} s /> <Profile /></div>)} />
                         <Route
                             path="/statistics"
-                            render={() => <Statistics />} />
+                            render={() => (<div><TopBar status="home" /> <Statistics /></div>)} />
                         <Route
                             path="/user-list"
-                            render={() => <UserList />} />
+                            render={() => (<div><TopBar status={this.state.status} /> <UserList /></div>)} />
                         <Route
                             path="/contract-bidding"
-                            render={() => <BiddingPage />} />
+                            render={() => (<div><TopBar status={this.state.status} /> <BiddingPage /></div>)} />
                     </div>
                 </BrowserRouter>
             </div>

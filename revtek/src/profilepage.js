@@ -9,7 +9,7 @@ export default class Profile extends Component {
     render() {
         return (
             <div>
-                <TopBar status="intern" />
+
                 <div style={{ background: '#fffff', padding: '30px' }}>
 
                     <Row gutter={16}>
