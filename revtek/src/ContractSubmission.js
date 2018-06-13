@@ -15,7 +15,7 @@ export default class ContractSubmission extends Component {
         description: "",
         numinterns: "",
         skills: [],
-        clicked: false, 
+        clicked: false 
       }
     }
   
@@ -44,17 +44,12 @@ export default class ContractSubmission extends Component {
         project: '', 
         description: '',
         numinterns: '', 
-        skills: '',
+        skills: [],
+        clicked: true
       })
 
     }
   
-
-
-    handleClick=e => {
-      e.preventDefault();
-      this.setState({clicked: true})
-    }
 
     render() {
       if (this.state.clicked === false) {
@@ -63,7 +58,7 @@ export default class ContractSubmission extends Component {
            <TopBar status="home" />
             {/* renders a form where users can input their contract information */}
             <section className="add-contract">
-            <Form className="login-form">
+            <Form onSubmit = {this.handleSubmit} className="login-form">
               <FormItem>
                 <Input name="client" placeholder="Client Name" onChange={this.handleChange} value={this.state.client}/>
               </FormItem>
@@ -87,7 +82,7 @@ export default class ContractSubmission extends Component {
               <FormItem>
                 <Input name="skills" placeholder="Preferred Intern Skills" onChange={this.handleChange} value={this.state.skills}/>
               </FormItem>
-              <button onClick={this.handleClick, this.handleSubmit}>Submit Contract </button>
+              <button>Submit Contract </button>
             </Form>
             </section>
           </div>
