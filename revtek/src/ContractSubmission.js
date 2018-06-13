@@ -48,7 +48,7 @@ export default class ContractSubmission extends Component {
       })
 
     }
-  }
+  
 
 
     handleClick=e => {
