@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col } from 'antd';
 import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from "react-router-dom";
 
 const styles = {
     root: {
@@ -21,9 +22,10 @@ class TopBar extends Component {
         super(props);
         this.state = {
             status: this.props.status,
-            intern: ["Profile", "Daily Challenge", "Contracts", "Alumni", "Forum"],
-            alumni: ["Profile", "Leaderboard", "Contracts", "Forum"],
-            admin: ["Profile", "Challenge Manager", "Contracts", "Users", "Forum"]
+            intern: [{ label: "Profile", place: "/profile" }, { label: "Daily Challenge", place: "/daily-challenge" }, { label: "Contracts", place: "/" }, { label: "Alumni", place: "/" }, { label: "Forum", place: "/" }],
+            alumni: [{ label: "Profile", place: "/profile" }, { label: "Leaderboard", place: "/" }, { label: "Contracts", place: "/" }, { label: "Forum", place: "/" }],
+            admin: [{ label: "Profile", place: "/profile" }, { label: "Challenge Manager", place: "/challenge-manager" }, { label: "Contracts", place: "/" }, { label: "Users", place: "/user-list-admin" }, { label: "Forum", place: "/" }],
+            home: [{ label: "Clients", place: "/" }, { label: "Members", place: "/" }]
         };
     }
     render() {
@@ -36,7 +38,7 @@ class TopBar extends Component {
                             <Typography variant="display1" color="inherit" className={classes.flex}>
                                 <i>RevTek</i>
                             </Typography>
-                            {this.state.intern.map(item => <Button mini color="inherit">{item}</Button>)}
+                            {this.state.intern.map(item => <Link to={item.place}><Button mini ><Typography>{item.label}</Typography></Button></Link>)}
                         </Toolbar>
                     </AppBar>
                 </div>
@@ -50,7 +52,7 @@ class TopBar extends Component {
                             <Typography variant="display1" color="inherit" className={classes.flex}>
                                 <i>RevTek</i>
                             </Typography>
-                            {this.state.alumni.map(item => <Button mini color="inherit">{item}</Button>)}
+                            {this.state.alumni.map(item => <Link to={item.place}><Button mini color="inherit"><Typography>{item.label}</Typography></Button></Link>)}
                         </Toolbar>
                     </AppBar>
                 </div>
@@ -64,7 +66,7 @@ class TopBar extends Component {
                             <Typography variant="display1" color="inherit" className={classes.flex}>
                                 <i>RevTek</i>
                             </Typography>
-                            {this.state.admin.map(item => <Button mini color="inherit">{item}</Button>)}
+                            {this.state.admin.map(item => <Link to={item.place}><Button mini color="inherit"><Typography>{item.label}</Typography></Button></Link>)}
                         </Toolbar>
                     </AppBar>
                 </div>
