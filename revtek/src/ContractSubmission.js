@@ -7,63 +7,55 @@ const FormItem = Form.Item;
 
 export default class ContractSubmission extends Component {
   constructor() {
-    super();
-    this.state = {
-      client: "",
-      email: "",
-      project: "",
-      description: "",
-      numinterns: "",
-      skills: [],
-      clicked: false,
-    };
-  };
+      super();
+      this.state = {
+        client: "",
+        email: "", 
+        project: "",
+        description: "",
+        numinterns: "",
+        skills: [],
+        clicked: false 
+      }
+    }
+  
+    // updates each input's corresponding state
+    handleChange=e => {
+      this.setState({
+        [e.target.name]: e.target.value
+      });
+    }
+  
+    // When the submit button is clicked, the user input gets put on firebase
+    handleSubmit=e => {
+      e.preventDefault();
+      const contractname = this.state.project.split(' ').join('-')
+      const contractsRef = fire.database().ref('contracts/' + contractname).set({
+        client: this.state.client,
+        email: this.state.email, 
+        project: this.state.project, 
+        desciption: this.state.description,
+        numinterns: this.state.numinterns, 
+        skills: this.state.skills        
+      });
+      this.setState({
+        client: '', 
+        email: '', 
+        project: '', 
+        description: '',
+        numinterns: '', 
+        skills: [],
+        clicked: true
+      })
 
-  // updates each input's corresponding state
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
-
-  // When the submit button is clicked, the user input gets put on firebase
-  handleSubmit = e => {
-    e.preventDefault();
-    const contractname = this.state.project.split(' ').join('-');
-    const contractsRef = fire.database().ref('contracts/' + contractname).set({
-      client: this.state.client,
-      email: this.state.email,
-      project: this.state.project,
-      desciption: this.state.description,
-      numinterns: this.state.numinterns,
-      skills: this.state.skills
-    });
-    this.setState({
-      client: '',
-      email: '',
-      project: '',
-      description: '',
-      numinterns: '',
-      skills: '',
-    });
-
-  };
-
-
-
-  handleClick = e => {
-    e.preventDefault();
-    this.setState({ clicked: true });
-  };
-
-  render() {
-    if (this.state.clicked === false) {
-      return (
-        <div className="contract">
-
-          {/* renders a form where users can input their contract information */}
-          <section className="add-contract">
-            <Form className="login-form">
+    render() {
+      if (this.state.clicked === false) {
+        return (
+          <div className="contract">
+           <TopBar status="home" />
+            {/* renders a form where users can input their contract information */}
+            <section className="add-contract">
+            <Form onSubmit = {this.handleSubmit} className="login-form">
               <FormItem>
                 <Input name="client" placeholder="Client Name" onChange={this.handleChange} value={this.state.client} />
               </FormItem>
@@ -87,7 +79,7 @@ export default class ContractSubmission extends Component {
               <FormItem>
                 <Input name="skills" placeholder="Preferred Intern Skills" onChange={this.handleChange} value={this.state.skills} />
               </FormItem>
-              <button onClick={this.handleClick, this.handleSubmit}>Submit Contract </button>
+              <button>Submit Contract </button>
             </Form>
             </section>
           </div >
