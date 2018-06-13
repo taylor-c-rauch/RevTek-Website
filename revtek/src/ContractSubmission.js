@@ -58,7 +58,7 @@ export default class ContractSubmission extends Component {
           <div className="contract">
             {/* renders a form where users can input their contract information */}
             <section className="add-contract">
-            <Form onSubmit={this.handleSubmit} className="login-form">
+            <Form className="login-form">
               <FormItem>
                 <Input name="client" placeholder="Client Name" onChange={this.handleChange} value={this.state.client}/>
               </FormItem>
@@ -82,7 +82,7 @@ export default class ContractSubmission extends Component {
               <FormItem>
                 <Input name="skills" placeholder="Preferred Intern Skills" onChange={this.handleChange} value={this.state.skills}/>
               </FormItem>
-              <button onClick={this.handleClick}>Submit Contract </button>
+              <button onClick={this.handleClick, this.handleSubmit}>Submit Contract </button>
             </Form>
             </section>
           </div>
