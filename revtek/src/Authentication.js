@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Input, Button } from 'antd';
 import fire from './fire';
+import App from './App';
 
 export default class Authentication extends Component {
   constructor(){
@@ -9,8 +10,28 @@ export default class Authentication extends Component {
       email: "",
       username: "",
       password: "",
-      status: ""
+      status: "",
+      user: null
     }
+  }
+
+  UNSAFE_componentWillMount() {
+  console.log("componentWillMount");
+  this.authListener();
+}
+
+authListener() {
+  fire.auth().onAuthStateChanged(user => {
+    if (user) {
+      this.setState({ user: user });
+    } else {
+      this.setState({ user: null });
+    }
+  });
+}
+
+onLoggedIn() {
+    return this.state.user ? <App /> : <Authentication />;
   }
 
   signup = e => {
