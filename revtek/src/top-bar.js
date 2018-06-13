@@ -98,8 +98,8 @@ class TopBar extends Component {
                                 open={open2}
                                 onClose={this.handleClose2}
                             >
-                                <MenuItem onClick={this.handleClose2}><Link to="/home">Login</Link></MenuItem>
-                                <MenuItem onClick={this.handleClose2}><Link to="/home">Sign-Up</Link></MenuItem>
+                                <MenuItem onClick={this.handleClose2}><Link to="/login">Login</Link></MenuItem>
+                                <MenuItem onClick={this.handleClose2}><Link to="/sign-up">Sign-Up</Link></MenuItem>
                             </Menu>
                         </Toolbar>
                     </AppBar>

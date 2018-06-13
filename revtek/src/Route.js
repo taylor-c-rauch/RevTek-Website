@@ -9,6 +9,8 @@ import Statistics from "./Statistics";
 import UserList from "./UserList";
 import Homepage from "./Homepage";
 import BiddingPage from "./BiddingPage";
+import Authentication from "./Authentication";
+import SignUp from "./SignUp";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 
 export default class Router extends Component {
@@ -32,6 +34,12 @@ export default class Router extends Component {
                         <Route
                             path="/contract-submission"
                             render={() => (<div><TopBar status="home" /> <Contract /></div>)} />
+                        <Route
+                            path="/login"
+                            render={() => (<div><TopBar status="home" /> <Authentication /></div>)} />
+                        <Route
+                            path="/sign-up"
+                            render={() => (<div><TopBar status="home" /> <SignUp /></div>)} />
                         <Route
                             path="/daily-challenge"
                             render={() => (<div><TopBar status={this.state.status} /> <DailyChallenge /></div>)} />

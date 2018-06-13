@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Input, Button } from 'antd';
 import fire from './fire';
 import App from './App';
+import Background from './assets/homePhoto.jpg';
 
 export default class Authentication extends Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
       email: "",
@@ -16,21 +17,21 @@ export default class Authentication extends Component {
   }
 
   UNSAFE_componentWillMount() {
-  console.log("componentWillMount");
-  this.authListener();
-}
+    console.log("componentWillMount");
+    this.authListener();
+  }
 
-authListener() {
-  fire.auth().onAuthStateChanged(user => {
-    if (user) {
-      this.setState({ user: user });
-    } else {
-      this.setState({ user: null });
-    }
-  });
-}
+  authListener() {
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ user: user });
+      } else {
+        this.setState({ user: null });
+      }
+    });
+  }
 
-onLoggedIn() {
+  onLoggedIn() {
     return this.state.user ? <App /> : <Authentication />;
   }
 
@@ -69,13 +70,21 @@ onLoggedIn() {
 
   render() {
     return (
-      <div>
-        <Input id="email" placeholder="Email" onChange={e => this.handleUserInput(e)} />
-        <Input id="username" placeholder="Username" onChange={e => this.handleUserInput(e)} />
-        <Input id="password" placeholder="Password" onChange={e => this.handleUserInput(e)} />
-        <Input id="status" placeholder="Status" onChange={e => this.handleUserInput(e)} />
-        <Button type="primary" onClick={e => this.signup(e)}>Submit</Button>
-      </div>
+      <section style={{
+        backgroundImage: `url(${Background})`,
+        height: 800,
+        width: '100%',
+        backgroundSize: 'cover',
+        overflow: 'hidden'
+      }}>
+        <div>
+          <Input id="email" placeholder="Email" onChange={e => this.handleUserInput(e)} />
+          <Input id="username" placeholder="Username" onChange={e => this.handleUserInput(e)} />
+          <Input id="password" placeholder="Password" onChange={e => this.handleUserInput(e)} />
+          <Input id="status" placeholder="Status" onChange={e => this.handleUserInput(e)} />
+          <Button type="primary" onClick={e => this.signup(e)}>Submit</Button>
+        </div>
+      </section>
     )
   }
 }
