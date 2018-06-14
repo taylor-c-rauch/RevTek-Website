@@ -7,15 +7,45 @@ const FormItem = Form.Item;
 
 export default class ContractSubmission extends Component {
   constructor() {
-      super();
-      this.state = {
+    super();
+    this.state = {
+      client: "",
+      email: "",
+      project: "",
+      description: "",
+      numinterns: "",
+      skills: [],
+      clicked: false
+    }
+  }
+
+  // updates each input's corresponding state
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  // When the submit button is clicked, the user input gets put on firebase
+  handleSubmit = e => {
+    e.preventDefault();
+    const contractname = this.state.project.split(' ').join('-')
+    const contractsRef = fire.database().ref('contracts/' + contractname).set({
+      client: this.state.client,
+      email: this.state.email,
+      project: this.state.project,
+      description: this.state.description,
+      numinterns: this.state.numinterns,
+      skills: this.state.skills
+    }).then(() => {
+      this.setState({
         client: "",
-        email: "", 
+        email: "",
         project: "",
         description: "",
         numinterns: "",
-        skills: [],
-        clicked: false,
+        skills: "",
+        clicked: !this.state.clicked,
         clientMessage: "",
         emailMessage: "",
         projectMessage: "",
@@ -24,7 +54,13 @@ export default class ContractSubmission extends Component {
         skillsMessage: "" 
       }
     }
-  
+    
+    handleClick = e => {
+    e.preventDefault();
+    this.setState({
+      clicked: !this.state.clicked
+    })
+   }
     // updates each input's corresponding state
     handleChange=e => {
       this.setState({
@@ -114,15 +150,17 @@ export default class ContractSubmission extends Component {
               </FormItem>
               <button onClick={this.handleSubmit}>Submit Contract </button>
             </Form>
-            </section>
-          </div >
-        );
+          </section>
+        </div >
+      );
     }
     else {
       return (
         <div style={{ background: '#ECECEC', padding: '30px' }}>
+          <TopBar status="home" />
           <h1>Thank you for submitting a contract!</h1>
           <h3> We will get back to you as soon as possible </h3>
+          <button onClick={this.handleClick}>Submit Another Contract </button>
         </div>
       )
     }

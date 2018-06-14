@@ -10,7 +10,7 @@ export default class Homepage extends Component {
   render() {
     return (
       <div>
-
+        <TopBar status="home" />
         <section
           style={{
             backgroundImage: `url(${Background})`,
