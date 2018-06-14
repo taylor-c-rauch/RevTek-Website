@@ -35,40 +35,7 @@ export default class SignUp extends Component {
     });
   }
 
-  signup = e => {
-    e.preventDefault();
-    fire
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(u => {
-        var user = fire.auth().currentUser;
-        this.logUser(user);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    this.setState({ clicked: true });
-  };
 
-  // When the submit button is clicked, the user input gets put on firebase
-  logUser = user => {
-    let ref = fire.database().ref('users');
-    let obj = {
-      email: this.state.email,
-      username: this.state.username,
-      fullname: this.state.fullname,
-      password: this.state.password,
-      status: this.state.status
-    }
-    ref.push(obj);
-  };
-
-  // updates each input's corresponding state
-  handleUserInput = e => {
-    this.setState({
-      [e.target.id]: e.target.value
-    });
-  };
 
   render() {
 
