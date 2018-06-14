@@ -12,10 +12,9 @@ export default class Profile extends Component {
         }
     }
 
-    handleClick = e => {
+    handleClick = (value) => {
         let todo = this.state.todo;
-        todo.push({task:"", hours:null});
-        this.setState({todo:todo});
+        todo.push({task: value, hours: null});
     }
 
 
@@ -57,7 +56,7 @@ export default class Profile extends Component {
                                     }}
                                 />
                                 <Card style={{ marginTop: 8 }} type="inner" title="To-Do" extra={
-                                        <Search placeholder="New Task" maxlength="5" onSearch={this.handleClick} enterButton= {<Button size="small"> + </Button>} /> }>
+                                        <Search placeholder="New Task" maxlength="5" onSearch={value => this.handleClick(value) } enterButton= {<Button size="small"> + </Button>} /> }>
                                     <Card style={{ marginTop: 8 }} >
                                             <Checkbox> Daily Challenges</Checkbox> 
                                         <br />
