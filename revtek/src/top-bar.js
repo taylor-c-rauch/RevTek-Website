@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'antd';
-import { Menu, MenuItem, AppBar, Toolbar, Typography, Button } from "@material-ui/core";
+import { MuiThemeProvider, createMuiTheme, Menu, MenuItem, AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 
@@ -16,7 +16,6 @@ const styles = {
         marginRight: 20,
     },
 };
-
 
 class TopBar extends Component {
     constructor(props) {
@@ -67,35 +66,34 @@ class TopBar extends Component {
                             <Typography variant="display1" color="inherit" className={classes.flex}>
                                 <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
-                            <Button mini onClick={this.handleMenu1}><Typography>Clients</Typography></Button>
+                            <Button mini onClick={this.handleMenu1}><Typography><font color="white">Clients</font></Typography></Button>
                             <Menu
 
                                 anchorEl={anchor1}
                                 anchorOrigin={{
                                     vertical: 'bottom',
-                                    horizontal: 'right',
+                                    horizontal: 'left',
                                 }}
-                                transformOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'right',
-                                }}
+                                getContentAnchorEl={null}
+
                                 open={open1}
                                 onClose={this.handleClose1}
                             >
                                 <Link to="/contract-submission" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose1}>Submit Contract</MenuItem></Link>
                                 <Link to="/statistics" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose1}>Developer Stats</MenuItem></Link>
                             </Menu>
-                            <Button mini onClick={this.handleMenu2}><Typography>Members</Typography></Button>
+
+                            <Button mini onClick={this.handleMenu2}><Typography><font color="white">Members</font></Typography></Button>
+
                             <Menu
                                 anchorEl={anchor2}
+
                                 anchorOrigin={{
                                     vertical: 'bottom',
-                                    horizontal: 'right',
+                                    horizontal: 'left',
                                 }}
-                                transformOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'right',
-                                }}
+
+                                getContentAnchorEl={null}
                                 open={open2}
                                 onClose={this.handleClose2}
                             >
