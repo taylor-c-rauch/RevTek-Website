@@ -1,31 +1,10 @@
 import React, { Component } from "react";
 import Background from "./assets/homePhoto.jpg";
-import { Input, Button, Row, Col, Menu, Dropdown, Icon, message } from "antd";
+import { Input, Button, Row, Col } from "antd";
 import fire from "./fire";
 import SignUpForm from './SignUpForm';
 import UserMessage from './UserMessage';
 import TopBar from "./top-bar";
-
-// const onClick = function({ key }) {
-//   message.info(`Click on item ${key}`);
-// };
-
-function handleButtonClick(e) {
-  message.error("Click on left button.");
-  console.log("click left button", e);
-}
-function handleMenuClick(e) {
-  message.error("You forgot to fill out SOMETHING");
-  console.log("click", e);
-}
-
-const menu = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key="1">Intern</Menu.Item>
-    <Menu.Item key="2">Alumni</Menu.Item>
-    <Menu.Item key="3">Administrator</Menu.Item>
-  </Menu>
-);
 
 export default class SignUp extends Component {
   constructor() {
@@ -94,106 +73,12 @@ export default class SignUp extends Component {
   };
 
   render() {
-    if (this.state.clicked === false) {
-      return (
-        <section
-          style={{
-            backgroundImage: `url(${Background})`,
-            height: 800,
-            width: "100%",
-            backgroundSize: "cover",
-            overflow: "hidden"
-          }}
-        >
-          <div>
-            <h1>Sign Up</h1>
-            <Row>
-              <Col span={24} offset={4}>
-                <Input
-                  style={{ width: "70%" }}
-                  id="email"
-                  placeholder="Email"
-                  onChange={e => this.handleUserInput(e)}
-                />
-              </Col>
-              <Col span={24} offset={4}>
-                <Input
-                  style={{ width: "70%" }}
-                  id="username"
-                  placeholder="Username"
-                  onChange={e => this.handleUserInput(e)}
-                />
-              </Col>
-              <Col span={24} offset={4}>
-                <Input
-                  style={{ width: "70%" }}
-                  id="fullname"
-                  placeholder="Fullname"
-                  onChange={e => this.handleUserInput(e)}
-                />
-              </Col>
-              <Col span={24} offset={4}>
-                <Input
-                  style={{ width: "70%" }}
-                  id="password"
-                  placeholder="Password"
-                  onChange={e => this.handleUserInput(e)}
-                />
-              </Col>
-              <Col span={24} offset={4}>
-                <div>
-                  <Dropdown overlay={menu}>
-                    <Button
-                      span={24}
-                      offset={4}
-                      style={{ marginLeft: 8 }}
-                      style={{ width: "70%" }}
-                    >
-                      Status <Icon type="down" />
-                    </Button>
-                  </Dropdown>
-                </div>
-              </Col>
-              <Button
-                span={24}
-                offset={4}
-                type="primary"
-                onClick={e => this.signup(e)}
-              >
-                Submit
-              </Button>
-            </Row>
-          </div>
-        </section>
-      );
-    } else {
-      return (
-        <div style={{ background: "#ECECEC", padding: "30px" }}>
-          <h1>Thank you for signing up!</h1>
-          <h3>
-            {" "}
-            Registration requires instructor approval. You will receive an email
-            soon regarding your account status
-          </h3>
-        </div>
-      );
-    }
 
-//   return (
-//    <div>
-//   <TopBar status="home" />
-//     {this.state.user ? (<UserMessage />) : (<SignUpForm />)}
-//     </div>
-//    );
+    return (
+      <div>
 
-//    return (
-//      <div>
-//        {this.state.user ? (<UserMessage person={this.state.user} />) : (<SignUpForm person={this.state.user} />)}
-//      </div>
-//    );
-//  }
-//}
-
-//ReactDOM.render(
-//stuff
-//, mountNode);
+        {this.state.user ? (<UserMessage person={this.state.user} />) : (<SignUpForm person={this.state.user} />)}
+      </div>
+    );
+  }
+}
