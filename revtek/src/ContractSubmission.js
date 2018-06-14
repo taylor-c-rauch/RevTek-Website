@@ -37,7 +37,7 @@ export default class ContractSubmission extends Component {
       description: this.state.description,
       numinterns: this.state.numinterns,
       skills: this.state.skills
-    }).then(()=> {
+    }).then(() => {
       this.setState({
         client: "",
         email: "",
@@ -63,6 +63,7 @@ export default class ContractSubmission extends Component {
     if (this.state.clicked === false) {
       return (
         <div className="contract">
+          <TopBar status="home" />
           {/* renders a form where users can input their contract information */}
           <section className="add-contract">
             <Form onSubmit={this.handleSubmit} className="login-form">
@@ -98,6 +99,7 @@ export default class ContractSubmission extends Component {
     else {
       return (
         <div style={{ background: '#ECECEC', padding: '30px' }}>
+          <TopBar status="home" />
           <h1>Thank you for submitting a contract!</h1>
           <h3> We will get back to you as soon as possible </h3>
           <button onClick={this.handleClick}>Submit Another Contract </button>
