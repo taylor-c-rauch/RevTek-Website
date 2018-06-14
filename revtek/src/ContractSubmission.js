@@ -53,7 +53,7 @@ export default class ContractSubmission extends Component {
         numinternsMessage: "",
         skillsMessage: "" 
       }
-    }
+    }}
     
     handleClick = e => {
     e.preventDefault();
