@@ -16,15 +16,19 @@ import { BrowserRouter, Route, Redirect } from "react-router-dom";
 export default class Router extends Component {
     constructor() {
         super();
-        this.state = { status: "intern" };
-    }
+        this.state = { status: "alumni", user: null };
+    };
+    updateField = (newVal) => {
+        this.setState({ user: newVal });
+    };
+
     render() {
         return (
             <div>
 
                 <BrowserRouter>
                     <div>
-                        <Redirect to="/profile" />
+                        <Redirect to="/home" />
                         <Route
                             path="/home"
                             render={() => (<div><TopBar status="home" /> <Homepage /></div>)} />
@@ -36,7 +40,9 @@ export default class Router extends Component {
                             render={() => (<div><TopBar status="home" /> <Contract /></div>)} />
                         <Route
                             path="/login"
-                            render={() => (<div><TopBar status="home" /> <Login /></div>)} />
+
+                            render={() => (<div><TopBar status="home" /> <Login updateField={(newVal) => this.updateField(newVal)} /></div>)} />
+
                         <Route
                             path="/sign-up"
                             render={() => (<div><TopBar status="home" /> <SignUp /></div>)} />
