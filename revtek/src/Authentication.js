@@ -26,8 +26,10 @@ export default class Authentication extends Component {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({ user: user });
+        this.props.updateField(user);
       } else {
         this.setState({ user: null });
+        this.props.updateField(null);
       }
     });
   }
