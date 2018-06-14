@@ -52,17 +52,15 @@ export default class SignUp extends Component {
 
   // When the submit button is clicked, the user input gets put on firebase
   logUser = user => {
-    const username = this.state.username;
-    const usernameRef = fire
-      .database()
-      .ref("users/" + username)
-      .set({
-        email: this.state.email,
-        username: this.state.username,
-        fullname: this.state.fullname,
-        password: this.state.password,
-        status: this.state.status
-      });
+    let ref = fire.database().ref('users');
+    let obj = {
+      email: this.state.email,
+      username: this.state.username,
+      fullname: this.state.fullname,
+      password: this.state.password,
+      status: this.state.status
+    }
+    ref.push(obj);
   };
 
   // updates each input's corresponding state
