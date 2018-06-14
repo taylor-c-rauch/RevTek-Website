@@ -1,11 +1,12 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { Input, Button, Row, Col } from "antd";
 import fire from "./fire";
 import App from "./App";
 import Background from "./assets/homePhoto.jpg";
 import { Link } from "react-router-dom";
+import TopBar from "./top-bar";
 
-export default class Authentication extends Component {
+export default class LoginForm extends Component {
   constructor() {
     super();
     this.state = {
@@ -17,29 +18,29 @@ export default class Authentication extends Component {
     };
   }
 
-  UNSAFE_componentWillMount() {
-    console.log("componentWillMount");
-    this.authListener();
-  }
 
-  authListener() {
-    fire.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState({ user: user });
-      } else {
-        this.setState({ user: null });
-      }
-    });
-  }
 
-  onLoggedIn() {
-    return this.state.user ? <App /> : <Authentication />;
-  }
+
+
+
 
   handleUserInput = e => {
     this.setState({
       [e.target.id]: e.target.value
     });
+  };
+
+  login = e => {
+    e.preventDefault();
+    fire
+      .auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(u => {
+        console.log(u);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   render() {
@@ -53,6 +54,7 @@ export default class Authentication extends Component {
           overflow: "hidden"
         }}
       >
+        <TopBar status="home" />
         <div>
           <h1>Sign In</h1>
           <Row>
@@ -73,7 +75,7 @@ export default class Authentication extends Component {
               />
             </Col>
             {/* Button does nothing yet */}
-            <Button type="primary">Login</Button>
+            <Button type="primary" onClick={e => this.login(e)}>Login</Button>
             Don't have an account?
             <Link to="/sign-up">
               <Button shape="square" type="primary">
@@ -83,6 +85,6 @@ export default class Authentication extends Component {
           </Row>
         </div>
       </section>
-    );
+    )
   }
 }

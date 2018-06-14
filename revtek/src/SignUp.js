@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Background from "./assets/homePhoto.jpg";
 import { Input, Button, Row, Col, Menu, Dropdown, Icon, message } from "antd";
 import fire from "./fire";
+import SignUpForm from './SignUpForm';
+import UserMessage from './UserMessage';
+import TopBar from "./top-bar";
 
 // const onClick = function({ key }) {
 //   message.info(`Click on item ${key}`);
@@ -33,9 +36,24 @@ export default class SignUp extends Component {
       fullname: "",
       password: "",
       status: "",
-      user: null,
+      user: {},
       clicked: false
     };
+  }
+
+
+  UNSAFE_componentWillMount() {
+    this.authListener();
+  }
+
+  authListener() {
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ user: user });
+      } else {
+        this.setState({ user: null });
+      }
+    });
   }
 
   signup = e => {
@@ -160,6 +178,13 @@ export default class SignUp extends Component {
         </div>
       );
     }
+
+ //   return (
+  //    <div>
+     //   <TopBar status="home" />
+   //     {this.state.user ? (<UserMessage />) : (<SignUpForm />)}
+ //     </div>
+//    );
   }
 }
 

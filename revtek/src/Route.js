@@ -9,15 +9,19 @@ import Statistics from "./Statistics";
 import UserList from "./UserList";
 import Homepage from "./Homepage";
 import BiddingPage from "./BiddingPage";
-import Authentication from "./Authentication";
+import Login from "./Login";
 import SignUp from "./SignUp";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 
 export default class Router extends Component {
     constructor() {
         super();
-        this.state = { status: "intern" };
-    }
+        this.state = { status: "alumni", user: null };
+    };
+    updateField = (newVal) => {
+        this.setState({ user: newVal });
+    };
+
     render() {
         return (
             <div>
@@ -27,28 +31,30 @@ export default class Router extends Component {
                         <Redirect to="/home" />
                         <Route
                             path="/home"
-                            render={() => (<div><TopBar status="home" /> <Homepage /></div>)} />
+                            render={() => (<div> <Homepage /></div>)} />
                         <Route
                             path="/challenge-manager"
                             render={() => (<div><TopBar status="admin" /> <ChallengeManager /></div>)} />
                         <Route
                             path="/contract-submission"
-                            render={() => (<div><TopBar status="home" /> <Contract /></div>)} />
+                            render={() => (<div> <Contract /></div>)} />
                         <Route
                             path="/login"
-                            render={() => (<div><TopBar status="home" /> <Authentication /></div>)} />
+
+                            render={() => (<div> <Login updateField={(newVal) => this.updateField(newVal)} /></div>)} />
+
                         <Route
                             path="/sign-up"
-                            render={() => (<div><TopBar status="home" /> <SignUp /></div>)} />
+                            render={() => (<div><SignUp /></div>)} />
                         <Route
                             path="/daily-challenge"
                             render={() => (<div><TopBar status={this.state.status} /> <DailyChallenge /></div>)} />
                         <Route
                             path="/profile"
-                            render={() => (<div><TopBar status={this.state.status} s /> <Profile /></div>)} />
+                            render={() => (<div>{console.log(this.state.user)}{console.log(this.state.user.status)}<TopBar status={this.state.user.status} /> <Profile /></div>)} />
                         <Route
                             path="/statistics"
-                            render={() => (<div><TopBar status="home" /> <Statistics /></div>)} />
+                            render={() => (<div><Statistics /></div>)} />
                         <Route
                             path="/user-list"
                             render={() => (<div><TopBar status={this.state.status} /> <UserList /></div>)} />
