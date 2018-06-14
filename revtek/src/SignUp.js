@@ -72,11 +72,11 @@ export default class SignUp extends Component {
   };
 
   render() {
+
       return (
         <div>
           {this.state.user ? (<UserMessage />) : (<SignUpForm />)}
         </div>
       );
     }
-  
-}
+  }
