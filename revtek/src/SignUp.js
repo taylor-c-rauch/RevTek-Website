@@ -179,14 +179,20 @@ export default class SignUp extends Component {
       );
     }
 
- //   return (
-  //    <div>
-     //   <TopBar status="home" />
-   //     {this.state.user ? (<UserMessage />) : (<SignUpForm />)}
- //     </div>
+//   return (
+//    <div>
+//   <TopBar status="home" />
+//     {this.state.user ? (<UserMessage />) : (<SignUpForm />)}
+//     </div>
 //    );
-  }
-}
+
+//    return (
+//      <div>
+//        {this.state.user ? (<UserMessage person={this.state.user} />) : (<SignUpForm person={this.state.user} />)}
+//      </div>
+//    );
+//  }
+//}
 
 //ReactDOM.render(
 //stuff

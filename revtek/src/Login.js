@@ -36,7 +36,7 @@ export default class Login extends Component {
 
     return (
       <div>
-        {this.state.user ? <div>{console.log(this.state.user)}{console.log(this.state.user.status)}<TopBar status={this.state.user.status} /> <Profile /></div> : <div><TopBar status="home" /> <LoginForm /></div>}
+        {this.state.user ? <div><TopBar status={this.state.user.status} /> <Profile person={this.state.user} /></div> : <div><TopBar status="home" /> <LoginForm /></div>}
       </div>
     );
   }
