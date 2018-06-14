@@ -34,18 +34,28 @@ export default class ContractSubmission extends Component {
       client: this.state.client,
       email: this.state.email,
       project: this.state.project,
-      desciption: this.state.description,
+      description: this.state.description,
       numinterns: this.state.numinterns,
       skills: this.state.skills
-    });
+    }).then(()=> {
+      this.setState({
+        client: "",
+        email: "",
+        project: "",
+        description: "",
+        numinterns: "",
+        skills: ""
+      })
+    })
     this.setState({
-      client: '',
-      email: '',
-      project: '',
-      description: '',
-      numinterns: '',
-      skills: [],
-      clicked: true
+      clicked: !this.state.clicked
+    })
+  }
+
+  handleClick = e => {
+    e.preventDefault();
+    this.setState({
+      clicked: !this.state.clicked
     })
   }
 
@@ -53,7 +63,6 @@ export default class ContractSubmission extends Component {
     if (this.state.clicked === false) {
       return (
         <div className="contract">
-
           {/* renders a form where users can input their contract information */}
           <section className="add-contract">
             <Form onSubmit={this.handleSubmit} className="login-form">
@@ -91,6 +100,7 @@ export default class ContractSubmission extends Component {
         <div style={{ background: '#ECECEC', padding: '30px' }}>
           <h1>Thank you for submitting a contract!</h1>
           <h3> We will get back to you as soon as possible </h3>
+          <button onClick={this.handleClick}>Submit Another Contract </button>
         </div>
       )
     }
