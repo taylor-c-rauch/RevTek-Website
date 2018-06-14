@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Card, Row, Col, Button, Checkbox } from 'antd';
+import { Input, Card, Row, Col, Button, Checkbox, InputNumber, Form } from 'antd';
 import TopBar from "./top-bar";
 
 const Search = Input.Search;
@@ -8,16 +8,23 @@ export default class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            todo: [{task: "New task 2", hours:null}], 
+            task: "", 
+            hours: null, 
+            todo: [], 
         }
     }
 
-    handleClick = e => {
+    handleChange=e => {
+        this.setState({
+          [e.target.name]: e.target.value
+        });
+      }
+
+    handleClick = (value) => {
         let todo = this.state.todo;
-        todo.push({task:"", hours:null});
+        todo.push({task: this.state.task , hours: this.state.hours});
         this.setState({todo:todo});
     }
-
 
     render() {
         return (
@@ -57,20 +64,24 @@ export default class Profile extends Component {
                                     }}
                                 />
                                 <Card style={{ marginTop: 8 }} type="inner" title="To-Do" extra={
-                                        <Search placeholder="New Task" maxlength="5" onSearch={this.handleClick} enterButton= {<Button size="small"> + </Button>} /> }>
+                                        <Form> 
+                                            <Input placeholder="New Task" name="task" onChange={this.handleChange}/> 
+                                            <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange}/> 
+                                            <Button size="small" onClick={this.handleClick}> + </Button>
+                                        </Form>  }>
                                     <Card style={{ marginTop: 8 }} >
                                             <Checkbox> Daily Challenges</Checkbox> 
                                         <br />
                                         <br /> 
-                                            <Search placeholder="Hours" maxlength="5" enterButton="+" />
+                                        Hours: <InputNumber min={0} max={100} defaultValue={0} onChange={this.handleChange} /> 
                                     </Card>
-                                    {this.state.todo.map(item=> 
+                                    {this.state.todo.map(todo=> 
                                         <Card style={{ marginTop: 8 }} >
-                                            <Checkbox> {item.task}</Checkbox> 
+                                            <Checkbox> {todo.task}</Checkbox> 
                                             <Button> Remove </Button>
                                         <br />
                                         <br /> 
-                                            <Search placeholder="Hours" maxlength="5" enterButton="+" />
+                                        Hours: {todo.hours} 
                                         </Card> 
                                     )}
                                 </Card>
