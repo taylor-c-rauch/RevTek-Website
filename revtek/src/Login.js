@@ -43,7 +43,7 @@ export default class Login extends Component {
         this.props.updateField("userInfo", this.state.users[key]);
 
         this.props.updateField("status", this.state.users[key].status);
-
+        console.log(this.state.users[key].status)
       }
     }
     );
