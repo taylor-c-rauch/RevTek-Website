@@ -129,7 +129,7 @@ export default class ContractSubmission extends Component {
               required={true} help={this.state.skillsMessage}>
                 <Input name="skills" placeholder="Preferred Intern Skills" onChange={this.handleChange} value={this.state.skills} />
               </FormItem>
-              <Button>Submit Contract </Button>
+              <Button onClick={this.handleSubmit}>Submit Contract </Button>
             </Form>
           </section>
         </div >
