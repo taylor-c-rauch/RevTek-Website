@@ -58,7 +58,7 @@ class TopBar extends Component {
     logout() {
         console.log("log out");
         fire.auth().signOut();
-      }
+    }
     render() {
         const { classes } = this.props;
         const { auth1, anchor1, auth2, anchor2 } = this.state;
@@ -120,7 +120,7 @@ class TopBar extends Component {
                                 <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
                             {this.state.intern.map(item => <Link to={item.place}><Button mini ><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
-                            <Link to="/login" style={{ textDecoration: "none" }}><MenuItem onClick={() => this.logout()}>Logout</MenuItem></Link>
+                            <Link to="/login" style={{ textDecoration: "none" }}><Button mini color="inherit" onClick={() => this.logout()}><Typography><font color="white">Logout</font></Typography></Button></Link>
 
                         </Toolbar>
                     </AppBar>
@@ -136,7 +136,7 @@ class TopBar extends Component {
                                 <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
                             {this.state.alumni.map(item => <Link to={item.place}><Button mini color="inherit"><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
-                            <Link to="/login" style={{ textDecoration: "none" }}><MenuItem onClick={() => this.logout()}>Logout</MenuItem></Link>
+                            <Link to="/login" style={{ textDecoration: "none" }}><Button mini color="inherit" onClick={() => this.logout()}><Typography><font color="white">Logout</font></Typography></Button></Link>
                         </Toolbar>
                     </AppBar>
                 </div>
@@ -151,7 +151,7 @@ class TopBar extends Component {
                                 <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
                             {this.state.admin.map(item => <Link to={item.place}><Button mini color="inherit"><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
-                            <Link to="/login" style={{ textDecoration: "none" }}><MenuItem onClick={() => this.logout()}>Logout</MenuItem></Link>
+                            <Link to="/login" style={{ textDecoration: "none" }}><Button mini color="inherit" onClick={() => this.logout()}><Typography><font color="white">Logout</font></Typography></Button></Link>
                         </Toolbar>
                     </AppBar>
                 </div>
