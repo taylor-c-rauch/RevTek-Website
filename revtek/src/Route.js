@@ -39,7 +39,7 @@ export default class Router extends Component {
                             render={() => (<div><TopBar status="home" /> <Contract /></div>)} />
                         <Route
                             path="/login"
-                            render={() => (<div><TopBar status="home" /> <Authentication updateField={this.updateField(newVal)} /></div>)} />
+                            render={() => (<div><TopBar status="home" /> <Authentication updateField={newVal => this.updateField(newVal)} /></div>)} />
                         <Route
                             path="/sign-up"
                             render={() => (<div><TopBar status="home" /> <SignUp /></div>)} />
