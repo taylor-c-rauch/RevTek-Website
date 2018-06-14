@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'antd';
-import { Menu, MenuItem, AppBar, Toolbar, Typography, Button } from "@material-ui/core";
+import { MuiThemeProvider, createMuiTheme, Menu, MenuItem, AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 
@@ -17,15 +17,14 @@ const styles = {
     },
 };
 
-
 class TopBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
             status: this.props.status,
-            intern: [{ label: "Profile", place: "/profile" }, { label: "Daily Challenge", place: "/daily-challenge" }, { label: "Contracts", place: "/contract-bidding" }, { label: "Alumni", place: "/user-list" }, { label: "Forum", place: "/" }],
-            alumni: [{ label: "Profile", place: "/profile" }, { label: "Leaderboard", place: "/" }, { label: "Contracts", place: "/contract-bidding" }, { label: "Forum", place: "/" }],
-            admin: [{ label: "Profile", place: "/profile" }, { label: "Challenge Manager", place: "/challenge-manager" }, { label: "Contracts", place: "/contract-bidding" }, { label: "Users", place: "/user-list" }, { label: "Forum", place: "/" }],
+            intern: [{ label: "Profile", place: "/profile" }, { label: "Daily Challenge", place: "/daily-challenge" }, { label: "Contracts", place: "/contract-bidding" }, { label: "Alumni", place: "/user-list" }, { label: "Forum", place: "/" }, { label: "Logout", place: "/" }],
+            alumni: [{ label: "Profile", place: "/profile" }, { label: "Leaderboard", place: "/" }, { label: "Contracts", place: "/contract-bidding" }, { label: "Forum", place: "/" }, { label: "Logout", place: "/" }],
+            admin: [{ label: "Profile", place: "/profile" }, { label: "Challenge Manager", place: "/challenge-manager" }, { label: "Contracts", place: "/contract-bidding" }, { label: "Users", place: "/user-list" }, { label: "Forum", place: "/" }, { label: "Logout", place: "/" }],
             anchor1: null,
             anchor2: null,
             auth1: true,
@@ -67,35 +66,34 @@ class TopBar extends Component {
                             <Typography variant="display1" color="inherit" className={classes.flex}>
                                 <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
-                            <Button mini onClick={this.handleMenu1}><Typography>Clients</Typography></Button>
+                            <Button mini onClick={this.handleMenu1}><Typography><font color="white">Clients</font></Typography></Button>
                             <Menu
 
                                 anchorEl={anchor1}
                                 anchorOrigin={{
                                     vertical: 'bottom',
-                                    horizontal: 'right',
+                                    horizontal: 'left',
                                 }}
-                                transformOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'right',
-                                }}
+                                getContentAnchorEl={null}
+
                                 open={open1}
                                 onClose={this.handleClose1}
                             >
                                 <Link to="/contract-submission" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose1}>Submit Contract</MenuItem></Link>
                                 <Link to="/statistics" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose1}>Developer Stats</MenuItem></Link>
                             </Menu>
-                            <Button mini onClick={this.handleMenu2}><Typography>Members</Typography></Button>
+
+                            <Button mini onClick={this.handleMenu2}><Typography><font color="white">Members</font></Typography></Button>
+
                             <Menu
                                 anchorEl={anchor2}
+
                                 anchorOrigin={{
                                     vertical: 'bottom',
-                                    horizontal: 'right',
+                                    horizontal: 'left',
                                 }}
-                                transformOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'right',
-                                }}
+
+                                getContentAnchorEl={null}
                                 open={open2}
                                 onClose={this.handleClose2}
                             >
@@ -115,7 +113,7 @@ class TopBar extends Component {
                             <Typography variant="display1" color="inherit" className={classes.flex}>
                                 <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
-                            {this.state.intern.map(item => <Link to={item.place}><Button mini ><Typography>{item.label}</Typography></Button></Link>)}
+                            {this.state.intern.map(item => <Link to={item.place}><Button mini ><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
                         </Toolbar>
                     </AppBar>
                 </div>
@@ -129,7 +127,7 @@ class TopBar extends Component {
                             <Typography variant="display1" color="inherit" className={classes.flex}>
                                 <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
-                            {this.state.alumni.map(item => <Link to={item.place}><Button mini color="inherit"><Typography>{item.label}</Typography></Button></Link>)}
+                            {this.state.alumni.map(item => <Link to={item.place}><Button mini color="inherit"><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
                         </Toolbar>
                     </AppBar>
                 </div>
@@ -143,7 +141,7 @@ class TopBar extends Component {
                             <Typography variant="display1" color="inherit" className={classes.flex}>
                                 <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
-                            {this.state.admin.map(item => <Link to={item.place}><Button mini color="inherit"><Typography>{item.label}</Typography></Button></Link>)}
+                            {this.state.admin.map(item => <Link to={item.place}><Button mini color="inherit"><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
                         </Toolbar>
                     </AppBar>
                 </div>

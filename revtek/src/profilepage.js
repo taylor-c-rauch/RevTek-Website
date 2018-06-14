@@ -15,7 +15,6 @@ export default class Profile extends Component {
     handleClick = (value) => {
         let todo = this.state.todo;
         todo.push({task: value, hours: null});
-        this.setState({todo:todo});
     }
 
 

@@ -1,0 +1,13 @@
+@import "~antd/dist/antd.css";
+
+.info {
+	text-align: left;
+	padding-top: 3%;
+	padding-left: 3%;
+	padding-right: 3%;
+}
+
+.submission {
+	padding: 3%;
+	text-align: center;
+}
