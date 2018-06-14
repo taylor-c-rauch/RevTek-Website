@@ -1,7 +1,28 @@
 import React, { Component } from "react";
 import Background from "./assets/homePhoto.jpg";
-import { Input, Button, Row, Col } from "antd";
+import { Input, Button, Row, Col, Menu, Dropdown, Icon, message } from "antd";
 import fire from "./fire";
+
+// const onClick = function({ key }) {
+//   message.info(`Click on item ${key}`);
+// };
+
+function handleButtonClick(e) {
+  message.error("Click on left button.");
+  console.log("click left button", e);
+}
+function handleMenuClick(e) {
+  message.error("You forgot to fill out SOMETHING");
+  console.log("click", e);
+}
+
+const menu = (
+  <Menu onClick={handleMenuClick}>
+    <Menu.Item key="1">Intern</Menu.Item>
+    <Menu.Item key="2">Alumni</Menu.Item>
+    <Menu.Item key="3">Administrator</Menu.Item>
+  </Menu>
+);
 
 export default class SignUp extends Component {
   constructor() {
@@ -69,7 +90,7 @@ export default class SignUp extends Component {
           <div>
             <h1>Sign Up</h1>
             <Row>
-              <Col span={24}>
+              <Col span={24} offset={4}>
                 <Input
                   style={{ width: "70%" }}
                   id="email"
@@ -77,7 +98,7 @@ export default class SignUp extends Component {
                   onChange={e => this.handleUserInput(e)}
                 />
               </Col>
-              <Col span={24}>
+              <Col span={24} offset={4}>
                 <Input
                   style={{ width: "70%" }}
                   id="username"
@@ -85,7 +106,7 @@ export default class SignUp extends Component {
                   onChange={e => this.handleUserInput(e)}
                 />
               </Col>
-              <Col span={24}>
+              <Col span={24} offset={4}>
                 <Input
                   style={{ width: "70%" }}
                   id="fullname"
@@ -93,7 +114,7 @@ export default class SignUp extends Component {
                   onChange={e => this.handleUserInput(e)}
                 />
               </Col>
-              <Col span={24}>
+              <Col span={24} offset={4}>
                 <Input
                   style={{ width: "70%" }}
                   id="password"
@@ -101,15 +122,26 @@ export default class SignUp extends Component {
                   onChange={e => this.handleUserInput(e)}
                 />
               </Col>
-              <Col span={24}>
-                <Input
-                  style={{ width: "70%" }}
-                  id="status"
-                  placeholder="Status"
-                  onChange={e => this.handleUserInput(e)}
-                />
+              <Col span={24} offset={4}>
+                <div>
+                  <Dropdown overlay={menu}>
+                    <Button
+                      span={24}
+                      offset={4}
+                      style={{ marginLeft: 8 }}
+                      style={{ width: "70%" }}
+                    >
+                      Status <Icon type="down" />
+                    </Button>
+                  </Dropdown>
+                </div>
               </Col>
-              <Button type="primary" onClick={e => this.signup(e)}>
+              <Button
+                span={24}
+                offset={4}
+                type="primary"
+                onClick={e => this.signup(e)}
+              >
                 Submit
               </Button>
             </Row>
@@ -130,3 +162,7 @@ export default class SignUp extends Component {
     }
   }
 }
+
+//ReactDOM.render(
+//stuff
+//, mountNode);
