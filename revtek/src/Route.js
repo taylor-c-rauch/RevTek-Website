@@ -16,7 +16,7 @@ import { BrowserRouter, Route, Redirect } from "react-router-dom";
 export default class Router extends Component {
     constructor() {
         super();
-        this.state = { status: "intern" };
+        this.state = { status: "alumni" };
     }
     render() {
         return (
@@ -24,7 +24,7 @@ export default class Router extends Component {
 
                 <BrowserRouter>
                     <div>
-                        <Redirect to="/home" />
+                        <Redirect to="/profile" />
                         <Route
                             path="/home"
                             render={() => (<div><TopBar status="home" /> <Homepage /></div>)} />

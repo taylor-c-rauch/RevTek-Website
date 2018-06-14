@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Background from "./assets/homePhoto.jpg";
 import { Input, Button, Row, Col } from "antd";
 import fire from "./fire";
+import SignUpForm from './SignUpForm';
+import UserMessage from './UserMessage';
 
 export default class SignUp extends Component {
   constructor() {
@@ -12,9 +14,24 @@ export default class SignUp extends Component {
       fullname: "",
       password: "",
       status: "",
-      user: null,
+      user: {},
       clicked: false
     };
+  }
+
+
+  UNSAFE_componentWillMount() {
+    this.authListener();
+  }
+
+  authListener() {
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ user: user });
+      } else {
+        this.setState({ user: null });
+      }
+    });
   }
 
   signup = e => {
@@ -55,7 +72,6 @@ export default class SignUp extends Component {
   };
 
   render() {
-    if (this.state.clicked === false) {
       return (
         <section
           style={{
