@@ -113,7 +113,7 @@ class TopBar extends Component {
                             <Typography variant="display1" color="inherit" className={classes.flex}>
                                 <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
-                            {this.state.intern.map(item => <Link to={item.place}><Button mini ><Typography>{item.label}</Typography></Button></Link>)}
+                            {this.state.intern.map(item => <Link to={item.place}><Button mini ><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
                         </Toolbar>
                     </AppBar>
                 </div>
@@ -127,7 +127,7 @@ class TopBar extends Component {
                             <Typography variant="display1" color="inherit" className={classes.flex}>
                                 <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
-                            {this.state.alumni.map(item => <Link to={item.place}><Button mini color="inherit"><Typography>{item.label}</Typography></Button></Link>)}
+                            {this.state.alumni.map(item => <Link to={item.place}><Button mini color="inherit"><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
                         </Toolbar>
                     </AppBar>
                 </div>
@@ -141,7 +141,7 @@ class TopBar extends Component {
                             <Typography variant="display1" color="inherit" className={classes.flex}>
                                 <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
-                            {this.state.admin.map(item => <Link to={item.place}><Button mini color="inherit"><Typography>{item.label}</Typography></Button></Link>)}
+                            {this.state.admin.map(item => <Link to={item.place}><Button mini color="inherit"><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
                         </Toolbar>
                     </AppBar>
                 </div>
