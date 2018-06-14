@@ -16,7 +16,7 @@ export default class Statistics extends React.Component {
 
         return (
             <div>
-
+                <TopBar status="home" />
                 <VictoryChart
                     // domainPadding will add space to each side of VictoryBar to prevent it from overlapping the axis
                     domainPadding={20}

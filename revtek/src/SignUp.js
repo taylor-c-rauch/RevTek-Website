@@ -4,6 +4,7 @@ import { Input, Button, Row, Col } from "antd";
 import fire from "./fire";
 import SignUpForm from './SignUpForm';
 import UserMessage from './UserMessage';
+import TopBar from "./top-bar";
 
 export default class SignUp extends Component {
   constructor() {
@@ -73,10 +74,11 @@ export default class SignUp extends Component {
 
   render() {
 
-      return (
-        <div>
-          {this.state.user ? (<UserMessage />) : (<SignUpForm />)}
-        </div>
-      );
-    }
+    return (
+      <div>
+        <TopBar status="home" />
+        {this.state.user ? (<UserMessage />) : (<SignUpForm />)}
+      </div>
+    );
   }
+}

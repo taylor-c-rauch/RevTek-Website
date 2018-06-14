@@ -6,6 +6,7 @@ import Background from "./assets/homePhoto.jpg";
 import { Link } from "react-router-dom";
 import Profile from './profilepage';
 import LoginForm from './LoginForm';
+import TopBar from "./top-bar";
 
 export default class Login extends Component {
   constructor() {
@@ -23,16 +24,19 @@ export default class Login extends Component {
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({ user: user });
+        this.props.updateField(user);
       } else {
         this.setState({ user: null });
+        this.props.updateField(null);
       }
     });
   }
 
   render() {
+
     return (
       <div>
-        {this.state.user ? <Profile /> : <LoginForm />}
+        {this.state.user ? <div>{console.log(this.state.user)}{console.log(this.state.user.status)}<TopBar status={this.state.user.status} /> <Profile /></div> : <div><TopBar status="home" /> <LoginForm /></div>}
       </div>
     );
   }

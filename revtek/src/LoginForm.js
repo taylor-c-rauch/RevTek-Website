@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Input, Button, Row, Col } from "antd";
 import fire from "./fire";
 import App from "./App";
 import Background from "./assets/homePhoto.jpg";
 import { Link } from "react-router-dom";
+import TopBar from "./top-bar";
 
 export default class LoginForm extends Component {
   constructor() {
@@ -30,17 +31,17 @@ export default class LoginForm extends Component {
   };
 
   login = e => {
-      e.preventDefault();
-      fire
-        .auth()
-        .signInWithEmailAndPassword(this.state.email, this.state.password)
-        .then(u => {
-          console.log(u);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    };
+    e.preventDefault();
+    fire
+      .auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(u => {
+        console.log(u);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   render() {
     return (
@@ -53,6 +54,7 @@ export default class LoginForm extends Component {
           overflow: "hidden"
         }}
       >
+        <TopBar status="home" />
         <div>
           <h1>Sign In</h1>
           <Row>
