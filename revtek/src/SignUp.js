@@ -72,6 +72,7 @@ export default class SignUp extends Component {
   };
 
   render() {
+    if (this.state.clicked === false) {
       return (
         <section
           style={{
