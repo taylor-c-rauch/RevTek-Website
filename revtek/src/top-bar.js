@@ -17,6 +17,7 @@ const styles = {
     },
 };
 
+
 class TopBar extends Component {
     constructor(props) {
         super(props);
@@ -64,7 +65,7 @@ class TopBar extends Component {
                     <AppBar position="static" style={{ backgroundColor: "#2D9CDB" }}>
                         <Toolbar>
                             <Typography variant="display1" color="inherit" className={classes.flex}>
-                                <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
                             <Button mini onClick={this.handleMenu1}><Typography>Clients</Typography></Button>
                             <Menu
@@ -81,8 +82,8 @@ class TopBar extends Component {
                                 open={open1}
                                 onClose={this.handleClose1}
                             >
-                                <MenuItem onClick={this.handleClose1}><Link to="/contract-submission">Submit Contract</Link></MenuItem>
-                                <MenuItem onClick={this.handleClose1}><Link to="/statistics">Developer Stats</Link></MenuItem>
+                                <Link to="/contract-submission" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose1}>Submit Contract</MenuItem></Link>
+                                <Link to="/statistics" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose1}>Developer Stats</MenuItem></Link>
                             </Menu>
                             <Button mini onClick={this.handleMenu2}><Typography>Members</Typography></Button>
                             <Menu
@@ -98,8 +99,8 @@ class TopBar extends Component {
                                 open={open2}
                                 onClose={this.handleClose2}
                             >
-                                <MenuItem onClick={this.handleClose2}><Link to="/login">Login</Link></MenuItem>
-                                <MenuItem onClick={this.handleClose2}><Link to="/sign-up">Sign-Up</Link></MenuItem>
+                                <Link to="/login" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose2}>Login</MenuItem></Link>
+                                <Link to="/sign-up" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose2}>Sign-Up</MenuItem></Link>
                             </Menu>
                         </Toolbar>
                     </AppBar>
