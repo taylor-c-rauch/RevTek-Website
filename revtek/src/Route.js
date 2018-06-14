@@ -9,14 +9,14 @@ import Statistics from "./Statistics";
 import UserList from "./UserList";
 import Homepage from "./Homepage";
 import BiddingPage from "./BiddingPage";
-import Authentication from "./Authentication";
+import Login from "./Login";
 import SignUp from "./SignUp";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 
 export default class Router extends Component {
     constructor() {
         super();
-        this.state = { status: "alumni" };
+        this.state = { status: "intern" };
     }
     render() {
         return (
@@ -36,7 +36,7 @@ export default class Router extends Component {
                             render={() => (<div><TopBar status="home" /> <Contract /></div>)} />
                         <Route
                             path="/login"
-                            render={() => (<div><TopBar status="home" /> <Authentication /></div>)} />
+                            render={() => (<div><TopBar status="home" /> <Login /></div>)} />
                         <Route
                             path="/sign-up"
                             render={() => (<div><TopBar status="home" /> <SignUp /></div>)} />

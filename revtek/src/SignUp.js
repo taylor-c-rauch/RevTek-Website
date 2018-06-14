@@ -73,76 +73,10 @@ export default class SignUp extends Component {
 
   render() {
       return (
-        <section
-          style={{
-            backgroundImage: `url(${Background})`,
-            height: 800,
-            width: "100%",
-            backgroundSize: "cover",
-            overflow: "hidden"
-          }}
-        >
-          <div>
-            <h1>Sign Up</h1>
-            <Row>
-              <Col span={24}>
-                <Input
-                  style={{ width: "70%" }}
-                  id="email"
-                  placeholder="Email"
-                  onChange={e => this.handleUserInput(e)}
-                />
-              </Col>
-              <Col span={24}>
-                <Input
-                  style={{ width: "70%" }}
-                  id="username"
-                  placeholder="Username"
-                  onChange={e => this.handleUserInput(e)}
-                />
-              </Col>
-              <Col span={24}>
-                <Input
-                  style={{ width: "70%" }}
-                  id="fullname"
-                  placeholder="Fullname"
-                  onChange={e => this.handleUserInput(e)}
-                />
-              </Col>
-              <Col span={24}>
-                <Input
-                  style={{ width: "70%" }}
-                  id="password"
-                  placeholder="Password"
-                  onChange={e => this.handleUserInput(e)}
-                />
-              </Col>
-              <Col span={24}>
-                <Input
-                  style={{ width: "70%" }}
-                  id="status"
-                  placeholder="Status"
-                  onChange={e => this.handleUserInput(e)}
-                />
-              </Col>
-              <Button type="primary" onClick={e => this.signup(e)}>
-                Submit
-              </Button>
-            </Row>
-          </div>
-        </section>
-      );
-    } else {
-      return (
-        <div style={{ background: "#ECECEC", padding: "30px" }}>
-          <h1>Thank you for signing up!</h1>
-          <h3>
-            {" "}
-            Registration requires instructor approval. You will receive an email
-            soon regarding your account status
-          </h3>
+        <div>
+          {this.state.user ? (<UserMessage />) : (<SignUpForm />)}
         </div>
       );
     }
-  }
+  
 }
