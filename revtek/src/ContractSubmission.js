@@ -19,47 +19,11 @@ export default class ContractSubmission extends Component {
     }
   }
 
-  // updates each input's corresponding state
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }
-
-  // When the submit button is clicked, the user input gets put on firebase
-  handleSubmit = e => {
-    e.preventDefault();
-    const contractname = this.state.project.split(' ').join('-')
-    const contractsRef = fire.database().ref('contracts/' + contractname).set({
-      client: this.state.client,
-      email: this.state.email,
-      project: this.state.project,
-      description: this.state.description,
-      numinterns: this.state.numinterns,
-      skills: this.state.skills
-    }).then(() => {
-      this.setState({
-        client: "",
-        email: "",
-        project: "",
-        description: "",
-        numinterns: "",
-        skills: "",
-        clicked: !this.state.clicked,
-        clientMessage: "",
-        emailMessage: "",
-        projectMessage: "",
-        descriptionMessage: "",
-        numinternsMessage: "",
-        skillsMessage: "" 
-      }
-    }}
-    
-    handleClick = e => {
+   handleClick = e => {
     e.preventDefault();
     this.setState({
       clicked: !this.state.clicked
-    })
+    });
    }
     // updates each input's corresponding state
     handleChange=e => {
@@ -106,8 +70,8 @@ export default class ContractSubmission extends Component {
           project: '', 
           description: '',
           numinterns: '', 
-          skills: [],
-          clicked: true,
+          skills: "",
+          clicked: !this.state.clicked,
           clientMessage: "",
           emailMessage: "",
           projectMessage: "",
