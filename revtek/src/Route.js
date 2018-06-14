@@ -24,7 +24,7 @@ export default class Router extends Component {
 
                 <BrowserRouter>
                     <div>
-                        <Redirect to="/profile" />
+                        <Redirect to="/home" />
                         <Route
                             path="/home"
                             render={() => (<div><TopBar status="home" /> <Homepage /></div>)} />
