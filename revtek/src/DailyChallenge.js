@@ -1,16 +1,47 @@
 import React, { Component } from 'react';
-import { Layout, Form, Input, Icon, Button, Card, Row,Col } from 'antd';
+import { Layout, Form, Input, Icon, Button, Card, Row, Col } from 'antd';
 import './DailyChallenge.css'
 import TopBar from "./top-bar";
+import fire from './fire.js';
 const Header = Layout.Header;
 const Content = Layout.Content;
 const FormItem = Form.Item;
 
 export default class DailyChallenge extends Component{
 
+	constructor(props){
+		super(props);
+		this.state = ({
+			dailyChallengeID: 0,
+			gitHubLink: ""
+		})
+	}
+
+	handleChange = (e) => {
+		e.preventDefault();	
+		let newGitLink = []
+    	newGitLink.push(e.target.value)
+    	this.setState({
+      		gitHubLink: newGitLink
+    	});
+    	console.log(this.state.gitHubLink)
+	}
+
 	handleSubmit = (e) => {
 		e.preventDefault();
-		//Add code so that it adds to firebase
+		const currUserRef = fire.auth().currentUser.uid;
+		let test = [];
+		const dailyObject = ({ID: this.state.dailyChallengeID , Link: this.state.gitHubLink})
+		test.push(dailyObject);
+
+		currUserRef.update({
+      		"dailyChallenges": test
+    	});
+
+    	this.setState({
+    		dailyChallengeID: 0 , 
+    		gitHubLink: "" 
+    	});	
 	}
 
 	render() {
@@ -37,12 +68,15 @@ export default class DailyChallenge extends Component{
 								<FormItem>
 						        	<Input 
 						        	prefix={<Icon type="link" 
-						        	style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="GitHub Link" />
+						        	style={{ color: 'rgba(0,0,0,.25)' }} />} 
+						        	placeholder="GitHub Link"
+						        	onChange={this.handleChange} 
+						        	/>
 						        </FormItem>
 								<FormItem>
-						          <Button type="primary" htmlType="submit">
-						          	Submit
-						          </Button>
+						        	<Button type="primary" htmlType="submit">
+						        	Submit
+						        	</Button>
 						        </FormItem>  
 							</Form>
 						</Card>
