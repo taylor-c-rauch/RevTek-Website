@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import fire from './fire.js';
 import TopBar from "./top-bar";
+import "./ContractSubmission.css";
 
 import { Form, Input, Button } from 'antd';
 const FormItem = Form.Item;
@@ -107,27 +108,27 @@ export default class ContractSubmission extends Component {
             <Form onSubmit={this.handleSubmit} className="login-form" layout='horizontal'>
               <FormItem label= "Client Name" validateStatus={this.state.clientValidate}
               required={true} help={this.state.clientMessage}> 
-                <Input name="client" placeholder="Client Name" onChange={this.handleChange} value={this.state.client} />
+                <Input className="client" name="client" placeholder="Client Name" onChange={this.handleChange} value={this.state.client} />
               </FormItem>
               <FormItem label = "Email" validateStatus={this.state.emailValidate}
               required={true} help={this.state.emailMessage}>
-                <Input name="email" placeholder="Email" onChange={this.handleChange} value={this.state.email} />
+                <Input className="email" name="email" placeholder="Email" onChange={this.handleChange} value={this.state.email} />
               </FormItem>
               <FormItem label = "Project Name" validateStatus={this.state.projectValidate}
               required={true} help={this.state.projectMessage}>
-                <Input name="project" placeholder="Project Name" onChange={this.handleChange} value={this.state.project} />
+                <Input className="project" name="project" placeholder="Project Name" onChange={this.handleChange} value={this.state.project} />
               </FormItem>
               <FormItem label = "Project Description" validateStatus={this.state.descriptionValidate}
               required={true} help={this.state.descriptionMessage}>
-                <Input name="description" placeholder="Project Description" onChange={this.handleChange} value={this.state.description} />
+                <Input className="description" name="description" placeholder="Project Description" onChange={this.handleChange} value={this.state.description} />
               </FormItem>
               <FormItem label = "Interns Needed" validateStatus={this.state.numinternsValidate}
               required={true} help={this.state.numinternsMessage}>
-                <Input name="numinterns" placeholder="Number of Interns Needed" onChange={this.handleChange} value={this.state.numinterns} />
+                <Input className="numinterns" name="numinterns" placeholder="Number of Interns Needed" onChange={this.handleChange} value={this.state.numinterns} />
               </FormItem>
               <FormItem label = "Skills Needed" validateStatus={this.state.skillsValidate}
               required={true} help={this.state.skillsMessage}>
-                <Input name="skills" placeholder="Preferred Intern Skills" onChange={this.handleChange} value={this.state.skills} />
+                <Input className="skills" name="skills" placeholder="Preferred Intern Skills" onChange={this.handleChange} value={this.state.skills} />
               </FormItem>
               <Button onClick={this.handleSubmit}>Submit Contract </Button>
             </Form>
