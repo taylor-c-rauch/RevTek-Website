@@ -14,7 +14,8 @@ export default class SignUpForm extends Component {
       password: "",
       status: "",
       user: {},
-      clicked: false
+      clicked: false,
+      dailyChallenges: []
     };
   }
 
@@ -43,7 +44,8 @@ export default class SignUpForm extends Component {
       username: this.state.username,
       fullname: this.state.fullname,
       password: this.state.password,
-      status: this.state.status
+      status: this.state.status,
+      dailyChallenges: this.state.dailyChallenges
     })
 
   };
