@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Input, Button, Row, Col } from "antd";
 import fire from "./fire";
 import App from "./App";
 import Background from "./assets/homePhoto.jpg";
 import { Link } from "react-router-dom";
 import TopBar from "./top-bar";
+import "./Login.css";
+import "./SignUp.css";
 
 export default class LoginForm extends Component {
   constructor() {
@@ -17,12 +19,6 @@ export default class LoginForm extends Component {
       user: null
     };
   }
-
-
-
-
-
-
 
   handleUserInput = e => {
     this.setState({
@@ -55,10 +51,11 @@ export default class LoginForm extends Component {
         }}
       >
         <TopBar status="home" />
-        <div>
-          <h1>Sign In</h1>
+        <div class="HeaderFiller" />
+        <div class="LoginBackground">
+          <h1 className="RobotoTitle">Sign In</h1>
           <Row>
-            <Col span={24}>
+            <Col>
               <Input
                 style={{ width: "70%" }}
                 id="email"
@@ -66,7 +63,7 @@ export default class LoginForm extends Component {
                 onChange={e => this.handleUserInput(e)}
               />
             </Col>
-            <Col span={24}>
+            <Col>
               <Input
                 style={{ width: "70%" }}
                 id="password"
@@ -75,7 +72,9 @@ export default class LoginForm extends Component {
               />
             </Col>
             {/* Button does nothing yet */}
-            <Button type="primary" onClick={e => this.login(e)}>Login</Button>
+            <Button type="primary" onClick={e => this.login(e)}>
+              Login
+            </Button>
             Don't have an account?
             <Link to="/sign-up">
               <Button shape="square" type="primary">
@@ -85,6 +84,6 @@ export default class LoginForm extends Component {
           </Row>
         </div>
       </section>
-    )
+    );
   }
 }

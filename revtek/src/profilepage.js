@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Input, Card, Row, Col, Button, Checkbox, InputNumber, Form } from 'antd';
 import TopBar from "./top-bar";
+import fire from './fire.js'
 
 const Search = Input.Search;
 
@@ -10,8 +11,8 @@ export default class Profile extends Component {
         this.state = {
             task: "", 
             hours: null, 
-            todo: [], 
-        }
+            todoList: [], 
+        }   
     }
 
     handleChange=e => {
@@ -20,10 +21,50 @@ export default class Profile extends Component {
         });
       }
 
-    handleClick = (value) => {
-        let todo = this.state.todo;
-        todo.push({task: this.state.task , hours: this.state.hours});
-        this.setState({todo:todo});
+    // When the submit button is clicked, the user input gets put on firebase
+    handleClick=e => {
+        const currUserRef = fire.database().ref('users/' + this.props.userID + '/todo/');
+        currUserRef.push({
+            task: this.state.task, 
+            hours: this.state.hours
+        });
+        this.setState({
+            task: '', 
+            hours: '',
+        })
+
+        // const todoRef = fire.database().ref('todo');
+        // const todo = {
+        //   task: this.state.task,
+        //   hours: this.state.hours, 
+        // }
+        // todoRef.push(todo);
+    }
+
+     // retrieves the information from firebase so it can be rendered on the screen
+    componentDidMount() {
+        const todoRef = fire.database().ref('users/' + this.props.userID + '/todo/');
+        todoRef.on('value', (snapshot) => {
+            let todoList = snapshot.val(); 
+            let newState = []; 
+            for (let todo in todoList) {
+                newState.push({
+                id: todo, 
+                task: todoList[todo].task, 
+                hours: todoList[todo].hours, 
+                }); 
+            }
+            this.setState({
+                todoList: newState
+            });
+        });
+    }
+
+
+    //  removes contracts 
+    removeItem(itemId) {
+        const itemRef = fire.database().ref(`/todo/${itemId}`);
+        itemRef.remove();
     }
 
     render() {
@@ -44,7 +85,7 @@ export default class Profile extends Component {
                                     Name
                                 </Card>
 
-                                <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<Button size="small" onClick={this.handleClick}> + </Button>}>
+                                <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<Button size="small"> + </Button>}>
                                     ReactJS, Python, JavaScript
                                 </Card>
                                 <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button size="small">Edit</Button>}>
@@ -63,27 +104,29 @@ export default class Profile extends Component {
                                         fontWeight: 500,
                                     }}
                                 />
-                                <Card style={{ marginTop: 8 }} type="inner" title="To-Do" extra={
+                                <Card style={{ marginTop: 8 }} type="inner" title="To-Do">
                                         <Form> 
                                             <Input placeholder="New Task" name="task" onChange={this.handleChange}/> 
                                             <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange}/> 
                                             <Button size="small" onClick={this.handleClick}> + </Button>
-                                        </Form>  }>
+                                        </Form>  
                                     <Card style={{ marginTop: 8 }} >
                                             <Checkbox> Daily Challenges</Checkbox> 
                                         <br />
                                         <br /> 
                                         Hours: <InputNumber min={0} max={100} defaultValue={0} onChange={this.handleChange} /> 
                                     </Card>
-                                    {this.state.todo.map(todo=> 
-                                        <Card style={{ marginTop: 8 }} >
-                                            <Checkbox> {todo.task}</Checkbox> 
-                                            <Button> Remove </Button>
-                                        <br />
-                                        <br /> 
-                                        Hours: {todo.hours} 
-                                        </Card> 
-                                    )}
+                                    {this.state.todoList.map((todo) => {
+                                        return (
+                                            <Card style={{ marginTop: 8 }} >
+                                                <Checkbox> {todo.task}</Checkbox> 
+                                                <br/>
+                                                Hours: {todo.hours} 
+                                                <br/>
+                                                <button onClick={() => this.removeItem(todo.id)}>Remove Contract</button>
+                                            </Card> 
+                                        )
+                                    })}
                                 </Card>
                             </Card>
                         </Col>

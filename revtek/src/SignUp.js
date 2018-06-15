@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Background from "./assets/homePhoto.jpg";
 import { Input, Button, Row, Col } from "antd";
 import fire from "./fire";
-import SignUpForm from './SignUpForm';
-import UserMessage from './UserMessage';
+import SignUpForm from "./SignUpForm";
+import UserMessage from "./UserMessage";
 import TopBar from "./top-bar";
 
 export default class SignUp extends Component {
@@ -19,7 +19,6 @@ export default class SignUp extends Component {
       clicked: false
     };
   }
-
 
   UNSAFE_componentWillMount() {
     this.authListener();
@@ -38,11 +37,9 @@ export default class SignUp extends Component {
 
 
   render() {
-
     return (
       <div>
-
-        {this.state.user ? (<UserMessage person={this.state.user} />) : (<SignUpForm person={this.state.user} />)}
+        {this.state.user ? (<UserMessage updateField={this.props.updateField} user={this.props.user} person={this.state.user} />) : (<SignUpForm updateField={this.props.updateField} user={this.props.user} person={this.state.user} />)}
       </div>
     );
   }

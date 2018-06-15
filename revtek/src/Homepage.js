@@ -10,7 +10,7 @@ export default class Homepage extends Component {
   render() {
     return (
       <div>
-        <TopBar status="home" />
+        <TopBar status="home" user={this.props.user} updateField={this.props.updateField} />
         <section
           style={{
             backgroundImage: `url(${Background})`,

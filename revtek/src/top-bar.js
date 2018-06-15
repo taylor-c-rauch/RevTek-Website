@@ -1,21 +1,30 @@
-import React, { Component } from 'react';
-import { Row, Col } from 'antd';
-import { MuiThemeProvider, createMuiTheme, Menu, MenuItem, AppBar, Toolbar, Typography, Button } from "@material-ui/core";
-import { withStyles } from '@material-ui/core/styles';
+import React, { Component } from "react";
+import { Row, Col } from "antd";
+import {
+    MuiThemeProvider,
+    createMuiTheme,
+    Menu,
+    MenuItem,
+    AppBar,
+    Toolbar,
+    Typography,
+    Button
+} from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import fire from './fire';
+import fire from "./fire";
 
 const styles = {
     root: {
-        flexGrow: 1,
+        flexGrow: 1
     },
     flex: {
-        flex: 1,
+        flex: 1
     },
     menuButton: {
         marginLeft: -12,
-        marginRight: 20,
-    },
+        marginRight: 20
+    }
 };
 
 class TopBar extends Component {
@@ -29,7 +38,8 @@ class TopBar extends Component {
             anchor1: null,
             anchor2: null,
             auth1: true,
-            auth2: true
+            auth2: true,
+            out: false,
         };
     }
     handleChange1 = (event, checked) => {
@@ -58,58 +68,126 @@ class TopBar extends Component {
     logout() {
         console.log("log out");
         fire.auth().signOut();
-      }
+        this.props.updateField("user", null);
+        this.props.updateField("email", "");
+        this.props.updateField("users", []);
+        this.props.updateField("userID", "");
+        this.props.updateField("userInfo", {});
+        this.props.updateField("status", "");
+        this.setState({ out: true });
+    }
+
+    handleLogout(e) {
+        fire.auth().signOut();
+        this.handleClose2();
+        this.props.updateField("user", null);
+        this.props.updateField("email", "");
+        this.props.updateField("users", []);
+        this.props.updateField("userID", "");
+        this.props.updateField("userInfo", {});
+        this.props.updateField("status", "");
+        this.setState({ out: true });
+    }
     render() {
         const { classes } = this.props;
         const { auth1, anchor1, auth2, anchor2 } = this.state;
         const open1 = Boolean(anchor1);
         const open2 = Boolean(anchor2);
         if (this.props.status === "home") {
-            return (
-                <div className={classes.root}>
-                    <AppBar position="static" style={{ backgroundColor: "#2D9CDB" }}>
-                        <Toolbar>
-                            <Typography variant="display1" color="inherit" className={classes.flex}>
-                                <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
-                            </Typography>
-                            <Button mini onClick={this.handleMenu1}><Typography><font color="white">Clients</font></Typography></Button>
-                            <Menu
+            if (this.props.user === null) {
+                return (
+                    <div className={classes.root}>
+                        <AppBar position="static" style={{ backgroundColor: "#2D9CDB" }}>
+                            <Toolbar>
+                                <Typography variant="display1" color="inherit" className={classes.flex}>
+                                    <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                </Typography>
+                                <Button mini onClick={this.handleMenu1}><Typography><font color="white">Clients</font></Typography></Button>
+                                <Menu
 
-                                anchorEl={anchor1}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                }}
-                                getContentAnchorEl={null}
+                                    anchorEl={anchor1}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'left',
+                                    }}
+                                    getContentAnchorEl={null}
 
-                                open={open1}
-                                onClose={this.handleClose1}
-                            >
-                                <Link to="/contract-submission" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose1}>Submit Contract</MenuItem></Link>
-                                <Link to="/statistics" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose1}>Developer Stats</MenuItem></Link>
-                            </Menu>
+                                    open={open1}
+                                    onClose={this.handleClose1}
+                                >
+                                    <Link to="/contract-submission" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose1}>Submit Contract</MenuItem></Link>
+                                    <Link to="/statistics" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose1}>Developer Stats</MenuItem></Link>
+                                </Menu>
 
-                            <Button mini onClick={this.handleMenu2}><Typography><font color="white">Members</font></Typography></Button>
+                                <Button mini onClick={this.handleMenu2}><Typography><font color="white">Members</font></Typography></Button>
 
-                            <Menu
-                                anchorEl={anchor2}
+                                <Menu
+                                    anchorEl={anchor2}
 
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                }}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'left',
+                                    }}
 
-                                getContentAnchorEl={null}
-                                open={open2}
-                                onClose={this.handleClose2}
-                            >
-                                <Link to="/login" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose2}>Login</MenuItem></Link>
-                                <Link to="/sign-up" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose2}>Sign-Up</MenuItem></Link>
-                            </Menu>
-                        </Toolbar>
-                    </AppBar>
-                </div >
-            );
+                                    getContentAnchorEl={null}
+                                    open={open2}
+                                    onClose={this.handleClose2}
+                                >
+                                    <Link to="/login" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose2}>Login</MenuItem></Link>
+                                    <Link to="/sign-up" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose2}>Sign-Up</MenuItem></Link>
+                                </Menu>
+                            </Toolbar>
+                        </AppBar>
+                    </div >
+                );
+            }
+            else {
+                return (
+                    <div className={classes.root}>
+                        <AppBar position="static" style={{ backgroundColor: "#2D9CDB" }}>
+                            <Toolbar>
+                                <Typography variant="display1" color="inherit" className={classes.flex}>
+                                    <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                </Typography>
+                                <Button mini onClick={this.handleMenu1}><Typography><font color="white">Clients</font></Typography></Button>
+                                <Menu
+
+                                    anchorEl={anchor1}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'left',
+                                    }}
+                                    getContentAnchorEl={null}
+
+                                    open={open1}
+                                    onClose={this.handleClose1}
+                                >
+                                    <Link to="/contract-submission" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose1}>Submit Contract</MenuItem></Link>
+                                    <Link to="/statistics" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose1}>Developer Stats</MenuItem></Link>
+                                </Menu>
+
+                                <Button mini onClick={this.handleMenu2}><Typography><font color="white">Members</font></Typography></Button>
+
+                                <Menu
+                                    anchorEl={anchor2}
+
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'left',
+                                    }}
+
+                                    getContentAnchorEl={null}
+                                    open={open2}
+                                    onClose={this.handleClose2}
+                                >
+                                    <Link to="/login" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose2}>Profile</MenuItem></Link>
+                                    <MenuItem onClick={e => this.handleLogout(e)}>Logout</MenuItem>
+                                </Menu>
+                            </Toolbar>
+                        </AppBar>
+                    </div >
+                );
+            }
         }
         else if (this.props.status === "intern") {
             return (
@@ -120,7 +198,7 @@ class TopBar extends Component {
                                 <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
                             {this.state.intern.map(item => <Link to={item.place}><Button mini ><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
-                            <Link to="/login" style={{ textDecoration: "none" }}><MenuItem onClick={() => this.logout()}>Logout</MenuItem></Link>
+                            <Link to="/home" style={{ textDecoration: "none" }}><Button mini color="inherit" onClick={() => this.logout()}><Typography><font color="white">Logout</font></Typography></Button></Link>
 
                         </Toolbar>
                     </AppBar>
@@ -136,7 +214,7 @@ class TopBar extends Component {
                                 <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
                             {this.state.alumni.map(item => <Link to={item.place}><Button mini color="inherit"><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
-                            <Link to="/login" style={{ textDecoration: "none" }}><MenuItem onClick={() => this.logout()}>Logout</MenuItem></Link>
+                            <Link to="/home" style={{ textDecoration: "none" }}><Button mini color="inherit" onClick={() => this.logout()}><Typography><font color="white">Logout</font></Typography></Button></Link>
                         </Toolbar>
                     </AppBar>
                 </div>
@@ -151,7 +229,7 @@ class TopBar extends Component {
                                 <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
                             </Typography>
                             {this.state.admin.map(item => <Link to={item.place}><Button mini color="inherit"><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
-                            <Link to="/login" style={{ textDecoration: "none" }}><MenuItem onClick={() => this.logout()}>Logout</MenuItem></Link>
+                            <Link to="/home" style={{ textDecoration: "none" }}><Button mini color="inherit" onClick={() => this.logout()}><Typography><font color="white">Logout</font></Typography></Button></Link>
                         </Toolbar>
                     </AppBar>
                 </div>
@@ -159,4 +237,5 @@ class TopBar extends Component {
         }
     }
 }
+
 export default withStyles(styles)(TopBar);
