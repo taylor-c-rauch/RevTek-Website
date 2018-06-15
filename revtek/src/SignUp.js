@@ -39,11 +39,7 @@ export default class SignUp extends Component {
   render() {
     return (
       <div>
-        {this.state.user ? (
-          <UserMessage person={this.state.user} />
-        ) : (
-          <SignUpForm person={this.state.user} />
-        )}
+        {this.state.user ? (<UserMessage updateField={this.props.updateField} user={this.props.user} person={this.state.user} />) : (<SignUpForm updateField={this.props.updateField} user={this.props.user} person={this.state.user} />)}
       </div>
     );
   }

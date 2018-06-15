@@ -34,36 +34,35 @@ export default class Router extends Component {
                         <Redirect to="/home" />
                         <Route
                             path="/home"
-                            render={() => (<div> <Homepage person={this.state.userInfo} /></div>)} />
+                            render={() => (<div> <Homepage updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} person={this.state.userInfo} /></div>)} />
                         <Route
                             path="/challenge-manager"
-                            render={() => (<div><TopBar status="admin" /> <ChallengeManager person={this.state.userInfo} /></div>)} />
+                            render={() => (<div><TopBar updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} status="admin" /> <ChallengeManager person={this.state.userInfo} /></div>)} />
                         <Route
                             path="/contract-submission"
-                            render={() => (<div> <Contract person={this.state.userInfo} /></div>)} />
+                            render={() => (<div> <Contract updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} person={this.state.userInfo} /></div>)} />
                         <Route
                             path="/login"
-
-                            render={() => (<div> <Login person={this.state.userInfo} updateField={(field, newVal) => this.updateField(field, newVal)} /></div>)} />
-
+                            render={() => (<div> <Login updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} person={this.state.userInfo} updateField={(field, newVal) => this.updateField(field, newVal)} /></div>)} />
                         <Route
                             path="/sign-up"
-                            render={() => (<div><SignUp person={this.state.userInfo} /></div>)} />
+                            render={() => (<div><SignUp updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} person={this.state.userInfo} /></div>)} />
                         <Route
                             path="/daily-challenge"
-                            render={() => (<div><TopBar status={this.state.status} /> <DailyChallenge person={this.state.userInfo} /></div>)} />
+                            render={() => (<div><TopBar user={this.state.user} updateField={(field, newVal) => this.updateField(field, newVal)} status={this.state.status} /> <DailyChallenge person={this.state.userInfo} /></div>)} />
                         <Route
                             path="/profile"
-                            render={() => (<div><TopBar status={this.state.status} /> <Profile person={this.state.userInfo} userID={this.state.userID} /></div>)} />
+                            render={() => (<div><TopBar user={this.state.user} updateField={(field, newVal) => this.updateField(field, newVal)} status={this.state.status} /> <Profile person={this.state.userInfo} userID={this.state.userID} /></div>)} />
+
                         <Route
                             path="/statistics"
-                            render={() => (<div><Statistics person={this.state.userInfo} /></div>)} />
+                            render={() => (<div><Statistics updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} person={this.state.userInfo} /></div>)} />
                         <Route
                             path="/user-list"
-                            render={() => (<div><TopBar status={this.state.status} /> <UserList person={this.state.userInfo} /></div>)} />
+                            render={() => (<div><TopBar user={this.state.user} updateField={(field, newVal) => this.updateField(field, newVal)} status={this.state.status} /> <UserList person={this.state.userInfo} /></div>)} />
                         <Route
                             path="/contract-bidding"
-                            render={() => (<div><TopBar status={this.state.status} /> <BiddingPage person={this.state.userInfo} /></div>)} />
+                            render={() => (<div><TopBar user={this.state.user} updateField={(field, newVal) => this.updateField(field, newVal)} status={this.state.status} /> <BiddingPage person={this.state.userInfo} /></div>)} />
                     </div>
                 </BrowserRouter>
             </div>

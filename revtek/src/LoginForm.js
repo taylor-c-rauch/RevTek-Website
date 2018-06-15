@@ -44,7 +44,7 @@ export default class LoginForm extends Component {
       <section
         style={{
           backgroundImage: `url(${Background})`,
-          height: 600,
+          height: 800,
           width: "100%",
           backgroundSize: "cover",
           overflow: "hidden"
