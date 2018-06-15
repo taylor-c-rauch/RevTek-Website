@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Button, Row, Col } from "antd";
+import { Input, Button, Row, Col, notification } from "antd";
 import fire from "./fire";
 import App from "./App";
 import Background from "./assets/homePhoto.jpg";
@@ -36,6 +36,10 @@ export default class LoginForm extends Component {
       })
       .catch(error => {
         console.log(error);
+        notification.error({
+          message: 'Error',
+          description: error.toString().substring(7),
+        });
       });
   };
 
