@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Background from "./assets/homePhoto.jpg";
+// import Background from "./assets/homePhoto.jpg";
 import { Input, Button, Row, Col } from "antd";
 import fire from "./fire";
 import SignUpForm from "./SignUpForm";
@@ -33,8 +33,6 @@ export default class SignUp extends Component {
       }
     });
   }
-
-
 
   render() {
     return (

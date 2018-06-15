@@ -41,49 +41,49 @@ export default class LoginForm extends Component {
 
   render() {
     return (
-      <section
-        style={{
-          backgroundImage: `url(${Background})`,
-          height: 600,
-          width: "100%",
-          backgroundSize: "cover",
-          overflow: "hidden"
-        }}
-      >
-        <TopBar status="home" />
-        <div class="HeaderFiller" />
-        <div class="LoginBackground">
-          <h1 className="RobotoTitle">Sign In</h1>
-          <Row>
-            <Col>
-              <Input
-                style={{ width: "70%" }}
-                id="email"
-                placeholder="Email"
-                onChange={e => this.handleUserInput(e)}
-              />
-            </Col>
-            <Col>
-              <Input
-                style={{ width: "70%" }}
-                id="password"
-                placeholder="Password"
-                onChange={e => this.handleUserInput(e)}
-              />
-            </Col>
-            {/* Button does nothing yet */}
-            <Button type="primary" onClick={e => this.login(e)}>
-              Login
-            </Button>
-            Don't have an account?
-            <Link to="/sign-up">
-              <Button shape="square" type="primary">
-                Sign Up
+      <div class="backdrop">
+        <section
+        /* style={{
+            backgroundImage: `url(${Background})`,
+            height: 600,
+            width: "100%",
+            backgroundSize: "cover",
+            overflow: "hidden"
+          }} */
+        >
+          <TopBar status="home" />
+          <div class="HeaderFiller" />
+          <div class="LoginBackground">
+            <h1 className="RobotoTitle">Sign In</h1>
+            <Row>
+              <Col>
+                <Input
+                  style={{ width: "70%" }}
+                  id="email"
+                  placeholder="Email"
+                  onChange={e => this.handleUserInput(e)}
+                />
+              </Col>
+              <Col>
+                <Input
+                  style={{ width: "70%" }}
+                  id="password"
+                  placeholder="Password"
+                  onChange={e => this.handleUserInput(e)}
+                />
+              </Col>
+              {/* Button does nothing yet */}
+              <Button type="primary" onClick={e => this.login(e)}>
+                Login
               </Button>
-            </Link>
-          </Row>
-        </div>
-      </section>
+              Don't have an account?
+              <Link to="/sign-up">
+                <Button type="primary">Sign Up</Button>
+              </Link>
+            </Row>
+          </div>
+        </section>
+      </div>
     );
   }
 }

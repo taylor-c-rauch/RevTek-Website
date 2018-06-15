@@ -2,56 +2,55 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto);
 @import url(http://fonts.googleapis.com/css?family=Roboto:100);
 
-.contract{
-    background-image: url("contractSubmission.jpeg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: 50% 0%;
+.contract {
+  background-image: url("contractSubmission.jpeg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: 50% 0%;
 }
 
-.contractHeader{
-    font-family: Roboto;
-    font-weight: lighter;
-    margin-top: 20px;
-    padding-top: 15px;
-    font-size: 35px;
+.contractHeader {
+  font-family: Roboto;
+  font-weight: lighter;
+  margin-top: 20px;
+  padding-top: 15px;
+  font-size: 35px;
 }
 
-.add-contract{
-    background: rgba(255, 255, 255, 0.7);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);   
-    width: 50%;
-    margin: 0 auto;
-    text-align: center;
-    height: 100%;
+.add-contract {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+  height: 100%;
 }
 
-.client{
-    width: 50%;
+.client {
+  width: 50%;
 }
 
-
-.email{
-    width: 50%;
+.email {
+  width: 50%;
 }
 
-.project{
-    width: 50%;
+.project {
+  width: 50%;
 }
 
-.description{
-    width: 50%;
+.description {
+  width: 50%;
 }
 
-.numinterns{
-    width: 50%;
+.numinterns {
+  width: 50%;
 }
 
-.skills{
-    width: 50%;
+.skills {
+  width: 50%;
 }
 
-.submitBut{
-    margin-bottom: 15px;
+.submitBut {
+  margin-bottom: 15px;
 }
