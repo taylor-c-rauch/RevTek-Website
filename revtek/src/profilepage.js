@@ -17,7 +17,7 @@ export default class Profile extends Component {
             linkedInInput: "",
             gitHubCurrent: "",
             linkedInCurrent: "",
-            loading: false
+            loading: false,
             skill: "",
             skills: [],
             showSkillInput: false
