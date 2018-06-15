@@ -115,32 +115,87 @@ export default class ContractSubmission extends Component {
             {/* renders a form where users can input their contract information */}
             <section className="add-contract">
             <h1 className = "contractHeader"> Submit a Contract </h1>
-            <Form onSubmit={this.handleSubmit} className="login-form" layout='horizontal'>
-              <FormItem label="Client Name" validateStatus={this.state.clientValidate}
-                required={true} help={this.state.clientMessage}>
-                <Input className="client" name="client" placeholder="Client Name" onChange={this.handleChange} value={this.state.client} />
+            <Form 
+              onSubmit={this.handleSubmit} 
+              className="login-form" 
+              layout='horizontal'>
+              <FormItem 
+                label="Client Name" 
+                validateStatus={this.state.clientValidate}
+                required={true} 
+                help={this.state.clientMessage}>
+                <Input 
+                  className="client" 
+                  name="client" 
+                  placeholder="Client Name" 
+                  onChange={this.handleChange} 
+                  value={this.state.client} />
               </FormItem>
-              <FormItem label="Email" validateStatus={this.state.emailValidate}
-                required={true} help={this.state.emailMessage}>
-                <Input className="email" name="email" placeholder="Email" onChange={this.handleChange} value={this.state.email} />
+              <FormItem 
+                label="Email" 
+                validateStatus={this.state.emailValidate}
+                required={true} 
+                help={this.state.emailMessage}>
+                <Input 
+                  className="email" 
+                  name="email" 
+                  placeholder="Email" 
+                  onChange={this.handleChange} 
+                  value={this.state.email} />
               </FormItem>
-              <FormItem label="Project Name" validateStatus={this.state.projectValidate}
-                required={true} help={this.state.projectMessage}>
-                <Input className="project" name="project" placeholder="Project Name" onChange={this.handleChange} value={this.state.project} />
+              <FormItem 
+                label="Project Name" 
+                validateStatus={this.state.projectValidate}
+                required={true} 
+                help={this.state.projectMessage}>
+                <Input 
+                  className="project"
+                  name="project" 
+                  placeholder="Project Name" 
+                  onChange={this.handleChange} 
+                  value={this.state.project} />
               </FormItem>
-              <FormItem label="Project Description" validateStatus={this.state.descriptionValidate}
-                required={true} help={this.state.descriptionMessage}>
-                <Input className="description" name="description" placeholder="Project Description" onChange={this.handleChange} value={this.state.description} />
+              <FormItem 
+                label="Project Description" 
+                validateStatus={this.state.descriptionValidate}
+                required={true} 
+                help={this.state.descriptionMessage}>
+                <Input 
+                  className="description" 
+                  name="description" 
+                  placeholder="Project Description" 
+                  onChange={this.handleChange} 
+                  value={this.state.description} />
               </FormItem>
-              <FormItem label="Interns Needed" validateStatus={this.state.numinternsValidate}
-                required={true} help={this.state.numinternsMessage}>
-                <Input className="numinterns" name="numinterns" placeholder="Number of Interns Needed" onChange={this.handleChange} value={this.state.numinterns} />
+              <FormItem 
+                label="Interns Needed" 
+                validateStatus={this.state.numinternsValidate}
+                required={true} 
+                help={this.state.numinternsMessage}>
+                <Input 
+                  className="numinterns" 
+                  name="numinterns" 
+                  placeholder="Number of Interns Needed" 
+                  onChange={this.handleChange} 
+                  value={this.state.numinterns} />
               </FormItem>
-              <FormItem label="Skills Needed" validateStatus={this.state.skillsValidate}
-                required={true} help={this.state.skillsMessage}>
-                <Input className="skills" name="skills" placeholder="Preferred Intern Skills" onChange={this.handleChange} value={this.state.skills} />
+              <FormItem 
+                label="Skills Needed" 
+                validateStatus={this.state.skillsValidate}
+                required={true} 
+                help={this.state.skillsMessage}>
+                <Input 
+                  className="skills" 
+                  name="skills" 
+                  placeholder="Preferred Intern Skills" 
+                  onChange={this.handleChange} 
+                  value={this.state.skills} />
               </FormItem>
-              <Button onClick={this.handleSubmit} className="submitBut">Submit Contract </Button>
+              <Button 
+                onClick={this.handleSubmit} 
+                className="submitBut">
+                Submit Contract 
+              </Button>
             </Form>
           </section>
           <br/>

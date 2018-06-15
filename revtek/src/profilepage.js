@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Card, Row, Col, Button, Checkbox, InputNumber, Form } from 'antd';
+import { Input, Card, Row, Col, Button, Checkbox, InputNumber, Form, Modal, Icon } from 'antd';
 import TopBar from "./top-bar";
 import fire from './fire.js'
 
@@ -9,9 +9,15 @@ export default class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            task: "",
-            hours: null,
+            task: "", 
+            hours: null, 
             todoList: [],
+            visible: false,
+            gitHubInput: "",
+            linkedInInput: "",
+            gitHubCurrent: "",
+            linkedInCurrent: "",
+            loading: false
             skill: "",
             skills: [],
             showSkillInput: false
@@ -25,7 +31,7 @@ export default class Profile extends Component {
       }
 
     // When the submit button is clicked, the user input gets put on firebase
-    handleClick=e => {
+    handleClick = e => {
         const currUserRef = fire.database().ref('users/' + this.props.userID + '/todo/');
         currUserRef.push({
             task: this.state.task,
@@ -36,10 +42,6 @@ export default class Profile extends Component {
             hours: '',
         })
     }
-
-
-
-
 
      // retrieves the information from firebase so it can be rendered on the screen
     componentDidMount() {
@@ -88,6 +90,26 @@ export default class Profile extends Component {
         const itemRef = fire.database().ref(`/todo/${itemId}`);
         itemRef.remove();
     }
+
+    showModal = e => {
+        this.setState({
+            visible: !this.state.visible
+        });
+    }
+
+    handleCancel = () => {
+        this.setState({ visible: false });
+    }
+
+    handleModal = () => {
+        this.setState({ loading: true });
+        setTimeout(() => {
+        this.setState({ loading: false, visible: false });
+            }, 500);
+        this.setState({
+            linkedInCurrent: this.state.linkedInInput,
+            gitHubCurrent: this.state.gitHubInput
+        })
 
     onSubmitSkill = () => {
       const currSkillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
@@ -156,12 +178,37 @@ export default class Profile extends Component {
                                   )
                                   })}
                                 </Card>
-
-                                <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button size="small">Edit</Button>}>
-                                    Github:
+                                <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button onClick={this.showModal} size="small">Edit</Button>}>
+                                    Github: {this.state.gitHubCurrent}
                                 <br />
-                                    LinkedIn:
+                                    LinkedIn: {this.state.linkedInCurrent}
                                 </Card>
+                                <Modal
+                                    visible={this.state.visible}
+                                    title="Edit Info"
+                                    onCancel={this.handleCancel}
+                                    footer={[
+                                        <Button key="back" onClick={this.handleCancel}>Cancel</Button>,
+                                        <Button key="submit" type="primary" loading={this.state.loading} onClick={this.handleModal}>
+                                        Submit
+                                        </Button>,
+                                    ]}
+                                    >
+                                    <Input 
+                                        placeholder= "GitHub" 
+                                        name="gitHubInput" 
+                                        prefix={<Icon type="link" 
+						        	    style={{ color: 'rgba(0,0,0,.25)' }} />} 
+                                        onChange={this.handleChange}>
+                                    </Input>
+                                    <Input 
+                                        placeholder="LinkedIn" 
+                                        name="linkedInInput" 
+                                        prefix={<Icon type="link" 
+						        	    style={{ color: 'rgba(0,0,0,.25)' }} />} 
+                                        onChange={this.handleChange}>
+                                    </Input>
+                                    </Modal>
                             </Card>
                         </Col>
                         <Col span={16}>
