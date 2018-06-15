@@ -110,6 +110,7 @@ export default class Profile extends Component {
             linkedInCurrent: this.state.linkedInInput,
             gitHubCurrent: this.state.gitHubInput
         })
+    }
 
     onSubmitSkill = () => {
       const currSkillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
