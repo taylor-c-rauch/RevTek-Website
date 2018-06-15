@@ -1,30 +1,30 @@
 import React, { Component } from "react";
 import { Row, Col } from "antd";
 import {
-  MuiThemeProvider,
-  createMuiTheme,
-  Menu,
-  MenuItem,
-  AppBar,
-  Toolbar,
-  Typography,
-  Button
+    MuiThemeProvider,
+    createMuiTheme,
+    Menu,
+    MenuItem,
+    AppBar,
+    Toolbar,
+    Typography,
+    Button
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import fire from "./fire";
 
 const styles = {
-  root: {
-    flexGrow: 1
-  },
-  flex: {
-    flex: 1
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
-  }
+    root: {
+        flexGrow: 1
+    },
+    flex: {
+        flex: 1
+    },
+    menuButton: {
+        marginLeft: -12,
+        marginRight: 20
+    }
 };
 
 class TopBar extends Component {
@@ -55,6 +55,7 @@ class TopBar extends Component {
     };
     handleChange2 = (event, checked) => {
         this.setState({ auth2: checked });
+    };
 
     handleMenu2 = event => {
         this.setState({ anchor2: event.currentTarget });
@@ -235,6 +236,6 @@ class TopBar extends Component {
             );
         }
     }
-  }
 }
+
 export default withStyles(styles)(TopBar);
