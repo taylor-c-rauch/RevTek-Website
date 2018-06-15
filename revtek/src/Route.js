@@ -12,6 +12,7 @@ import BiddingPage from "./BiddingPage";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import fire from "./fire";
+import UserMessage from "./UserMessage";
 
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 
@@ -59,6 +60,9 @@ export default class Router extends Component {
                         <Route
                             path="/user-list"
                             render={() => (<div><TopBar user={this.state.user} updateField={(field, newVal) => this.updateField(field, newVal)} status={this.state.status} /> <UserList person={this.state.userInfo} /></div>)} />
+                        <Route
+                            path="/signup-message"
+                            render={() => (<div> <UserMessage updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} person={this.state.userInfo} /></div>)} />
                         <Route
                             path="/contract-bidding"
                             render={() => (<div><TopBar user={this.state.user} updateField={(field, newVal) => this.updateField(field, newVal)} status={this.state.status} /> <BiddingPage person={this.state.userInfo} /></div>)} />

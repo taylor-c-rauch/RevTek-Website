@@ -3,7 +3,7 @@ import { Input, Button, Row, Col } from "antd";
 import fire from "./fire";
 import App from "./App";
 import Background from "./assets/homePhoto.jpg";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Profile from './profilepage';
 import LoginForm from './LoginForm';
 import TopBar from "./top-bar";
@@ -12,7 +12,7 @@ export default class Login extends Component {
   constructor() {
     super();
     this.state = {
-      user: {}, users: []
+      user: null, users: []
     }
   }
 
@@ -65,7 +65,8 @@ export default class Login extends Component {
 
     return (
       <div>
-        {this.state.user ? <div><TopBar updateField={this.props.updateField} user={this.props.user} status={this.props.person.status} /> <Profile updateField={this.props.updateField} user={this.props.user} person={this.props.person} /></div> : <div> <LoginForm /></div>}
+        {console.log(this.state.user)}
+        {this.state.user ? <Redirect to="/profile" /> : <div> <LoginForm updateField={this.props.updateField} user={this.props.user} person={this.props.person} /></div>}
       </div>
     );
   }

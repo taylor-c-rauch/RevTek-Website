@@ -44,15 +44,15 @@ export default class LoginForm extends Component {
       <section
         style={{
           backgroundImage: `url(${Background})`,
-          height: 600,
+          height: 800,
           width: "100%",
           backgroundSize: "cover",
           overflow: "hidden"
         }}
       >
-        <TopBar status="home" />
-        <div class="HeaderFiller" />
-        <div class="LoginBackground">
+        <TopBar updateField={this.props.updateField} status="home" user={this.props.user} />
+        <div className="HeaderFiller" />
+        <div className="LoginBackground">
           <h1 className="RobotoTitle">Sign In</h1>
           <Row>
             <Col>
@@ -77,7 +77,7 @@ export default class LoginForm extends Component {
             </Button>
             Don't have an account?
             <Link to="/sign-up">
-              <Button shape="square" type="primary">
+              <Button type="primary">
                 Sign Up
               </Button>
             </Link>
