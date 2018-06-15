@@ -9,46 +9,46 @@ export default class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            task: "", 
-            hours: null, 
-            todoList: [], 
+            task: "",
+            hours: null,
+            todoList: [],
+            skills: []
         }
-        
     }
 
     handleChange=e => {
         this.setState({
           [e.target.name]: e.target.value
         });
-    
       }
 
     // When the submit button is clicked, the user input gets put on firebase
     handleClick=e => {
-        const todoRef = fire.database().ref('todo');
-        const todo = {
-          task: this.state.task,
-          hours: this.state.hours, 
-        }
-        todoRef.push(todo);
+        const currUserRef = fire.database().ref('users/' + this.props.userID + '/todo/');
+        currUserRef.push({
+            task: this.state.task,
+            hours: this.state.hours
+        });
         this.setState({
-          task: '', 
-          hours: '', 
+            task: '',
+            hours: '',
         })
     }
 
+  
+
      // retrieves the information from firebase so it can be rendered on the screen
     componentDidMount() {
-        const todoRef = fire.database().ref('todo');
+        const todoRef = fire.database().ref('users/' + this.props.userID + '/todo/');
         todoRef.on('value', (snapshot) => {
-            let todoList = snapshot.val(); 
-            let newState = []; 
+            let todoList = snapshot.val();
+            let newState = [];
             for (let todo in todoList) {
                 newState.push({
-                id: todo, 
-                task: todoList[todo].task, 
-                hours: todoList[todo].hours, 
-                }); 
+                id: todo,
+                task: todoList[todo].task,
+                hours: todoList[todo].hours,
+                });
             }
             this.setState({
                 todoList: newState
@@ -57,7 +57,7 @@ export default class Profile extends Component {
     }
 
 
-    //  removes contracts 
+    //  removes contracts
     removeItem(itemId) {
         const itemRef = fire.database().ref(`/todo/${itemId}`);
         itemRef.remove();
@@ -81,7 +81,7 @@ export default class Profile extends Component {
                                     Name
                                 </Card>
 
-                                <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<Button size="small"> + </Button>}>
+                                <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<Button size="small" onClick={this.onSubmitSkills}> + </Button>}>
                                     ReactJS, Python, JavaScript
                                 </Card>
                                 <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button size="small">Edit</Button>}>
@@ -101,26 +101,26 @@ export default class Profile extends Component {
                                     }}
                                 />
                                 <Card style={{ marginTop: 8 }} type="inner" title="To-Do">
-                                        <Form> 
-                                            <Input placeholder="New Task" name="task" onChange={this.handleChange}/> 
-                                            <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange}/> 
+                                        <Form>
+                                            <Input placeholder="New Task" name="task" onChange={this.handleChange}/>
+                                            <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange}/>
                                             <Button size="small" onClick={this.handleClick}> + </Button>
-                                        </Form>  
+                                        </Form>
                                     <Card style={{ marginTop: 8 }} >
-                                            <Checkbox> Daily Challenges</Checkbox> 
+                                            <Checkbox> Daily Challenges</Checkbox>
                                         <br />
-                                        <br /> 
-                                        Hours: <InputNumber min={0} max={100} defaultValue={0} onChange={this.handleChange} /> 
+                                        <br />
+                                        Hours: <InputNumber min={0} max={100} defaultValue={0} onChange={this.handleChange} />
                                     </Card>
                                     {this.state.todoList.map((todo) => {
                                         return (
                                             <Card style={{ marginTop: 8 }} >
-                                                <Checkbox> {todo.task}</Checkbox> 
+                                                <Checkbox> {todo.task}</Checkbox>
                                                 <br/>
-                                                Hours: {todo.hours} 
+                                                Hours: {todo.hours}
                                                 <br/>
                                                 <button onClick={() => this.removeItem(todo.id)}>Remove Contract</button>
-                                            </Card> 
+                                            </Card>
                                         )
                                     })}
                                 </Card>
@@ -132,4 +132,3 @@ export default class Profile extends Component {
         );
     }
 }
-
