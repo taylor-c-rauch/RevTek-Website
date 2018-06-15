@@ -13,30 +13,27 @@ export default class DailyChallenge extends Component{
 		super(props);
 		this.state = ({
 			dailyChallengeID: 0,
-			gitHubLink: ""
+			gitHubLink: 0
 		})
 	}
 
 	handleChange = (e) => {
 		e.preventDefault();	
-		let newGitLink = []
-    	newGitLink.push(e.target.value)
     	this.setState({
-      		gitHubLink: newGitLink
+      		gitHubLink: e.target.value
     	});
-    	console.log(this.state.gitHubLink)
 	}
 
 	handleSubmit = (e) => {
 		e.preventDefault();
-		const currUserRef = fire.auth().currentUser.uid;
-		let test = [];
-		const dailyObject = ({ID: this.state.dailyChallengeID , Link: this.state.gitHubLink})
-		test.push(dailyObject);
 
-		currUserRef.update({
-      		"dailyChallenges": test
-    	});
+		const currUserRef = fire.database().ref('users/' + this.props.userID + '/dailyChallenges/');
+
+		let test = [];
+		var dailyObject = ({ID: this.state.dailyChallengeID , Link: this.state.gitHubLink})
+		currUserRef.push(dailyObject);
+
+		
 
     	this.setState({
     		dailyChallengeID: 0 , 

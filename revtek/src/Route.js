@@ -51,7 +51,7 @@ export default class Router extends Component {
                             render={() => (<div><SignUp person={this.state.userInfo} /></div>)} />
                         <Route
                             path="/daily-challenge"
-                            render={() => (<div><TopBar status={this.state.status} /> <DailyChallenge person={this.state.userInfo} /></div>)} />
+                            render={() => (<div><TopBar status={this.state.status} /> <DailyChallenge person={this.state.userInfo} userID={this.state.userID} /></div>)} />
                         <Route
                             path="/profile"
                             render={() => (<div><TopBar status={this.state.status} /> <Profile person={this.state.userInfo} /></div>)} />
