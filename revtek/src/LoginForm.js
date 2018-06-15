@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Button, Row, Col } from "antd";
+import { Input, Button, Row, Col, notification } from "antd";
 import fire from "./fire";
 import App from "./App";
 import Background from "./assets/homePhoto.jpg";
@@ -36,6 +36,10 @@ export default class LoginForm extends Component {
       })
       .catch(error => {
         console.log(error);
+        notification.error({
+          message: 'Error',
+          description: error.toString().substring(7),
+        });
       });
   };
 
@@ -50,9 +54,9 @@ export default class LoginForm extends Component {
           overflow: "hidden"
         }}
       >
-        <TopBar status="home" />
-        <div class="HeaderFiller" />
-        <div class="LoginBackground">
+        <TopBar updateField={this.props.updateField} status="home" user={this.props.user} />
+        <div className="HeaderFiller" />
+        <div className="LoginBackground">
           <h1 className="RobotoTitle">Sign In</h1>
           <Row>
             <Col>
@@ -77,7 +81,7 @@ export default class LoginForm extends Component {
             </Button>
             Don't have an account?
             <Link to="/sign-up">
-              <Button shape="square" type="primary">
+              <Button type="primary">
                 Sign Up
               </Button>
             </Link>

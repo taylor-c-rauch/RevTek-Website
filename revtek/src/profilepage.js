@@ -18,7 +18,10 @@ export default class Profile extends Component {
             gitHubCurrent: "",
             linkedInCurrent: "",
             loading: false
-        }   
+            skill: "",
+            skills: [],
+            showSkillInput: false
+        }
     }
 
     handleChange=e => {
@@ -31,43 +34,58 @@ export default class Profile extends Component {
     handleClick = e => {
         const currUserRef = fire.database().ref('users/' + this.props.userID + '/todo/');
         currUserRef.push({
-            task: this.state.task, 
+            task: this.state.task,
             hours: this.state.hours
         });
         this.setState({
-            task: '', 
+            task: '',
             hours: '',
         })
-
-        // const todoRef = fire.database().ref('todo');
-        // const todo = {
-        //   task: this.state.task,
-        //   hours: this.state.hours, 
-        // }
-        // todoRef.push(todo);
     }
 
      // retrieves the information from firebase so it can be rendered on the screen
     componentDidMount() {
         const todoRef = fire.database().ref('users/' + this.props.userID + '/todo/');
         todoRef.on('value', (snapshot) => {
-            let todoList = snapshot.val(); 
-            let newState = []; 
+            let todoList = snapshot.val();
+            let newState = [];
             for (let todo in todoList) {
                 newState.push({
-                id: todo, 
-                task: todoList[todo].task, 
-                hours: todoList[todo].hours, 
-                }); 
+                id: todo,
+                task: todoList[todo].task,
+                hours: todoList[todo].hours,
+                });
+            }
+            let skillList = snapshot.val();
+            let newSkill = [];
+            for (let skill in skillList) {
+              newSkill.push({
+                id: skill,
+                skill: skillList[skill].skill
+              })
             }
             this.setState({
-                todoList: newState
+                todoList: newState,
             });
         });
+      const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
+      skillRef.on('value', (snapshot) => {
+        let skillList = snapshot.val();
+        let newSkill = [];
+        for (let skill in skillList) {
+          newSkill.push({
+            id: skill,
+            skill: skillList[skill].skill
+          })
+        }
+        this.setState({
+          skills: newSkill
+        })
+      })
     }
 
 
-    //  removes contracts 
+    //  removes contracts
     removeItem(itemId) {
         const itemRef = fire.database().ref(`/todo/${itemId}`);
         itemRef.remove();
@@ -92,6 +110,43 @@ export default class Profile extends Component {
             linkedInCurrent: this.state.linkedInInput,
             gitHubCurrent: this.state.gitHubInput
         })
+
+    onSubmitSkill = () => {
+      const currSkillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
+      currSkillRef.push({
+          skill: this.state.skill,
+      });
+      this.setState({
+          skill: '',
+      })
+    }
+
+    removeSkill = (e) => {
+      const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/' )
+
+      skillRef.remove(e.toString())
+
+      console.log(e)
+
+    }
+
+    renderSkill = () => {
+      if (this.state.showSkillInput == true) {
+        return(
+          <div>
+            <Input placeholder="New Skill" name="skill" onChange={this.handleChange}/>
+            <Button onClick={() => this.onSubmitSkill()} htmlType="submit" >Submit</Button>
+          </div>
+        )
+      } else if (this.state.showSkillInput == false){
+        return(<div></div>);
+      }
+    }
+
+    onShowInput = () => {
+      this.setState({
+        showSkillInput: !this.state.showSkillInput
+      })
     }
 
     render() {
@@ -112,8 +167,16 @@ export default class Profile extends Component {
                                     Name
                                 </Card>
 
-                                <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<Button size="small"> + </Button>}>
-                                    ReactJS, Python, JavaScript
+
+                                <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<div><Button size="small" onClick={() => this.onShowInput()}> + </Button>{this.renderSkill()}</div>}>
+                                  {this.state.skills.map((skills, i) => {
+                                    return (
+                                    <div key={i}>
+                                      <h5>{skills.skill}</h5>
+                                      <Button type="danger" onClick={(i) => this.removeSkill(i)}>X</Button>
+                                    </div>
+                                  )
+                                  })}
                                 </Card>
                                 <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button onClick={this.showModal} size="small">Edit</Button>}>
                                     Github: {this.state.gitHubCurrent}
@@ -158,26 +221,26 @@ export default class Profile extends Component {
                                     }}
                                 />
                                 <Card style={{ marginTop: 8 }} type="inner" title="To-Do">
-                                        <Form> 
-                                            <Input placeholder="New Task" name="task" onChange={this.handleChange}/> 
-                                            <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange}/> 
+                                        <Form>
+                                            <Input placeholder="New Task" name="task" onChange={this.handleChange}/>
+                                            <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange}/>
                                             <Button size="small" onClick={this.handleClick}> + </Button>
-                                        </Form>  
+                                        </Form>
                                     <Card style={{ marginTop: 8 }} >
-                                            <Checkbox> Daily Challenges</Checkbox> 
+                                            <Checkbox> Daily Challenges</Checkbox>
                                         <br />
-                                        <br /> 
-                                        Hours: <InputNumber min={0} max={100} defaultValue={0} onChange={this.handleChange} /> 
+                                        <br />
+                                        Hours: <InputNumber min={0} max={100} defaultValue={0} onChange={this.handleChange} />
                                     </Card>
                                     {this.state.todoList.map((todo) => {
                                         return (
                                             <Card style={{ marginTop: 8 }} >
-                                                <Checkbox> {todo.task}</Checkbox> 
+                                                <Checkbox> {todo.task}</Checkbox>
                                                 <br/>
-                                                Hours: {todo.hours} 
+                                                Hours: {todo.hours}
                                                 <br/>
                                                 <button onClick={() => this.removeItem(todo.id)}>Remove Contract</button>
-                                            </Card> 
+                                            </Card>
                                         )
                                     })}
                                 </Card>
@@ -189,4 +252,3 @@ export default class Profile extends Component {
         );
     }
 }
-
