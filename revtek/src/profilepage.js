@@ -33,13 +33,6 @@ export default class Profile extends Component {
             task: '',
             hours: '',
         })
-
-        // const todoRef = fire.database().ref('todo');
-        // const todo = {
-        //   task: this.state.task,
-        //   hours: this.state.hours,
-        // }
-        // todoRef.push(todo);
     }
 
   
