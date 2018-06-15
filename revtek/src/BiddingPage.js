@@ -66,8 +66,7 @@ export default class BiddingPage extends React.Component {
         <Button type="primary" disabled={!this.state.onDisabled}>Submit Bid</Button>
         </Card>
         )}
-        </div>
+        </div>)
     }
 
     }
-}
