@@ -24,8 +24,8 @@ export default class SignUpForm extends Component {
       status: "",
       user: {},
       clicked: false,
-      dailyChallenges: [], 
-      todo: [], 
+      dailyChallenges: [],
+      todo: [],
     };
   }
 
@@ -55,8 +55,8 @@ export default class SignUpForm extends Component {
       fullname: this.state.fullname,
       password: this.state.password,
       status: this.state.status,
-      dailyChallenges: this.state.dailyChallenges, 
-      todo: this.state.todo, 
+      dailyChallenges: this.state.dailyChallenges,
+      todo: this.state.todo,
     })
 
   };
@@ -137,7 +137,7 @@ export default class SignUpForm extends Component {
               className="SubmitButton"
               type="primary"
               //submit button does nothing yet
-              /* onClick={e => this.signup(e)} */
+              onClick={e => this.signup(e)}
             >
               Submit
             </Button>
