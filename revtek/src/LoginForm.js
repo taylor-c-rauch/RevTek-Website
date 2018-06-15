@@ -50,6 +50,7 @@ export default class LoginForm extends Component {
           overflow: "hidden"
         }}
       >
+        <TopBar status="home" />
         <div class="HeaderFiller" />
         <div class="LoginBackground">
           <h1 className="RobotoTitle">Sign In</h1>

@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import "./top-bar.css";
+import fire from "./fire";
 
 const styles = {
   root: {
@@ -37,23 +37,20 @@ class TopBar extends Component {
         { label: "Daily Challenge", place: "/daily-challenge" },
         { label: "Contracts", place: "/contract-bidding" },
         { label: "Alumni", place: "/user-list" },
-        { label: "Forum", place: "/" },
-        { label: "Logout", place: "/" }
+        { label: "Forum", place: "/" }
       ],
       alumni: [
         { label: "Profile", place: "/profile" },
         { label: "Leaderboard", place: "/" },
         { label: "Contracts", place: "/contract-bidding" },
-        { label: "Forum", place: "/" },
-        { label: "Logout", place: "/" }
+        { label: "Forum", place: "/" }
       ],
       admin: [
         { label: "Profile", place: "/profile" },
         { label: "Challenge Manager", place: "/challenge-manager" },
         { label: "Contracts", place: "/contract-bidding" },
         { label: "Users", place: "/user-list" },
-        { label: "Forum", place: "/" },
-        { label: "Logout", place: "/" }
+        { label: "Forum", place: "/" }
       ],
       anchor1: null,
       anchor2: null,
@@ -83,6 +80,11 @@ class TopBar extends Component {
   handleClose2 = () => {
     this.setState({ anchor2: null });
   };
+
+  logout() {
+    console.log("log out");
+    fire.auth().signOut();
+  }
   render() {
     const { classes } = this.props;
     const { auth1, anchor1, auth2, anchor2 } = this.state;
@@ -102,14 +104,12 @@ class TopBar extends Component {
                   to="/home"
                   style={{ textDecoration: "none", color: "#fff" }}
                 >
-                  <i class="roboto">RevTek</i>
+                  <i>RevTek</i>
                 </Link>
               </Typography>
               <Button mini onClick={this.handleMenu1}>
                 <Typography>
-                  <font class="roboto" color="white">
-                    Clients
-                  </font>
+                  <font color="white">Clients</font>
                 </Typography>
               </Button>
               <Menu
@@ -139,9 +139,7 @@ class TopBar extends Component {
 
               <Button mini onClick={this.handleMenu2}>
                 <Typography>
-                  <font class="roboto" color="white">
-                    Members
-                  </font>
+                  <font color="white">Members</font>
                 </Typography>
               </Button>
 
@@ -180,7 +178,7 @@ class TopBar extends Component {
                   to="/home"
                   style={{ testDecoration: "none", color: "#fff" }}
                 >
-                  <i class="roboto">RevTek</i>
+                  <i>RevTek</i>
                 </Link>
               </Typography>
               {this.state.intern.map(item => (
@@ -192,6 +190,13 @@ class TopBar extends Component {
                   </Button>
                 </Link>
               ))}
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <Button mini color="inherit" onClick={() => this.logout()}>
+                  <Typography>
+                    <font color="white">Logout</font>
+                  </Typography>
+                </Button>
+              </Link>
             </Toolbar>
           </AppBar>
         </div>
@@ -222,6 +227,13 @@ class TopBar extends Component {
                   </Button>
                 </Link>
               ))}
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <Button mini color="inherit" onClick={() => this.logout()}>
+                  <Typography>
+                    <font color="white">Logout</font>
+                  </Typography>
+                </Button>
+              </Link>
             </Toolbar>
           </AppBar>
         </div>
@@ -252,6 +264,13 @@ class TopBar extends Component {
                   </Button>
                 </Link>
               ))}
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <Button mini color="inherit" onClick={() => this.logout()}>
+                  <Typography>
+                    <font color="white">Logout</font>
+                  </Typography>
+                </Button>
+              </Link>
             </Toolbar>
           </AppBar>
         </div>
