@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import { Card, Layout, Input, Button } from 'antd';
+import { Card, Layout, Input, Button, Menu, Dropdown, Icon } from 'antd';
 import fire from './fire.js'
 
-export default class BiddingPage extends React.Component {
+export default class ContractEditor extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
         contracts: [],
-        data: []
+        data: [],
+        users: []
       };
     }
 
@@ -47,23 +48,57 @@ export default class BiddingPage extends React.Component {
             data: newState
           });
         });
+
+        const usersRef = fire.database().ref('users');
+        usersRef.on('value', (snapshot) => {
+          let userVals = snapshot.val();
+          console.log(snapshot.val())
+          let newState2 = [];
+          for (let user in userVals) {
+              let userList = {
+                fullname: userVals[user].fullname,
+              };
+              newState2.push(userList);
+          }
+          this.setState({
+            users: newState2
+          });
+        });
     }
 
     render(){
-        console.log(this.state.data.onDisabled)
+        console.log(this.state.users.fullname)
+        const menu = (
+            <div>
+            {this.state.users.map(x => 
+            <Menu>
+              <Menu.Item key="0">
+                <a>{x.fullname}</a>
+              </Menu.Item>
+            </Menu>
+        )}
+            </div>
+          );
         const { Header, Footer, Sider, Content } = Layout;
         return(
         <div style={{ background: '#ECECEC', padding: '10px' }}>
         {this.state.data.map(x=>
-        <Card title={x.client} style={{ width: 1027 }}>
+        <Card title={x.client} extra={<a href="#">Remove</a>} style={{ width: 1027 }}>
         <p><strong>{x.project}</strong></p>
         <p>{x.description}</p>
         <p>{x.email}</p>
         <p>{x.numinterns}</p>
         <p>{x.skills}</p>
-        <Input placeholder="Pay Rate" id="payRate" onChange={e => this.handleUserInput(e)} />
-        <Input placeholder="Estimated Hours" id="estHours" onChange={e => this.handleUserInput(e)} />
-        <Button type="primary" disabled={!this.state.onDisabled}>Submit Bid</Button>
+        <Dropdown overlay={menu} trigger={['click']}>
+        <a className="ant-dropdown-link" href="#">
+         Options <Icon type="down" />
+        </a>
+         </Dropdown>
+         <Dropdown overlay={menu} trigger={['click']}>
+        <a className="ant-dropdown-link" href="#">
+         Assign <Icon type="down" />
+        </a>
+         </Dropdown>
         </Card>
         )}
         </div>
