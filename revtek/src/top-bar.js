@@ -54,8 +54,8 @@ class TopBar extends Component {
         this.setState({ anchor1: null });
     };
     handleChange2 = (event, checked) => {
-        this.setState({ auth2: checked });
-
+        this.setState({ auth2: checked });};
+`
     handleMenu2 = event => {
         this.setState({ anchor2: event.currentTarget });
     };
@@ -236,5 +236,5 @@ class TopBar extends Component {
         }
     }
   }
-}
+
 export default withStyles(styles)(TopBar);
