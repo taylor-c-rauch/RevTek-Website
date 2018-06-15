@@ -24,7 +24,7 @@ export default class Login extends Component {
 
     fire.auth().onAuthStateChanged(user => {
       if (user) {
-        this.setState({ user: user });
+        this.setState({ user: user }, () => this.newfunc());
         this.props.updateField("user", user);
         this.props.updateField("email", user.email);
 
@@ -34,7 +34,7 @@ export default class Login extends Component {
     });
   }
 
-  newfunc() {
+  newfunc2() {
     Object.keys(this.state.users).forEach((key) => {
       if (this.state.users[key].email === this.state.user.email) {
         let userID = key;
@@ -49,14 +49,14 @@ export default class Login extends Component {
     );
   }
 
-  componentDidMount() {
+  newfunc() {
     const usersRef = fire.database().ref('users');
     let users1 = [];
     usersRef.on('value', (snapshot) => {
       users1 = snapshot.val();
 
       this.props.updateField("users", users1);
-      this.setState({ users: users1 }, () => this.newfunc());
+      this.setState({ users: users1 }, () => this.newfunc2());
     });
 
   }
@@ -65,7 +65,7 @@ export default class Login extends Component {
 
     return (
       <div>
-        {this.state.user ? <div><TopBar status={this.props.person.status} /> <Profile person={this.props.person} /></div> : <div> <LoginForm /></div>}
+        {this.state.user ? <div><TopBar updateField={this.props.updateField} user={this.props.user} status={this.props.person.status} /> <Profile updateField={this.props.updateField} user={this.props.user} person={this.props.person} /></div> : <div> <LoginForm /></div>}
       </div>
     );
   }

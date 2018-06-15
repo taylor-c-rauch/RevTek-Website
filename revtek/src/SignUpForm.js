@@ -68,7 +68,7 @@ export default class SignUpForm extends Component {
         backgroundSize: 'cover',
         overflow: 'hidden'
       }}>
-        <TopBar status="home" />
+        <TopBar updateField={this.props.updateField} status="home" user={this.props.user} />
         <div>
           <h1>Sign Up</h1>
           <Row>
