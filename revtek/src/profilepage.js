@@ -23,19 +23,44 @@ export default class Profile extends Component {
     
       }
 
-    handleClick= e => {
+    // When the submit button is clicked, the user input gets put on firebase
+    handleClick=e => {
         const todoRef = fire.database().ref('todo');
         const todo = {
           task: this.state.task,
           hours: this.state.hours, 
         }
-        let todoList = this.state.todoList; 
-        todoList.push(todo)
         todoRef.push(todo);
         this.setState({
           task: '', 
           hours: '', 
         })
+    }
+
+     // retrieves the information from firebase so it can be rendered on the screen
+    componentDidMount() {
+        const todoRef = fire.database().ref('todo');
+        todoRef.on('value', (snapshot) => {
+            let todoList = snapshot.val(); 
+            let newState = []; 
+            for (let todo in todoList) {
+                newState.push({
+                id: todo, 
+                task: todoList[todo].task, 
+                hours: todoList[todo].hours, 
+                }); 
+            }
+            this.setState({
+                todoList: newState
+            });
+        });
+    }
+
+
+    //  removes contracts 
+    removeItem(itemId) {
+        const itemRef = fire.database().ref(`/todo/${itemId}`);
+        itemRef.remove();
     }
 
     render() {
@@ -56,7 +81,7 @@ export default class Profile extends Component {
                                     Name
                                 </Card>
 
-                                <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<Button size="small" onClick={this.handleClick}> + </Button>}>
+                                <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<Button size="small"> + </Button>}>
                                     ReactJS, Python, JavaScript
                                 </Card>
                                 <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button size="small">Edit</Button>}>
@@ -87,13 +112,14 @@ export default class Profile extends Component {
                                         <br /> 
                                         Hours: <InputNumber min={0} max={100} defaultValue={0} onChange={this.handleChange} /> 
                                     </Card>
-                                    {this.state.todoList.map((item) => {
+                                    {this.state.todoList.map((todo) => {
                                         return (
                                             <Card style={{ marginTop: 8 }} >
-                                                <Checkbox> {item.task}</Checkbox> 
+                                                <Checkbox> {todo.task}</Checkbox> 
                                                 <br/>
-                                                Hours: {item.hours} 
-                                               {/* <button onClick={() => this.removeItem(item.id)}>Remove Contract</button> */}
+                                                Hours: {todo.hours} 
+                                                <br/>
+                                                <button onClick={() => this.removeItem(todo.id)}>Remove Contract</button>
                                             </Card> 
                                         )
                                     })}
