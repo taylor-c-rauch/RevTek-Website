@@ -79,9 +79,10 @@ export default class SignUpForm extends Component {
           overflow: "hidden"
         }}
       >
-        <TopBar status="home" />
+        <TopBar updateField={this.props.updateField} status="home" user={this.props.user} />
         <div class="HeaderFiller" />
         <div class="LoginBackground">
+
           <Row>
             <h1 class="RobotoTitle">Sign Up</h1>
             <Col>
