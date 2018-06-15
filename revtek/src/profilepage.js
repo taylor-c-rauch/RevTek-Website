@@ -32,13 +32,6 @@ export default class Profile extends Component {
             task: '', 
             hours: '',
         })
-
-        // const todoRef = fire.database().ref('todo');
-        // const todo = {
-        //   task: this.state.task,
-        //   hours: this.state.hours, 
-        // }
-        // todoRef.push(todo);
     }
 
      // retrieves the information from firebase so it can be rendered on the screen
