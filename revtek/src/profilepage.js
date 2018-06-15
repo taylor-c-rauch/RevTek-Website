@@ -12,34 +12,38 @@ export default class Profile extends Component {
             task: "", 
             hours: null, 
             todoList: [], 
-        }
-        
+        }   
     }
 
     handleChange=e => {
         this.setState({
           [e.target.name]: e.target.value
         });
-    
       }
 
     // When the submit button is clicked, the user input gets put on firebase
     handleClick=e => {
-        const todoRef = fire.database().ref('todo');
-        const todo = {
-          task: this.state.task,
-          hours: this.state.hours, 
-        }
-        todoRef.push(todo);
+        const currUserRef = fire.database().ref('users/' + this.props.userID + '/todo/');
+        currUserRef.push({
+            task: this.state.task, 
+            hours: this.state.hours
+        });
         this.setState({
-          task: '', 
-          hours: '', 
+            task: '', 
+            hours: '',
         })
+
+        // const todoRef = fire.database().ref('todo');
+        // const todo = {
+        //   task: this.state.task,
+        //   hours: this.state.hours, 
+        // }
+        // todoRef.push(todo);
     }
 
      // retrieves the information from firebase so it can be rendered on the screen
     componentDidMount() {
-        const todoRef = fire.database().ref('todo');
+        const todoRef = fire.database().ref('users/' + this.props.userID + '/todo/');
         todoRef.on('value', (snapshot) => {
             let todoList = snapshot.val(); 
             let newState = []; 
