@@ -105,6 +105,7 @@ export default class ContractSubmission extends Component {
           <TopBar status="home" />
             {/* renders a form where users can input their contract information */}
             <section className="add-contract">
+            <h1 className = "contractHeader"> Submit a Contract </h1>
             <Form onSubmit={this.handleSubmit} className="login-form" layout='horizontal'>
               <FormItem label= "Client Name" validateStatus={this.state.clientValidate}
               required={true} help={this.state.clientMessage}> 
@@ -130,9 +131,10 @@ export default class ContractSubmission extends Component {
               required={true} help={this.state.skillsMessage}>
                 <Input className="skills" name="skills" placeholder="Preferred Intern Skills" onChange={this.handleChange} value={this.state.skills} />
               </FormItem>
-              <Button onClick={this.handleSubmit}>Submit Contract </Button>
+              <Button onClick={this.handleSubmit} className="submitBut">Submit Contract </Button>
             </Form>
           </section>
+          <br/>
         </div >
       );
     }
