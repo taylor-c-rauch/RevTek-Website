@@ -12,7 +12,9 @@ export default class Profile extends Component {
             task: "",
             hours: null,
             todoList: [],
-            skills: []
+            skill: "",
+            skills: [],
+            showSkillInput: false
         }
     }
 
@@ -42,7 +44,9 @@ export default class Profile extends Component {
         // todoRef.push(todo);
     }
 
-  
+
+
+
 
      // retrieves the information from firebase so it can be rendered on the screen
     componentDidMount() {
@@ -57,10 +61,32 @@ export default class Profile extends Component {
                 hours: todoList[todo].hours,
                 });
             }
+            let skillList = snapshot.val();
+            let newSkill = [];
+            for (let skill in skillList) {
+              newSkill.push({
+                id: skill,
+                skill: skillList[skill].skill
+              })
+            }
             this.setState({
-                todoList: newState
+                todoList: newState,
             });
         });
+      const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
+      skillRef.on('value', (snapshot) => {
+        let skillList = snapshot.val();
+        let newSkill = [];
+        for (let skill in skillList) {
+          newSkill.push({
+            id: skill,
+            skill: skillList[skill].skill
+          })
+        }
+        this.setState({
+          skills: newSkill
+        })
+      })
     }
 
 
@@ -68,6 +94,44 @@ export default class Profile extends Component {
     removeItem(itemId) {
         const itemRef = fire.database().ref(`/todo/${itemId}`);
         itemRef.remove();
+    }
+
+    onSubmitSkill = () => {
+      const currSkillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
+      currSkillRef.push({
+          skill: this.state.skill,
+      });
+      this.setState({
+          skill: '',
+      })
+    }
+
+    removeSkill = (e) => {
+      const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/' )
+
+      skillRef.remove(e.toString())
+
+      console.log(e)
+
+    }
+
+    renderSkill = () => {
+      if (this.state.showSkillInput == true) {
+        return(
+          <div>
+            <Input placeholder="New Skill" name="skill" onChange={this.handleChange}/>
+            <Button onClick={() => this.onSubmitSkill()} htmlType="submit" >Submit</Button>
+          </div>
+        )
+      } else if (this.state.showSkillInput == false){
+        return(<div></div>);
+      }
+    }
+
+    onShowInput = () => {
+      this.setState({
+        showSkillInput: !this.state.showSkillInput
+      })
     }
 
     render() {
@@ -88,9 +152,18 @@ export default class Profile extends Component {
                                     Name
                                 </Card>
 
-                                <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<Button size="small" onClick={this.onSubmitSkills}> + </Button>}>
-                                    ReactJS, Python, JavaScript
+
+                                <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<div><Button size="small" onClick={() => this.onShowInput()}> + </Button>{this.renderSkill()}</div>}>
+                                  {this.state.skills.map((skills, i) => {
+                                    return (
+                                    <div key={i}>
+                                      <h5>{skills.skill}</h5>
+                                      <Button type="danger" onClick={(i) => this.removeSkill(i)}>X</Button>
+                                    </div>
+                                  )
+                                  })}
                                 </Card>
+
                                 <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button size="small">Edit</Button>}>
                                     Github:
                                 <br />
