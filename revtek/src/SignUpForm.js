@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import Background from "./assets/homePhoto.jpg";
-import { Input, Button, Row, Col, Menu, Dropdown, Icon, message } from "antd";
+import { Select, Input, Button, Row, Col, Menu, notification, Icon, message } from "antd";
 import fire from "./fire";
 import TopBar from "./top-bar";
 import "./SignUp.css";
+import { Link, Redirect } from "react-router-dom";
 
-const menu = (
-  <Menu>
-    <Menu.Item key="1">Intern</Menu.Item>
-    <Menu.Item key="2">Alumni</Menu.Item>
-    <Menu.Item key="3">Administrator</Menu.Item>
-  </Menu>
-);
+
+const Option = Select.Option;
+
 
 export default class SignUpForm extends Component {
   constructor() {
@@ -25,6 +22,7 @@ export default class SignUpForm extends Component {
       user: {},
       clicked: false,
       dailyChallenges: [],
+      switch: false,
       todo: [],
     };
   }
@@ -37,11 +35,19 @@ export default class SignUpForm extends Component {
       .then(u => {
         var user = fire.auth().currentUser;
         this.logUser(user);
+        fire.auth().signOut().catch(error => {
+          console.log(error);
+        });
+        this.setState({ switch: true, clicked: true, email: "", username: "", fullname: "", password: "", status: "" });
       })
       .catch(error => {
         console.log(error);
+        notification.error({
+          message: 'Error',
+          description: error.toString().substring(7),
+        });
       });
-    this.setState({ clicked: true });
+
   };
 
   // When the submit button is clicked, the user input gets put on firebase
@@ -70,6 +76,11 @@ export default class SignUpForm extends Component {
     });
   };
 
+  handleSelect(value) {
+
+    this.setState({ status: value });
+  };
+
   render() {
     return (
       <section
@@ -93,6 +104,7 @@ export default class SignUpForm extends Component {
                 id="email"
                 placeholder="Email"
                 onChange={e => this.handleUserInput(e)}
+                value={this.state.email}
               />
             </Col>
             <Col>
@@ -101,6 +113,7 @@ export default class SignUpForm extends Component {
                 id="username"
                 placeholder="Username"
                 onChange={e => this.handleUserInput(e)}
+                value={this.state.username}
               />
             </Col>
             <Col>
@@ -109,6 +122,7 @@ export default class SignUpForm extends Component {
                 id="fullname"
                 placeholder="Fullname"
                 onChange={e => this.handleUserInput(e)}
+                value={this.state.fullname}
               />
             </Col>
             <Col>
@@ -117,22 +131,18 @@ export default class SignUpForm extends Component {
                 id="password"
                 placeholder="Password"
                 onChange={e => this.handleUserInput(e)}
+                value={this.state.password}
               />
             </Col>
             <Col>
-              <div>
-                <Dropdown overlay={menu}>
-                  <Button
-                    span={24}
-                    offset={4}
-                    style={{ marginLeft: 8 }}
-                    style={{ width: "60%" }}
-                  >
-                    Status <Icon type="down" />
-                  </Button>
-                </Dropdown>
-              </div>
+              <Select placeholder="Status"
+                style={{ width: "60%" }} onChange={value => this.handleSelect(value)}>
+                <Option value="intern">Intern</Option>
+                <Option value="alumni">Alumni</Option>
+                <Option value="administrator">Administrator</Option>
+              </Select>
             </Col>
+
             <Button
               className="SubmitButton"
               type="primary"
@@ -141,6 +151,9 @@ export default class SignUpForm extends Component {
             >
               Submit
             </Button>
+            {console.log(this.state.switch)}
+            {this.state.switch ? <Redirect to="/signup-message" /> : null}
+
           </Row>
         </div>
       </section>
