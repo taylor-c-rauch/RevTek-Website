@@ -144,15 +144,16 @@ export default class SignUpForm extends Component {
                 <Option value="administrator">Administrator</Option>
               </Select>
             </Col>
-
-            <Button
-              className="SubmitButton"
-              type="primary"
-              //submit button does nothing yet
-              onClick={e => this.signup(e)}
-            >
-              Submit
+            <Link to="/signup-message">
+              <Button
+                className="SubmitButton"
+                type="primary"
+                //submit button does nothing yet
+                onClick={e => this.signup(e)}
+              >
+                Submit
             </Button>
+            </Link>
             {console.log(this.state.switch)}
             {this.state.switch ? <Redirect to="/signup-message" /> : null}
 
