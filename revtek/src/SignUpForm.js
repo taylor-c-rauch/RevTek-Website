@@ -24,6 +24,7 @@ export default class SignUpForm extends Component {
       dailyChallenges: [],
       switch: false,
       todo: [],
+      skills:[]
     };
   }
 
@@ -63,6 +64,7 @@ export default class SignUpForm extends Component {
       status: this.state.status,
       dailyChallenges: this.state.dailyChallenges,
       todo: this.state.todo,
+      skills: this.state.skills
     })
 
   };
