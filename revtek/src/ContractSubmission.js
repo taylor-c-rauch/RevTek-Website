@@ -242,7 +242,7 @@ export default class ContractSubmission extends Component {
                 onClick={this.handleSubmit}
                 className="submitBut"
               >
-                Submit Contract{" "}
+                Submit Contract
               </Button>
             </Form>
           </section>

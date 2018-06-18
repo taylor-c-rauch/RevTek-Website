@@ -14,8 +14,9 @@
   font-family: Roboto;
   font-weight: lighter;
   margin-top: 20px;
-  padding-top: 15px;
+  padding-top: 20px;
   font-size: 35px;
+  color: rgba(0, 0, 0);
 }
 
 .add-contract {

@@ -31,7 +31,8 @@ export default class SignUpForm extends Component {
       clicked: false,
       dailyChallenges: [],
       switch: false,
-      todo: []
+      todo: [],
+      skills: []
     };
   }
 
@@ -82,7 +83,8 @@ export default class SignUpForm extends Component {
         password: this.state.password,
         status: this.state.status,
         dailyChallenges: this.state.dailyChallenges,
-        todo: this.state.todo
+        todo: this.state.todo,
+        skills: this.state.skills
       });
   };
 
@@ -119,6 +121,7 @@ export default class SignUpForm extends Component {
                   value={this.state.email}
                 />
               </Col>
+              <br />
               <Col>
                 <Input
                   style={{ width: "60%" }}
@@ -128,6 +131,7 @@ export default class SignUpForm extends Component {
                   value={this.state.username}
                 />
               </Col>
+              <br />
               <Col>
                 <Input
                   style={{ width: "60%" }}
@@ -137,6 +141,7 @@ export default class SignUpForm extends Component {
                   value={this.state.fullname}
                 />
               </Col>
+              <br />
               <Col>
                 <Input
                   style={{ width: "60%" }}
@@ -146,6 +151,7 @@ export default class SignUpForm extends Component {
                   value={this.state.password}
                 />
               </Col>
+              <br />
               <Col>
                 <Select
                   placeholder="Status"
@@ -157,14 +163,14 @@ export default class SignUpForm extends Component {
                   <Option value="administrator">Administrator</Option>
                 </Select>
               </Col>
-
+              <br />
+              <br />
               <Button
                 className="SubmitButton"
                 type="primary"
                 span={24}
                 offset={4}
                 style={{ marginLeft: 8 }}
-                style={{ width: "60%" }}
                 onClick={e => this.signup(e)}
               >
                 Submit
