@@ -228,12 +228,7 @@ export default class Profile extends Component {
                                             <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange}/>
                                             <Button size="small" onClick={this.handleClick}> + </Button>
                                         </Form>
-                                    <Card style={{ marginTop: 8 }} >
-                                            <Checkbox> Daily Challenges</Checkbox>
-                                        <br />
-                                        <br />
-                                        Hours: <InputNumber min={0} max={100} defaultValue={0} onChange={this.handleChange} />
-                                    </Card>
+
                                     {this.state.todoList.map((todo) => {
                                         return (
                                             <Card style={{ marginTop: 8 }} >
