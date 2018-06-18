@@ -21,7 +21,7 @@ class App extends Component {
         usersRef.on('value', (snapshot) => {
           console.log("2+2=4")
           users1 = snapshot.val();
-          this.setState({ users: users1 }, () => this.newfunc2());
+          this.setState({ users: users1 }, () => { console.log(this.state.users); this.newfunc2(); });
         });
       } else {
         this.setState({ user: null });
@@ -31,7 +31,7 @@ class App extends Component {
 
   newfunc2() {
     Object.keys(this.state.users).forEach((key) => {
-      if (this.state.users[key].email === this.state.user.email) {
+      if (this.state.users[key].email === this.state.email) {
         let userID = key;
         this.setState({ userID: userID });
         this.setState({ userInfo: this.state.users[key] });
