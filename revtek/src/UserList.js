@@ -1,7 +1,10 @@
 import React from 'react'; 
 import ReactDom from 'react-dom'; 
-import { Row, Col, Card, Button } from 'antd';
+import { Row, Col, Card, Button, Select} from 'antd';
 import fire from "./fire.js";
+
+
+const Option = Select.Option
 
 export default class UserList extends React.Component {
     constructor(props) {
@@ -18,8 +21,15 @@ export default class UserList extends React.Component {
         })
     }
 
+    handleSelect = (userID, value) => {
+        let hopperRef = fire.database().ref(`/users/${userID}`);
+        hopperRef.update({
+            status: value, 
+        }); 
+      };
+    
+
     removeItem(userID) {
-        console.log(userID);
         const userRef = fire.database().ref(`/users/${userID}`);
         userRef.remove();
     }
@@ -37,14 +47,11 @@ export default class UserList extends React.Component {
                   username: users[user].username,
                 }); 
             }
-            console.log(allUsers)
             this.setState({
                 allUsers: allUsers
               });
         });
     }
-         
-   
 
     render() {
         const isClicked = this.state.clicked; 
@@ -60,7 +67,14 @@ export default class UserList extends React.Component {
                                 <Card title={user.fullname} bordered={false} style={{ marginTop: 8 }}>
                                     <p>Username: {user.username}</p>
                                     <p>Email: {user.email}</p>
-                                    {isClicked ?  <Button size="medium" onClick={() => this.removeItem(user.id)}>Remove User</Button> : null}
+                                    {isClicked ?  <div> <Button size="medium" onClick={() => this.removeItem(user.id)}>Remove User</Button> 
+                                        <br/> 
+                                        <Select placeholder="Status" style={{ width: "60%" }} onChange={value => this.handleSelect(user.id, value)}>
+                                            <Option value="intern">Intern</Option>
+                                            <Option value="alumni">Alumni</Option>
+                                            <Option value="administrator">Administrator</Option>
+                                        </Select> 
+                                    </div>: null}
                                 </Card>
                             )
                         })}
