@@ -82,6 +82,24 @@ export default class ContractSubmission extends Component {
           skillsValidate: "error"
         });
       }
+      if (this.state.description === "") {
+        this.setState({
+          descriptionMessage: "Please enter your project description.",
+          descriptionValidate: "error"
+        });
+      }
+      if (this.state.numinterns === "") {
+        this.setState({
+          numinternsMessage: "Please enter the number of interns needed.",
+          numinternsValidate: "error"
+        });
+      }
+      if (this.state.skills === "") {
+        this.setState({
+          skillsMessage: "Please enter preferred skills for your project.",
+          skillsValidate: "error"
+        });
+      }
     } else {
       const contractname = this.state.project.split(" ").join("-");
       const contractsRef = fire
@@ -118,12 +136,15 @@ export default class ContractSubmission extends Component {
       });
     }
   };
-
   render() {
     if (this.state.clicked === false) {
       return (
         <div className="contract">
-          <TopBar status="home" />
+          <TopBar
+            status="home"
+            user={this.props.user}
+            updateField={this.props.updateField}
+          />
           {/* renders a form where users can input their contract information */}
           <section className="add-contract">
             <h1 className="contractHeader"> Submit a Contract </h1>
@@ -231,17 +252,21 @@ export default class ContractSubmission extends Component {
     } else {
       return (
         <div style={{ background: "#ECECEC", padding: "30px" }}>
-          <TopBar status="home" />
+          <TopBar
+            status="home"
+            updateField={this.props.updateField}
+            user={this.props.user}
+          />
           <h1 className="contractHeader">
-            Thank you for submitting your contract!
+            Thank you for submitting a contract!
           </h1>
           <h3 font-family="Roboto">
             {" "}
             We will get back to you as soon as possible{" "}
           </h3>
-          <Button type="primary" onClick={this.handleClick}>
+          <button type="primary" onClick={this.handleClick}>
             Submit Another Contract{" "}
-          </Button>
+          </button>
         </div>
       );
     }

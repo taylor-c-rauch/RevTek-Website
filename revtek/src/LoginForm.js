@@ -42,15 +42,7 @@ export default class LoginForm extends Component {
   render() {
     return (
       <div class="backdrop">
-        <section
-        /* style={{
-            backgroundImage: `url(${Background})`,
-            height: 600,
-            width: "100%",
-            backgroundSize: "cover",
-            overflow: "hidden"
-          }} */
-        >
+        <section>
           <TopBar status="home" />
           <div class="HeaderFiller" />
           <div class="LoginBackground">
