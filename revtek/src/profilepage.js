@@ -106,12 +106,12 @@ export default class Profile extends Component {
     }
 
     handleModal = () => {
-        const userRef = fire.database().ref('users/' + this.props.userID);
+        const usersRef = fire.database().ref('users/' + this.props.userID);
         this.setState({ loading: true });
         setTimeout(() => {
-            this.setState({ loading: false, visible: false });
-        }, 500);
-        userRef.push({
+        this.setState({ loading: false, visible: false });
+            }, 500);
+        usersRef.update({
             linkedIn: this.state.linkedInInput,
             gitHub: this.state.gitHubInput
         })
@@ -177,7 +177,13 @@ export default class Profile extends Component {
     }
 
     render() {
-
+        let userRef = fire.database().ref('users/' + this.props.userID);
+        let user = {};
+        userRef.on('value', (snapshot) => {
+            user = snapshot.val();
+          });
+        let linkedIn = user.linkedIn;
+        let gitHub = user.gitHub;
         return (
             <div>
 
@@ -208,9 +214,10 @@ export default class Profile extends Component {
                                     })}
                                 </Card>
                                 <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button onClick={this.showModal} size="small">Edit</Button>}>
-                                    Github: {this.state.gitHubCurrent}
-                                    <br />
-                                    LinkedIn: {this.state.linkedInCurrent}
+
+                                    Github: {linkedIn}
+                                <br />
+                                    LinkedIn: {gitHub}
                                 </Card>
                                 <Modal
                                     visible={this.state.visible}
