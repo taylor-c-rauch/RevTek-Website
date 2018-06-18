@@ -18,72 +18,56 @@ export default class UserList extends React.Component {
         })
     }
 
-    removeItem(itemId) {
-        const itemRef = fire.database().ref('users/' + this.props.userID);
-        itemRef.remove();
+    removeItem(userID) {
+        console.log(userID);
+        const userRef = fire.database().ref(`/users/${userID}`);
+        userRef.remove();
     }
 
     componentDidMount(){
         let usersRef = fire.database().ref('users');
-        let users = {};
-        let allUsers = [];
         usersRef.on('value', (snapshot) => {
-            users = snapshot.val();
-          });
-        Object.keys(users).forEach((key) => {
-            let status = users[key].status;
-            allUsers.push(users[key])
+            let users = snapshot.val();
+            let allUsers = []; 
+            for (let user in users) {
+                allUsers.push({
+                  id: user, 
+                  name: users[user].fullname, 
+                  email: users[user].email, 
+                  username: users[user].username,
+                }); 
+            }
+            console.log(allUsers)
+            this.setState({
+                allUsers: allUsers
+              });
         });
-        this.setState({allUsers: allUsers});
     }
-
+         
+   
 
     render() {
-        if (this.state.clicked == true) {
-            return (
-               <div>
-                     <Row gutter={16}>
-                     <Col span={8}>
-                     <h1> User Profiles </h1> 
-                         <Button size="medium" onClick={this.handleClick}>Done</Button>
-                         {this.state.allUsers.map((user) => {
-                             return (
-                                 <div style={{ background: '#ECECEC', padding: '30px' }}>
-                                 <Card title={user.fullname} bordered={false} style={{ width: 200 }}>
-                                     <p>Username: {user.username}</p>
-                                     <p>Email: {user.email}</p>
-                                     <Button size="medium" onClick={() => this.removeItem(user.id)}>Remove User</Button>
-                                 </Card>
-                                 </div> 
-                             )
-                         })}
-                     </Col> 
-                     </Row> 
-                 </div> 
-            )
-        }
-        else {
-            return (
-                <div>
-                     <Row gutter={16}>
-                     <Col span={8}>
-                     <h1> User Profiles </h1> 
-                         <Button size="medium" onClick={this.handleClick}>Edit</Button>
-                         {this.state.allUsers.map((user) => {
-                             return (
-                                 <div style={{ background: '#ECECEC', padding: '30px' }}>
-                                 <Card title={user.fullname} bordered={false} style={{ marginTop: 8 }}>
-                                     <p>Username: {user.username}</p>
-                                     <p>Email: {user.email}</p>
-                                 </Card>
-                                 </div> 
-                             )
-                         })}
-                     </Col> 
-                     </Row> 
-                 </div> 
-             ); 
-
-        }
+        const isClicked = this.state.clicked; 
+        return (
+            <div>
+                 <Row gutter={16}>
+                 <Col span={8}>
+                 <h1> User Profiles </h1> 
+                     {isClicked ? <Button size="medium" onClick={this.handleClick}>Done</Button> : <Button size="medium" onClick={this.handleClick}>Edit</Button>} 
+                     <div style={{ background: '#ECECEC', padding: '30px' }}>
+                        {this.state.allUsers.map((user) => {
+                            return (
+                                <Card title={user.fullname} bordered={false} style={{ marginTop: 8 }}>
+                                    <p>Username: {user.username}</p>
+                                    <p>Email: {user.email}</p>
+                                    {isClicked ?  <Button size="medium" onClick={() => this.removeItem(user.id)}>Remove User</Button> : null}
+                                </Card>
+                            )
+                        })}
+                     </div> 
+                 </Col> 
+                 </Row> 
+             </div> 
+         ); 
     }
 }
