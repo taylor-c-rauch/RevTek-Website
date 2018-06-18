@@ -18,6 +18,7 @@ import { BrowserRouter, Route, Redirect } from "react-router-dom";
 export default class Router extends Component {
 
     render() {
+        console.log("hello");
         return (
 
             <div>
