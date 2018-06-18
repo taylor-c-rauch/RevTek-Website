@@ -33,7 +33,7 @@ export default class UserList extends React.Component {
         let newMap = alum.map(i => {
             return (<div style={{ background: '#ECECEC', padding: '30px'}}>
             <Card title={i.fullname} bordered={false} style={{ width: 300 }}>
-                <p>{Object.keys(i)}</p>
+                <p> {i.email} {i.username} </p>
             </Card>
         </div>)
         });

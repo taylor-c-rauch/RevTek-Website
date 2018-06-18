@@ -102,13 +102,14 @@ export default class Profile extends Component {
     }
 
     handleModal = () => {
+        const userRef = fire.database().ref('users/' + this.props.userID);
         this.setState({ loading: true });
         setTimeout(() => {
         this.setState({ loading: false, visible: false });
             }, 500);
-        this.setState({
-            linkedInCurrent: this.state.linkedInInput,
-            gitHubCurrent: this.state.gitHubInput
+        userRef.push({
+            linkedIn: this.state.linkedInInput,
+            gitHub: this.state.gitHubInput
         })
     }
 
