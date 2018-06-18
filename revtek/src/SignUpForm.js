@@ -24,7 +24,7 @@ export default class SignUpForm extends Component {
       dailyChallenges: [],
       switch: false,
       todo: [],
-      skills:[]
+      skills: []
     };
   }
 

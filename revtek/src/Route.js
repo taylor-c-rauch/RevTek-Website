@@ -10,66 +10,54 @@ import UserList from "./UserList";
 import Homepage from "./Homepage";
 import BiddingPage from "./BiddingPage";
 import Login from "./Login";
-import SignUp from "./SignUp";
+import SignUpForm from "./SignUpForm";
 import fire from "./fire";
 import UserMessage from "./UserMessage";
-
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 
 export default class Router extends Component {
-    constructor() {
-        super();
-        this.state = { email: "", user: null, users: [], userID: "", userInfo: {}, status: "" };
-    };
-    updateField = (field, newVal) => {
-        this.setState({ [field]: newVal });
-    };
 
     render() {
-        console.log(this.state);
         return (
+
             <div>
+                <Redirect to="/home" />
+                <Route
+                    path="/home"
+                    render={() => (<div> <Homepage updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
+                <Route
+                    path="/challenge-manager"
+                    render={() => (<div><TopBar updateField={this.props.updateField} user={this.props.user} status="admin" /> <ChallengeManager person={this.props.userInfo} /></div>)} />
+                <Route
+                    path="/contract-submission"
+                    render={() => (<div> <Contract updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
+                <Route
+                    path="/login"
+                    render={() => (<div> <Login updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
+                <Route
+                    path="/sign-up"
+                    render={() => (<div><SignUpForm updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
+                <Route
+                    path="/daily-challenge"
+                    render={() => (<div><TopBar user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <DailyChallenge person={this.props.userInfo} userID={this.props.userID} /></div>)} />
+                <Route
+                    path="/profile"
+                    render={() => (<div><TopBar user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <Profile person={this.props.userInfo} userID={this.props.userID} /></div>)} />
 
-                <BrowserRouter>
-                    <div>
-                        <Redirect to="/home" />
-                        <Route
-                            path="/home"
-                            render={() => (<div> <Homepage updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} person={this.state.userInfo} /></div>)} />
-                        <Route
-                            path="/challenge-manager"
-                            render={() => (<div><TopBar updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} status="admin" /> <ChallengeManager person={this.state.userInfo} /></div>)} />
-                        <Route
-                            path="/contract-submission"
-                            render={() => (<div> <Contract updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} person={this.state.userInfo} /></div>)} />
-                        <Route
-                            path="/login"
-                            render={() => (<div> <Login updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} person={this.state.userInfo} updateField={(field, newVal) => this.updateField(field, newVal)} /></div>)} />
-                        <Route
-                            path="/sign-up"
-                            render={() => (<div><SignUp updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} person={this.state.userInfo} /></div>)} />
-                        <Route
-                            path="/daily-challenge"
-                            render={() => (<div><TopBar user={this.state.user} updateField={(field, newVal) => this.updateField(field, newVal)} status={this.state.status} /> <DailyChallenge person={this.state.userInfo} userID={this.state.userID}/></div>)} />
-                        <Route
-                            path="/profile"
-                            render={() => (<div><TopBar user={this.state.user} updateField={(field, newVal) => this.updateField(field, newVal)} status={this.state.status} /> <Profile person={this.state.userInfo} userID={this.state.userID} /></div>)} />
-
-                        <Route
-                            path="/statistics"
-                            render={() => (<div><Statistics updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} person={this.state.userInfo} /></div>)} />
-                        <Route
-                            path="/user-list"
-                            render={() => (<div><TopBar user={this.state.user} updateField={(field, newVal) => this.updateField(field, newVal)} status={this.state.status} /> <UserList person={this.state.userInfo} /></div>)} />
-                        <Route
-                            path="/signup-message"
-                            render={() => (<div> <UserMessage updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} person={this.state.userInfo} /></div>)} />
-                        <Route
-                            path="/contract-bidding"
-                            render={() => (<div><TopBar user={this.state.user} updateField={(field, newVal) => this.updateField(field, newVal)} status={this.state.status} /> <BiddingPage person={this.state.userInfo} /></div>)} />
-                    </div>
-                </BrowserRouter>
+                <Route
+                    path="/statistics"
+                    render={() => (<div><Statistics updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
+                <Route
+                    path="/user-list"
+                    render={() => (<div><TopBar user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <UserList person={this.props.userInfo} /></div>)} />
+                <Route
+                    path="/signup-message"
+                    render={() => (<div> <UserMessage updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
+                <Route
+                    path="/contract-bidding"
+                    render={() => (<div><TopBar user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <BiddingPage person={this.props.userInfo} /></div>)} />
             </div>
+
         );
     }
 }
