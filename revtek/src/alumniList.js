@@ -1,7 +1,8 @@
 import React from 'react'; 
 import ReactDom from 'react-dom'; 
-import { Row, Col, Card } from 'antd';
+import { Row, Col, Card, Anchor } from 'antd';
 import fire from "./fire.js";
+import './alumniList.css';
 
 export default class AlumniList extends React.Component {
     constructor(props) {
@@ -31,13 +32,14 @@ export default class AlumniList extends React.Component {
     render() {
         let alum = this.state.alumni;
         return (
-        <div>
-            <h1> Alumni Profiles </h1>
+        <div className="alumniProfs">
+            <h1 className="alumniHeader"> Alumni Profiles </h1>
         {alum.map(i => {
             return (
             <div style={{ background: '#ECECEC', padding: '30px'}}>
-                <Card className="alumniProfs" title={i.fullname} bordered={false} style={{ width: 900 }}>
-                    <p> {i.email} {i.username} </p>
+                <Card className="alumniCards" title={i.fullname} bordered={false}>
+                    GitHub: <a href={i.gitHub}> {i.gitHub} </a>
+                    LinkedIn: <a href={i.linkedIn}> {i.linkedIn} </a>
                 </Card>
             </div>
         )
