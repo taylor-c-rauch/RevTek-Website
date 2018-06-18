@@ -48,6 +48,7 @@ class App extends Component {
 
 
   render() {
+    console.log(this.state);
     return (
       <div>
         <Router updateField={(field, newVal) => this.updateField(field, newVal)} email={this.state.email} user={this.state.user} users={this.state.users} userID={this.state.userID} userInfo={this.state.userInfo} status={this.state.status} />
