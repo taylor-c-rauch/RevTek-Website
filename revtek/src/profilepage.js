@@ -87,7 +87,7 @@ export default class Profile extends Component {
 
     //  removes contracts
     removeItem(itemId) {
-        const itemRef = fire.database().ref(`/todo/${itemId}`);
+        const itemRef = fire.database().ref('users/' + this.props.userID + '/todo/');
         itemRef.remove();
     }
 
@@ -242,7 +242,7 @@ export default class Profile extends Component {
                                                 <br/>
                                                 Hours: {todo.hours}
                                                 <br/>
-                                                <button onClick={() => this.removeItem(todo.id)}>Remove Contract</button>
+                                                <Button onClick={() => this.removeItem(todo.id)}>Remove Contract</Button>
                                             </Card>
                                         )
                                     })}
