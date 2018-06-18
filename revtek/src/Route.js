@@ -13,6 +13,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import fire from "./fire";
 import UserMessage from "./UserMessage";
+import AlumniList from "./alumniList";
 
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 
@@ -54,7 +55,11 @@ export default class Router extends Component {
                         <Route
                             path="/profile"
                             render={() => (<div><TopBar user={this.state.user} updateField={(field, newVal) => this.updateField(field, newVal)} status={this.state.status} /> <Profile person={this.state.userInfo} userID={this.state.userID} /></div>)} />
+                        <Route
+                            path="/alumni-list"
+                            render={() => (<div><TopBar user={this.state.user} updateField={(field, newVal) => this.updateField(field, newVal)} status="intern" /> <AlumniList person={this.state.userInfo} userID={this.state.userID} /></div>)} />
 
+                        
                         <Route
                             path="/statistics"
                             render={() => (<div><Statistics updateField={(field, newVal) => this.updateField(field, newVal)} user={this.state.user} person={this.state.userInfo} /></div>)} />

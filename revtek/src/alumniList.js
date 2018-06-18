@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 import { Row, Col, Card } from 'antd';
 import fire from "./fire.js";
 
-export default class UserList extends React.Component {
+export default class AlumniList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
