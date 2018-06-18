@@ -32,9 +32,9 @@ class TopBar extends Component {
         super(props);
         this.state = {
             status: this.props.status,
-            intern: [{ label: "Profile", place: "/profile" }, { label: "Daily Challenge", place: "/daily-challenge" }, { label: "Contracts", place: "/contract-bidding" }, { label: "Alumni", place: "/user-list" }, { label: "Forum", place: "/" },],
-            alumni: [{ label: "Profile", place: "/profile" }, { label: "Leaderboard", place: "/" }, { label: "Contracts", place: "/contract-bidding" }, { label: "Forum", place: "/" },],
-            admin: [{ label: "Profile", place: "/profile" }, { label: "Challenge Manager", place: "/challenge-manager" }, { label: "Contracts", place: "/contract-bidding" }, { label: "Users", place: "/user-list" }, { label: "Forum", place: "/" },],
+            intern: [{ label: "Profile", place: "/profile" }, { label: "Daily Challenge", place: "/daily-challenge" }, { label: "Contracts", place: "/contract-bidding" }, { label: "Alumni", place: "/user-list" },],
+            alumni: [{ label: "Profile", place: "/profile" }, { label: "Leaderboard", place: "/" }, { label: "Contracts", place: "/contract-bidding" },],
+            admin: [{ label: "Profile", place: "/profile" }, { label: "Challenge Manager", place: "/challenge-manager" }, { label: "Contracts", place: "/contract-bidding" }, { label: "Users", place: "/user-list" },],
             anchor1: null,
             anchor2: null,
             auth1: true,
