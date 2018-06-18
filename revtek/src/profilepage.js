@@ -12,6 +12,7 @@ export default class Profile extends Component {
             task: "", 
             hours: null, 
             todoList: [],
+            checked: true, 
             visible: false,
             gitHubInput: "",
             linkedInInput: "",
@@ -35,13 +36,23 @@ export default class Profile extends Component {
         const currUserRef = fire.database().ref('users/' + this.props.userID + '/todo/');
         currUserRef.push({
             task: this.state.task,
-            hours: this.state.hours
+            hours: this.state.hours, 
         });
         this.setState({
             task: '',
             hours: '',
         })
     }
+
+    handleCheck = (e) => {
+        this.setState({
+            checked: !this.state.checked
+        })
+        const currUserRef = fire.database().ref('users/' + this.props.userID + '/todo/');
+        currUserRef.update({
+            checked: this.state.checked
+        });
+      }
 
      // retrieves the information from firebase so it can be rendered on the screen
     componentDidMount() {
@@ -84,10 +95,9 @@ export default class Profile extends Component {
       })
     }
 
-
     //  removes contracts
     removeItem(itemId) {
-        const itemRef = fire.database().ref(`/todo/${itemId}`);
+        const itemRef = fire.database().ref('users/' + this.props.userID + '/todo/');
         itemRef.remove();
     }
 
@@ -228,20 +238,14 @@ export default class Profile extends Component {
                                             <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange}/>
                                             <Button size="small" onClick={this.handleClick}> + </Button>
                                         </Form>
-                                    <Card style={{ marginTop: 8 }} >
-                                            <Checkbox> Daily Challenges</Checkbox>
-                                        <br />
-                                        <br />
-                                        Hours: <InputNumber min={0} max={100} defaultValue={0} onChange={this.handleChange} />
-                                    </Card>
                                     {this.state.todoList.map((todo) => {
                                         return (
                                             <Card style={{ marginTop: 8 }} >
-                                                <Checkbox> {todo.task}</Checkbox>
+                                                <Checkbox onChange={this.handleCheck}> {todo.task}</Checkbox>
                                                 <br/>
                                                 Hours: {todo.hours}
                                                 <br/>
-                                                <button onClick={() => this.removeItem(todo.id)}>Remove Contract</button>
+                                                <Button onClick={() => this.removeItem(todo.id)}>Remove Task</Button>
                                             </Card>
                                         )
                                     })}
