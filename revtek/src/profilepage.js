@@ -152,6 +152,12 @@ export default class Profile extends Component {
     }
 
     render() {
+        let userRef = fire.database().ref('users/' + this.props.userID);
+        userRef.on('value', (snapshot) => {
+            let user = snapshot.val();
+            let linkedIn = user.linkedIn;
+            let gitHub = user.gitHub;
+            });
         return (
             <div>
                 <div style={{ background: '#fffff', padding: '30px' }}>

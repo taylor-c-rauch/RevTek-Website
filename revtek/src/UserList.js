@@ -30,13 +30,16 @@ export default class UserList extends React.Component {
 
     render() {
         let alum = this.state.alumni;
-        let newMap = alum.map(i => {
-            return (<div style={{ background: '#ECECEC', padding: '30px'}}>
-            <Card title={i.fullname} bordered={false} style={{ width: 300 }}>
-                <p> {i.email} {i.username} </p>
-            </Card>
-        </div>)
-        });
-        return(newMap);
+        return (
+        alum.map(i => {
+            return (
+            <div style={{ background: '#ECECEC', padding: '30px'}}>
+                <Card className="alumniProfs" title={i.fullname} bordered={false} style={{ width: 900 }}>
+                    <p> {i.email} {i.username} </p>
+                </Card>
+            </div>
+        )
+        })
+    )
     }
 }
