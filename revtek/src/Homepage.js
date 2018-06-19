@@ -38,7 +38,8 @@ export default class Homepage extends Component {
             </Row>
             <p>
               We have built a community of developers with the expertise to
-              flawlessly carry out your projects and ideas.
+              flawlessly carry out your projects and ideas. We are excited to
+              see what we can accomplish together.
             </p>
           </div>
         </section>
