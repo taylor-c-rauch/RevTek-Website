@@ -215,9 +215,9 @@ export default class Profile extends Component {
                                 </Card>
                                 <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button onClick={this.showModal} size="small">Edit</Button>}>
 
-                                    LinkedIn: <a href={linkedIn}> {linkedIn} </a>
-                                <br />
                                     GitHub: <a href={gitHub}> {gitHub} </a>
+                                <br />  
+                                    LinkedIn: <a href={linkedIn}> {linkedIn} </a>
                                 </Card>
                                 <Modal
                                     visible={this.state.visible}
