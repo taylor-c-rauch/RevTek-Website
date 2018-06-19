@@ -4,6 +4,7 @@ import TopBar from "./top-bar";
 import fire from './fire.js';
 import { Typography } from "@material-ui/core";
 import ToDoItem from './ToDoItem';
+import "./profilepage.css";
 
 const Search = Input.Search;
 const storageRef = fire.storage().ref();
@@ -129,9 +130,9 @@ export default class Profile extends Component {
 
 
     removeSkill = (skillId) => {
-      const skillRef = fire.database().ref('users/' + this.props.userID + `/skills/${skillId}` )
+        const skillRef = fire.database().ref('users/' + this.props.userID + `/skills/${skillId}`)
 
-      skillRef.remove()
+        skillRef.remove()
 
     }
 
@@ -178,14 +179,14 @@ export default class Profile extends Component {
     }
 
     onComplete = (itemId) => {
-      const currUserRef = fire.database().ref('users/' + this.props.userID + `/todo/${itemId}`)
-      currUserRef.update({
-        completed: !this.state.completed
-      })
-      this.setState({
-        completed: !this.state.completed
-      })
-      console.log(this.state.completed)
+        const currUserRef = fire.database().ref('users/' + this.props.userID + `/todo/${itemId}`)
+        currUserRef.update({
+            completed: !this.state.completed
+        })
+        this.setState({
+            completed: !this.state.completed
+        })
+        console.log(this.state.completed)
 
 
 
@@ -203,12 +204,12 @@ export default class Profile extends Component {
     }
 
     renderCompleted = () => {
-        
-          return(
-            <ToDoItem list={this.state.todoList} check={this.state.completed} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)}/>
-          )
 
-      }
+        return (
+            <ToDoItem list={this.state.todoList} check={this.state.completed} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
+        )
+
+    }
 
 
     render() {
@@ -221,7 +222,7 @@ export default class Profile extends Component {
         let linkedIn = user.linkedIn;
         let gitHub = user.gitHub;
         return (
-            <div>
+            <div className="container">
 
                 <div style={{ background: '#fffff', padding: '30px' }}>
                     <Row gutter={16}>
@@ -234,7 +235,7 @@ export default class Profile extends Component {
                                     fontWeight: 500,
                                 }}
                                 />
-                                <Card style={{ marginTop: 8 }} type="inner" extra={<Popover trigger="click" placement="bottom" content={<input type="file" accept=".jpg, .jpeg, .png" onChange={this.fileChangedHandler} />}><Button size="small">Edit Picture </Button></Popover>} cover={<img src={this.props.person.profilepic} />}>
+                                <Card style={{ marginTop: 8 }} type="inner" extra={<Popover trigger="click" placement="bottom" content={<label className="new_Btn" >Select File<input id="html_btn" type="file" accept=".jpg, .jpeg, .png" onChange={this.fileChangedHandler} /></label>}><Button size="small">Edit Picture </Button></Popover>} cover={<img src={this.props.person.profilepic} />}>
                                     {this.props.person.fullname}
                                 </Card>
 
@@ -242,8 +243,8 @@ export default class Profile extends Component {
                                 <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<div><Button size="small" onClick={() => this.onShowInput()}> + </Button>{this.renderSkill()}</div>}>
                                     {this.state.skills.map((skills, i) => {
                                         return (
-                                            <div key={skills.id}>
-                                                <Card>
+                                            <div key={skills.id} >
+                                                <Card className="container">
 
                                                     <Typography variant="caption">{skills.skill}</Typography>
                                                     <Button size="small" type="danger" onClick={(i) => this.removeSkill(i)}>X</Button>
@@ -253,12 +254,15 @@ export default class Profile extends Component {
                                         )
                                     })}
                                 </Card>
+
                                 <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button onClick={this.showModal} size="small">Edit</Button>}>
 
-                                   GitHub: <a href={gitHub}> {gitHub} </a>
-                                <br />
-                                    LinkedIn: <a href={linkedIn}> {linkedIn} </a>
+                                    GitHub: <a href={gitHub} target="_blank"> {gitHub} </a>
+                                    <br />
+                                    LinkedIn: <a href={linkedIn} target="_blank"> {linkedIn} </a>
+
                                 </Card>
+
                                 <Modal
                                     visible={this.state.visible}
                                     title="Edit Info"
@@ -269,7 +273,7 @@ export default class Profile extends Component {
                                             Submit
                                         </Button>,
                                     ]}
-                                    >
+                                >
 
                                     <Input
                                         placeholder="GitHub"
@@ -305,14 +309,14 @@ export default class Profile extends Component {
                                         <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange} />
                                         <Button size="small" onClick={this.handleClick}> + </Button>
                                     </Form>
-                                      {this.renderCompleted()}
+                                    {this.renderCompleted()}
 
                                 </Card>
                             </Card>
                         </Col>
                     </Row >
                 </div >
-            </div>
+            </div >
         );
     }
 }
