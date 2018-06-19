@@ -7,12 +7,20 @@ export default class ToDoItem extends Component {
       <div>
         {this.props.list.map((todo) => {
             return (
-                <Card style={{ marginTop: 8 }} key={todo.id}>
-                    <Checkbox checked={this.props.check} value={todo.id} onClick={() => this.props.complete(todo.id)}> {todo.task}</Checkbox>
-                    <br/>
-                    Hours: {todo.hours}
-                    <br/>
-                    <Button onClick={() => this.props.remove(todo.id)}>Remove Contract</Button>
+                <Card style={{ marginTop: 8, backgroundColor: '#d1e2ff' }} key={todo.id}>
+                  <Row>
+                    <Col span={20} style={{paddingBottom: 10}}>
+                      <Checkbox checked={this.props.check} value={todo.id} onClick={() => this.props.complete(todo.id)}>{todo.task}</Checkbox>
+                    </Col>
+                    <Col span={4}>
+                      <Card style={{backgroundColor: 'white', paddingTop: -5, paddingBottom: -5}}>
+                        <h4>Hours: {todo.hours}</h4>
+                      </Card>
+                    </Col>
+                    <div>
+                      <Button onClick={() => this.props.remove(todo.id)} type="danger">Remove Contract</Button>
+                    </div>
+                  </Row>
                 </Card>
             )
         })}
