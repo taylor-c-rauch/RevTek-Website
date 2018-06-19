@@ -1,40 +1,192 @@
 import React, { Component } from 'react';
-import { Card, Button, Col, Row } from 'antd';
+import { Layout, Form, Input, Icon, Card, Button, Col, Row, DatePicker } from 'antd';
+import fire from "./fire.js"
+const Header = Layout.Header;
+const Content = Layout.Content;
+const FormItem = Form.Item;
+const { TextArea } = Input;
 
 export default class ChallengeManager extends Component {
+
+    constructor(props){
+        super(props);
+        this.state = ({
+            name: "",
+            duedate: "",
+            description: "", 
+            challenges: [] ,
+            interns: [],
+            submissions: [],
+            data: []
+        })
+    }
+
+    componentDidMount(){
+
+        //Updates the render() with all the challenges in Firebase
+        const challengesRef = fire.database().ref('challenges/');
+        challengesRef.on('value', (snapshot) => {
+           let challengesSnapshot = snapshot.val();
+           let challengesArray = []
+
+           for (let challenge in challengesSnapshot){
+            challengesArray.push({
+                name: challengesSnapshot[challenge].name,
+                description: challengesSnapshot[challenge].description,
+                duedate: challengesSnapshot[challenge].duedate,
+                submissions: challengesSnapshot[challenge].submissions
+                });
+           }
+
+           this.setState({
+                challenges: challengesArray
+           })
+        })
+
+        //Creates a snapshot of interns to display on each card
+        const usersRef = fire.database().ref('users/');
+        usersRef.on('value', (snapshot) => {
+           let usersSnapshot = snapshot.val();
+           let usersArray = []
+
+           for (let user in usersSnapshot){
+                if (usersSnapshot[user].status == "intern"){
+                    usersArray.push({
+                        name: usersSnapshot[user].fullname,
+                        dailyChallenges: usersSnapshot[user].dailyChallenges
+                    });
+                }
+            }
+
+            this.setState({
+                interns: usersArray
+            })
+        })
+
+    }  
+
+    handleName = (e) => {
+        e.preventDefault(); 
+        this.setState({
+            name: e.target.value
+        });
+    }
+
+    handleDate = (e) => {
+
+        var myDate = new Date(e);
+
+        this.setState({
+            duedate: myDate.toLocaleString(),
+            seconds: myDate.getTime()
+        });
+    }
+
+    handleDescription = (e) => {
+        e.preventDefault();
+        this.setState({
+            description: e.target.value
+        })
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const currChallengeRef = fire.database().ref('challenges/');
+
+
+        let challengeObject = ({name: this.state.name, description: this.state.description, duedate: this.state.duedate, seconds: this.state.seconds, submissions: this.state.submissions})
+        currChallengeRef.child(this.state.name).set({ 
+            name: this.state.name,
+            description: this.state.description,
+            duedate: this.state.duedate,
+            seconds: this.state.seconds,
+            submissions: this.state.submissions
+        });
+
+        let array = this.state.challenges;
+        array.push(challengeObject);
+        this.setState({
+            challenges: array
+        });
+    }
+
+    handleDelete = (name) => {
+        console.log(`${name}`)
+        //const currChallengeRef = fire.database().ref(`challenges/${name}`);
+        //currChallengeRef.remove()
+    }
+
     render () {
         return (
             <div> 
-            <div> 
-                <h1>Challenge Manager</h1> 
-                <Button>Add new challenge</Button>
-            </div>
-            <br/>
-            <div style={{ background: '#ECECEC', padding: '30px' }}>
-                <h2>Contract Challenge</h2> 
-                <Button type="primary" shape="circle" icon="delete" />
-                <Row gutter={16}>
-                <Col span={4}>
-                    <Card title="Jane Doe" bordered={false} style={{ width: 240 }} cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>Link:</Card>
-                </Col>
-                <Col span={4}>
-                    <Card title="JSON Jon" bordered={false} style={{ width: 240 }} cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>Link:</Card>
-                </Col>
-                <Col span={4}>
-                    <Card title="Sed Do" bordered={false} style={{ width: 240 }} cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>Link:</Card>
-                </Col>
-                <Col span={4}>
-                    <Card title="Lorem Ipsum" bordered={false} style={{ width: 240 }} cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>Link:</Card>
-                </Col>
-                <Col span={4}>
-                    <Card title="Nathan Park" bordered={false} style={{ width: 240 }} cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>Link:</Card>
-                </Col>
-                <Col span={4}>
-                    <Card title="John Doe" bordered={false} style={{ width: 240 }} cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>Link:</Card>
-                </Col>
-                </Row>
-            </div>
-            </div>
+            <Row>
+            <Col span={16} offset = {4}>
+                    <Content className = "submission">
+                        <Card bordered={true} title = "Challenge Manager">
+                            <Form layout="inline" onSubmit={this.handleSubmit}>
+                                <FormItem>
+                                    <Input 
+                                    prefix={<Icon type="link" 
+                                    style={{ color: 'rgba(0,0,0,.25)' }} />} 
+                                    placeholder="Challenge Name"
+                                    onChange={this.handleName} 
+                                    />
+                                </FormItem>
+                                <FormItem>
+                                    <DatePicker onChange ={this.handleDate} placeholder = "Due Date"/>
+                                </FormItem>
+                                    <TextArea 
+                                    rows = {4} 
+                                    placeholder = "Challenge Description"
+                                    onChange = {this.handleDescription} 
+                                    />
+                                <FormItem>
+                                    <Button type="primary" htmlType="submit">
+                                    Add Challenge
+                                    </Button>
+                                </FormItem>  
+                            </Form>
+                        </Card>
+                    </Content>
+                </Col>  
+            </Row>
+
+            {/*  Maps the challenges from database to a new card and maps interns who have submitted links */}
+            {this.state.challenges.map(challenge => {
+
+                const currName = challenge.name;
+                console.log(currName)
+                let query = fire.database().ref('challenges/' + currName + '/submissions/');
+                let data = []
+                query.once("value", (snapshot) => {
+                    snapshot.forEach(function(childSnapshot) {
+                      var childData = childSnapshot.val();
+                      data.push({name: childData.Name, gitHubLink: childData.gitHubLink})
+                  });
+                });
+
+                return (
+                    <div>
+                        <Row>
+                            <Col span={20} offset={2}>
+                                <Card title = {challenge.name + "  Due Date: " + challenge.duedate}>
+                                    <p>{challenge.description}</p>
+                                    {data.map(submission => {
+                                        return(
+                                            <p>{submission.name + " : " + submission.gitHubLink}</p>
+                                            )
+                                        })
+                                    }
+                                    <Button type="primary" shape="circle" icon="delete" onClick={(currName) => this.handleDelete(currName)}/>
+                                </Card>
+                            </Col>
+                        </Row>
+                        <br/>
+                    </div>
+                )
+                })
+            }
+        </div>
         )
     }
 }
