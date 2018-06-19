@@ -49,7 +49,7 @@ export default class Router extends Component {
                     render={() => (<div><TopBar user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <Profile person={this.props.userInfo} userID={this.props.userID} /></div>)} />
                 <Route
                     path="/alumni-list"
-                    render={() => (<div><TopBar user={this.props.user} updateField={(field, newVal) => this.updateField(field, newVal)} status="intern" /> <AlumniList person={this.props.userInfo} userID={this.props.userID} /></div>)} />
+                    render={() => (<div><TopBar user={this.props.user} updateField={this.props.updateField} status="intern" /> <AlumniList person={this.props.userInfo} userID={this.props.userID} /></div>)} />
                 <Route
                     path="/statistics"
                     render={() => (<div><Statistics updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
