@@ -73,8 +73,6 @@ export default class SignUpForm extends Component {
   logUser = user => {
     const uid = fire.auth().currentUser.uid;
 
-    const uid = fire.auth().currentUser.uid;
-
     const usernameRef = fire
       .database()
       .ref("users/" + uid)
@@ -123,6 +121,7 @@ export default class SignUpForm extends Component {
                   value={this.state.email}
                 />
               </Col>
+              <br />
               <Col>
                 <Input
                   style={{ width: "60%" }}
@@ -132,6 +131,7 @@ export default class SignUpForm extends Component {
                   value={this.state.username}
                 />
               </Col>
+              <br />
               <Col>
                 <Input
                   style={{ width: "60%" }}
@@ -141,6 +141,7 @@ export default class SignUpForm extends Component {
                   value={this.state.fullname}
                 />
               </Col>
+              <br />
               <Col>
                 <Input
                   style={{ width: "60%" }}
@@ -151,6 +152,7 @@ export default class SignUpForm extends Component {
                   type="password"
                 />
               </Col>
+              <br />
               <Col>
                 <Select
                   placeholder="Status"
@@ -162,6 +164,8 @@ export default class SignUpForm extends Component {
                   <Option value="administrator">Administrator</Option>
                 </Select>
               </Col>
+              <br />
+              <br />
               <Link to="/signup-message">
                 <Button
                   className="SubmitButton"

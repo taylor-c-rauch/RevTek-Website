@@ -64,21 +64,25 @@ export default class LoginForm extends Component {
                   onChange={e => this.handleUserInput(e)}
                 />
               </Col>
+              <br />
               <Col>
                 <Input
                   style={{ width: "70%" }}
                   id="password"
                   placeholder="Password"
+                  type="password"
                   onChange={e => this.handleUserInput(e)}
                 />
               </Col>
+              <br />
               <Button type="primary" onClick={e => this.login(e)}>
                 Login
               </Button>
-              Don't have an account?
-              <Link to="/sign-up">
-                <Button type="primary">Sign Up</Button>
-              </Link>
+              <br />
+              <br />
+
+              <div>Don't have an account?</div>
+              <Link to="/sign-up">Sign Up</Link>
             </Row>
           </div>
         </section>
