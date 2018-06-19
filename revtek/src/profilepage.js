@@ -141,10 +141,16 @@ export default class Profile extends Component {
     renderSkill = () => {
         if (this.state.showSkillInput == true) {
             return (
-                <div>
-                    <Input value={this.state.skill} wplaceholder="New Skill" name="skill" onChange={this.handleChange} />
-                    <Button onClick={() => this.onSubmitSkill()} htmlType="submit" >Submit</Button>
+              <Row>
+                <div style={{paddingTop: 10}}>
+                  <Col span={15}>
+                    <Input placeholder="New Skill" name="skill" onChange={this.handleChange} />
+                  </Col>
+                  <Col span={9}>
+                    <Button onClick={() => this.onSubmitSkill()} htmlType="submit" type="dashed" >Submit</Button>
+                  </Col>
                 </div>
+              </Row>
             )
         } else if (this.state.showSkillInput == false) {
             return (<div></div>);
@@ -205,9 +211,10 @@ export default class Profile extends Component {
 
     renderCompleted = () => {
 
-        return (
-            <ToDoItem list={this.state.todoList} check={this.state.completed} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
-        )
+          return(
+            <ToDoItem list={this.state.todoList} check={this.state.completed} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)}/>
+          )
+
 
     }
 
@@ -242,20 +249,22 @@ export default class Profile extends Component {
                                     {this.props.person.fullname}
                                 </Card>
 
+                                <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<Row><div><Button size="small" onClick={() => this.onShowInput()}> + </Button><Col span={24}>{this.renderSkill()}</Col></div></Row>}>
+                                  {this.state.skills.map((skills) => {
+                                    return (
+                                    <div key={skills.id}>
+                                      <Row style={{paddingBottom: 20}}>
+                                        <Col span={20}>
+                                          <Tag style={{paddingRight: 20, paddingLeft: 20}} color="magenta">{skills.skill}</Tag>
+                                        </Col>
+                                        <Col span={4}>
+                                          <Button type="danger" onClick={() => this.removeSkill(skills.id)}>X</Button>
+                                        </Col>
+                                      </Row>
+                                    </div>
+                                  )
+                                  })}
 
-                                <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<div><Button size="small" onClick={() => this.onShowInput()}> + </Button>{this.renderSkill()}</div>}>
-                                    {this.state.skills.map((skills, i) => {
-                                        return (
-                                            <div key={skills.id} >
-                                                <Card className="container">
-
-                                                    <Typography variant="caption">{skills.skill}</Typography>
-                                                    <Button size="small" type="danger" onClick={(i) => this.removeSkill(i)}>X</Button>
-
-                                                </Card>
-                                            </div>
-                                        )
-                                    })}
                                 </Card>
 
                                 <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button onClick={this.showModal} size="small">Edit</Button>}>
@@ -308,9 +317,17 @@ export default class Profile extends Component {
                                 />
                                 <Card style={{ marginTop: 8 }} type="inner" title="To-Do">
                                     <Form>
-                                        <Input placeholder="New Task" name="task" onChange={this.handleChange} />
-                                        <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange} />
-                                        <Button size="small" onClick={this.handleClick}> + </Button>
+                                      <Row>
+                                        <Col span={6}>
+                                          <Input placeholder="New Task" name="task" onChange={this.handleChange} />
+                                        </Col>
+                                        <Col span={6} style={{paddingLeft:10}}>
+                                          <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange} />
+                                        </Col>
+                                        <Col span={3} style={{paddingLeft:10}}>
+                                          <Button size="medium" onClick={this.handleClick}> + </Button>
+                                        </Col>
+                                      </Row>
                                     </Form>
                                     {this.renderCompleted()}
 
