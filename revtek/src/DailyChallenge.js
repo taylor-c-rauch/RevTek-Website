@@ -12,9 +12,37 @@ export default class DailyChallenge extends Component{
 	constructor(props){
 		super(props);
 		this.state = ({
-			dailyChallengeID: 0,
-			gitHubLink: 0
+			challengeName: "",
+			dueDate: "",
+			challengeDescription: "",
+			gitHubLink: "None"
 		})
+	}
+
+	componentDidMount(){
+		const challengesRef = fire.database().ref('challenges');
+		challengesRef.on('value', (snapshot) => {
+			let currTime = new Date().getTime()
+        	let endTime = currTime + 87400000;
+            let challengesSnapshot = snapshot.val();
+            let challengesArray = []
+            console.log(challengesSnapshot)
+            console.log(currTime)
+            console.log(endTime)
+
+           	for (let challenge in challengesSnapshot){
+           		if (challengesSnapshot[challenge].seconds <= endTime && challengesSnapshot[challenge].seconds >= currTime)
+	            	this.setState({
+	            		challengeName: challengesSnapshot[challenge].name,
+	            		dueDate: challengesSnapshot[challenge].duedate,
+	            		challengeDescription: challengesSnapshot[challenge].description
+	            	}) 
+            }
+
+            this.setState({
+            	challenges: challengesArray
+            })
+        })
 	}
 
 	handleChange = (e) => {
@@ -27,33 +55,21 @@ export default class DailyChallenge extends Component{
 	handleSubmit = (e) => {
 		e.preventDefault();
 
-		const currUserRef = fire.database().ref('users/' + this.props.userID + '/dailyChallenges/');
-
-		let test = [];
-		var dailyObject = ({ID: this.state.dailyChallengeID , Link: this.state.gitHubLink})
-		currUserRef.push(dailyObject);
-
-		
-
-    	this.setState({
-    		dailyChallengeID: 0 , 
-    		gitHubLink: "" 
-    	});	
+		const challengesRef = fire.database().ref('challenges/' + this.state.challengeName + '/submissions');
+		challengesRef.child(this.props.person.fullname).set({ 
+            Name: this.props.person.fullname,
+            gitHubLink: this.state.gitHubLink
+        });
 	}
 
 	render() {
+		console.log(this.state.challengeName)
 		return (
 			<Row>
 				<Col span = {24}>
 					<Content className="info">
-						<Card title="Daily Challenge" bordered={true}>
-							<p><font size="5">"Lorem ipsum dolor sit amet, consectetur 
-							adipiscing elit, sed do eiusmod tempor incididunt ut labore 
-							et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
-							ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-							in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-							Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt 
-							ollit anim id est laborum."</font></p>
+						<Card title={this.state.challengeName + " Due Date:" + this.state.dueDate} bordered={true}>
+							<p>{this.state.challengeDescription}</p>
 						</Card>
 					</Content>
 				</Col>

@@ -69,8 +69,12 @@ export default class UserList extends React.Component {
                  <h1> User Profiles </h1> 
                      {isClicked ? <Button size="medium" onClick={this.handleClick}>Done</Button> : <Button size="medium" onClick={this.handleClick}>Edit</Button>} 
                      <div style={{ background: '#ECECEC', padding: '30px' }}>
+                        <div>
+                        <h2> Users to Approve </h2> 
                         {this.state.allUsers.map((user) => {
-                            return (
+                            if (user.approved == false) {
+                                return (
+                                <div>
                                 <Card title={user.fullname} bordered={false} style={{ marginTop: 8 }}>
                                     <p>Username: {user.username}</p>
                                     <p>Email: {user.email}</p>
@@ -83,8 +87,34 @@ export default class UserList extends React.Component {
                                         </Select> 
                                     </div>: null}
                                 </Card>
-                            )
+                                </div>
+                                );
+                            }
                         })}
+                        </div>
+                        <div>
+                        <h2> Approved Users </h2> 
+                        {this.state.allUsers.map((user) => {
+                            if (user.approved == true) {
+                                return (
+                                <div>
+                                <Card title={user.fullname} bordered={false} style={{ marginTop: 8 }}>
+                                    <p>Username: {user.username}</p>
+                                    <p>Email: {user.email}</p>
+                                    {isClicked ?  <div> <Button size="medium" onClick={() => this.removeItem(user.id)}>Remove User</Button>
+                                        <br/> 
+                                        <Select placeholder="Status" style={{ width: "60%" }} onChange={value => this.handleSelect(user.id, value)}>
+                                            <Option value="intern">Intern</Option>
+                                            <Option value="alumni">Alumni</Option>
+                                            <Option value="administrator">Administrator</Option>
+                                        </Select> 
+                                    </div>: null}
+                                </Card>
+                                </div>
+                                );
+                            }
+                        })}
+                        </div>
                      </div> 
                  </Col> 
                  </Row> 
