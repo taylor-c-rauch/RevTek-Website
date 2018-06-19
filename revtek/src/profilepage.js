@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Input, Card, Row, Col, Button, Checkbox, InputNumber, Form, Modal, Icon } from 'antd';
 import TopBar from "./top-bar";
-import fire from './fire.js'
+import fire from './fire.js';
+import ToDoItem from './ToDoItem';
 
 const Search = Input.Search;
 
@@ -9,8 +10,8 @@ export default class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            task: "", 
-            hours: null, 
+            task: "",
+            hours: null,
             todoList: [],
             visible: false,
             gitHubInput: "",
@@ -20,8 +21,10 @@ export default class Profile extends Component {
             loading: false,
             skill: "",
             skills: [],
-            showSkillInput: false
+            showSkillInput: false,
+            completed: false
         }
+        this.renderCompleted = this.renderCompleted.bind(this);
     }
 
     handleChange=e => {
@@ -35,7 +38,8 @@ export default class Profile extends Component {
         const currUserRef = fire.database().ref('users/' + this.props.userID + '/todo/');
         currUserRef.push({
             task: this.state.task,
-            hours: this.state.hours
+            hours: this.state.hours,
+            completed: this.state.completed
         });
         this.setState({
             task: '',
@@ -85,11 +89,6 @@ export default class Profile extends Component {
     }
 
 
-    //  removes contracts
-    removeItem(itemId) {
-        const itemRef = fire.database().ref('users/' + this.props.userID + '/todo/');
-        itemRef.remove();
-    }
 
     showModal = e => {
         this.setState({
@@ -123,14 +122,14 @@ export default class Profile extends Component {
       })
     }
 
-    removeSkill = (e) => {
-      const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/' )
+    removeSkill = (skillId) => {
+      const skillRef = fire.database().ref('users/' + this.props.userID + `/skills/${skillId}` )
 
-      skillRef.remove(e.toString())
-
-      console.log(e)
+      skillRef.remove()
 
     }
+
+
 
     renderSkill = () => {
       if (this.state.showSkillInput == true) {
@@ -150,6 +149,47 @@ export default class Profile extends Component {
         showSkillInput: !this.state.showSkillInput
       })
     }
+
+    onComplete = (itemId) => {
+      const currUserRef = fire.database().ref('users/' + this.props.userID + `/todo/${itemId}`)
+      currUserRef.update({
+        completed: !this.state.completed
+      })
+      this.setState({
+        completed: !this.state.completed
+      })
+      console.log(this.state.completed)
+
+
+
+
+    }
+
+
+
+
+
+    //  removes contracts
+    removeItem(itemId) {
+        const itemRef = fire.database().ref('users/' + this.props.userID + `/todo/${itemId}`);
+        itemRef.remove();
+    }
+
+    renderCompleted = () => {
+        if(this.props.person.todo === false) {
+          return(
+            <ToDoItem list={this.state.todoList} check={this.state.completed} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)}/>
+          )
+        } else if (this.state.completed === true) {
+          return(
+            <div>
+              <h1>hi there</h1>
+              <ToDoItem list={this.state.todoList} check={this.state.completed} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)}/>
+            </div>
+          )
+        }
+      }
+
 
     render() {
         return (
@@ -171,11 +211,11 @@ export default class Profile extends Component {
 
 
                                 <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<div><Button size="small" onClick={() => this.onShowInput()}> + </Button>{this.renderSkill()}</div>}>
-                                  {this.state.skills.map((skills, i) => {
+                                  {this.state.skills.map((skills) => {
                                     return (
-                                    <div key={i}>
+                                    <div key={skills.id}>
                                       <h5>{skills.skill}</h5>
-                                      <Button type="danger" onClick={(i) => this.removeSkill(i)}>X</Button>
+                                      <Button type="danger" onClick={() => this.removeSkill(skills.id)}>X</Button>
                                     </div>
                                   )
                                   })}
@@ -196,18 +236,18 @@ export default class Profile extends Component {
                                         </Button>,
                                     ]}
                                     >
-                                    <Input 
-                                        placeholder= "GitHub" 
-                                        name="gitHubInput" 
-                                        prefix={<Icon type="link" 
-						        	    style={{ color: 'rgba(0,0,0,.25)' }} />} 
+                                    <Input
+                                        placeholder= "GitHub"
+                                        name="gitHubInput"
+                                        prefix={<Icon type="link"
+						        	    style={{ color: 'rgba(0,0,0,.25)' }} />}
                                         onChange={this.handleChange}>
                                     </Input>
-                                    <Input 
-                                        placeholder="LinkedIn" 
-                                        name="linkedInInput" 
-                                        prefix={<Icon type="link" 
-						        	    style={{ color: 'rgba(0,0,0,.25)' }} />} 
+                                    <Input
+                                        placeholder="LinkedIn"
+                                        name="linkedInInput"
+                                        prefix={<Icon type="link"
+						        	    style={{ color: 'rgba(0,0,0,.25)' }} />}
                                         onChange={this.handleChange}>
                                     </Input>
                                     </Modal>
@@ -229,17 +269,8 @@ export default class Profile extends Component {
                                             <Button size="small" onClick={this.handleClick}> + </Button>
                                         </Form>
 
-                                    {this.state.todoList.map((todo) => {
-                                        return (
-                                            <Card style={{ marginTop: 8 }} >
-                                                <Checkbox> {todo.task}</Checkbox>
-                                                <br/>
-                                                Hours: {todo.hours}
-                                                <br/>
-                                                <Button onClick={() => this.removeItem(todo.id)}>Remove Contract</Button>
-                                            </Card>
-                                        )
-                                    })}
+                                      {this.renderCompleted()}
+
                                 </Card>
                             </Card>
                         </Col>
