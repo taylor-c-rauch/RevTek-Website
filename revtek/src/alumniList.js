@@ -1,6 +1,6 @@
 import React from 'react'; 
 import ReactDom from 'react-dom'; 
-import { Row, Col, Card, Anchor } from 'antd';
+import { Row, Col, Card, Text} from 'antd';
 import fire from "./fire.js";
 import './alumniList.css';
 
@@ -37,7 +37,10 @@ export default class AlumniList extends React.Component {
         {alum.map(i => {
             return (
             <div style={{ background: '#ECECEC', padding: '30px'}}>
-                <Card className="alumniCards" title={i.fullname} bordered={false}>
+                <Card className="alumniCards" 
+                      title={<h1 className="cardTitle">{i.fullname} </h1>} 
+                      extra={<img width="100px" height="100px" alt="example" src={i.profilepic}/>} 
+                      bordered={false}>
                     GitHub: <a href={i.gitHub}> {i.gitHub} </a>
                     <br/>
                     LinkedIn: <a href={i.linkedIn}> {i.linkedIn} </a>
