@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Input, Card, Row, Col, Button, Checkbox, InputNumber, Form, Modal, Icon } from 'antd';
+import { Popover, Input, Card, Row, Col, Button, Checkbox, InputNumber, Form, Modal, Icon } from 'antd';
 import TopBar from "./top-bar";
 import fire from './fire.js';
+import { Typography } from "@material-ui/core";
 import ToDoItem from './ToDoItem';
-
 
 const Search = Input.Search;
 const storageRef = fire.storage().ref();
@@ -28,6 +28,7 @@ export default class Profile extends Component {
             completed: false,
             profilepic: this.props.person.profilepic
         }
+        console.log(this.props.person.profilepic);
         this.renderCompleted = this.renderCompleted.bind(this);
     }
 
@@ -108,8 +109,8 @@ export default class Profile extends Component {
         const usersRef = fire.database().ref('users/' + this.props.userID);
         this.setState({ loading: true });
         setTimeout(() => {
-        this.setState({ loading: false, visible: false });
-            }, 500);
+            this.setState({ loading: false, visible: false });
+        }, 500);
         usersRef.update({
             linkedIn: this.state.linkedInInput,
             gitHub: this.state.gitHubInput
@@ -140,7 +141,7 @@ export default class Profile extends Component {
         if (this.state.showSkillInput == true) {
             return (
                 <div>
-                    <Input placeholder="New Skill" name="skill" onChange={this.handleChange} />
+                    <Input value={this.state.skill} wplaceholder="New Skill" name="skill" onChange={this.handleChange} />
                     <Button onClick={() => this.onSubmitSkill()} htmlType="submit" >Submit</Button>
                 </div>
             )
@@ -211,11 +212,12 @@ export default class Profile extends Component {
 
 
     render() {
+        //<input type="file" onChange={this.fileChangedHandler} />
         let userRef = fire.database().ref('users/' + this.props.userID);
         let user = {};
         userRef.on('value', (snapshot) => {
             user = snapshot.val();
-          });
+        });
         let linkedIn = user.linkedIn;
         let gitHub = user.gitHub;
         return (
@@ -232,24 +234,28 @@ export default class Profile extends Component {
                                     fontWeight: 500,
                                 }}
                                 />
-                                <Card style={{ marginTop: 8 }} type="inner" extra={<input type="file" onChange={this.fileChangedHandler} />} cover={<img alt="example" src={this.state.profilepic} />}>
+                                <Card style={{ marginTop: 8 }} type="inner" extra={<Popover trigger="click" placement="bottom" content={<input type="file" accept=".jpg, .jpeg, .png" onChange={this.fileChangedHandler} />}><Button size="small">Edit Picture </Button></Popover>} cover={<img src={this.props.person.profilepic} />}>
                                     {this.props.person.fullname}
                                 </Card>
 
 
                                 <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<div><Button size="small" onClick={() => this.onShowInput()}> + </Button>{this.renderSkill()}</div>}>
-                                  {this.state.skills.map((skills) => {
-                                    return (
-                                    <div key={skills.id}>
-                                      <h5>{skills.skill}</h5>
-                                      <Button type="danger" onClick={() => this.removeSkill(skills.id)}>X</Button>
-                                    </div>
-                                  )
-                                  })}
+                                    {this.state.skills.map((skills, i) => {
+                                        return (
+                                            <div key={skills.id}>
+                                                <Card>
+
+                                                    <Typography variant="caption">{skills.skill}</Typography>
+                                                    <Button size="small" type="danger" onClick={(i) => this.removeSkill(i)}>X</Button>
+
+                                                </Card>
+                                            </div>
+                                        )
+                                    })}
                                 </Card>
                                 <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button onClick={this.showModal} size="small">Edit</Button>}>
 
-                                    GitHub: <a href={gitHub}> {gitHub} </a>
+                                   GitHub: <a href={gitHub}> {gitHub} </a>
                                 <br />
                                     LinkedIn: <a href={linkedIn}> {linkedIn} </a>
                                 </Card>
