@@ -9,14 +9,13 @@ import LoginForm from './LoginForm';
 import TopBar from "./top-bar";
 
 export default class Login extends Component {
-
   render() {
-
-    return (
-      <div>
-
-        {this.props.user ? <Redirect to="/profile" /> : <div> <LoginForm updateField={this.props.updateField} user={this.props.user} person={this.props.person} /></div>}
-      </div>
-    );
+    console.log(this.props.approved);
+      return (
+        <div>
+          {this.props.user ? <Redirect to="/profile"/> : <div> <LoginForm updateField={this.props.updateField} user={this.props.user} person={this.props.person} /></div>}
+        </div>
+        
+      )
   }
 }
