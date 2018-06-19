@@ -3,6 +3,7 @@ import { Popover, Input, Card, Row, Col, Button, Checkbox, InputNumber, Form, Mo
 import TopBar from "./top-bar";
 import fire from './fire.js';
 import { Typography } from "@material-ui/core";
+import ToDoItem from './ToDoItem';
 
 const Search = Input.Search;
 const storageRef = fire.storage().ref();
@@ -12,7 +13,6 @@ export default class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
             task: "",
             hours: null,
             todoList: [],
@@ -25,9 +25,11 @@ export default class Profile extends Component {
             skill: "",
             skills: [],
             showSkillInput: false,
+            completed: false,
             profilepic: this.props.person.profilepic
         }
         console.log(this.props.person.profilepic);
+        this.renderCompleted = this.renderCompleted.bind(this);
     }
 
     handleChange = e => {
@@ -41,7 +43,8 @@ export default class Profile extends Component {
         const currUserRef = fire.database().ref('users/' + this.props.userID + '/todo/');
         currUserRef.push({
             task: this.state.task,
-            hours: this.state.hours
+            hours: this.state.hours,
+            completed: this.state.completed
         });
         this.setState({
             task: '',
@@ -91,11 +94,6 @@ export default class Profile extends Component {
     }
 
 
-    //  removes contracts
-    removeItem(itemId) {
-        const itemRef = fire.database().ref('users/' + this.props.userID + '/todo/');
-        itemRef.remove();
-    }
 
     showModal = e => {
         this.setState({
@@ -129,14 +127,15 @@ export default class Profile extends Component {
         })
     }
 
-    removeSkill = (e) => {
-        const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/')
 
-        skillRef.remove(e.toString())
+    removeSkill = (skillId) => {
+      const skillRef = fire.database().ref('users/' + this.props.userID + `/skills/${skillId}` )
 
-        console.log(e)
+      skillRef.remove()
 
     }
+
+
 
     renderSkill = () => {
         if (this.state.showSkillInput == true) {
@@ -178,6 +177,40 @@ export default class Profile extends Component {
 
     }
 
+    onComplete = (itemId) => {
+      const currUserRef = fire.database().ref('users/' + this.props.userID + `/todo/${itemId}`)
+      currUserRef.update({
+        completed: !this.state.completed
+      })
+      this.setState({
+        completed: !this.state.completed
+      })
+      console.log(this.state.completed)
+
+
+
+
+    }
+
+
+
+
+
+    //  removes contracts
+    removeItem(itemId) {
+        const itemRef = fire.database().ref('users/' + this.props.userID + `/todo/${itemId}`);
+        itemRef.remove();
+    }
+
+    renderCompleted = () => {
+        
+          return(
+            <ToDoItem list={this.state.todoList} check={this.state.completed} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)}/>
+          )
+
+      }
+
+
     render() {
         //<input type="file" onChange={this.fileChangedHandler} />
         let userRef = fire.database().ref('users/' + this.props.userID);
@@ -209,7 +242,7 @@ export default class Profile extends Component {
                                 <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<div><Button size="small" onClick={() => this.onShowInput()}> + </Button>{this.renderSkill()}</div>}>
                                     {this.state.skills.map((skills, i) => {
                                         return (
-                                            <div key={i}>
+                                            <div key={skills.id}>
                                                 <Card>
 
                                                     <Typography variant="caption">{skills.skill}</Typography>
@@ -222,9 +255,9 @@ export default class Profile extends Component {
                                 </Card>
                                 <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button onClick={this.showModal} size="small">Edit</Button>}>
 
-                                    Github: {linkedIn}
-                                    <br />
-                                    LinkedIn: {gitHub}
+                                   GitHub: <a href={gitHub}> {gitHub} </a>
+                                <br />
+                                    LinkedIn: <a href={linkedIn}> {linkedIn} </a>
                                 </Card>
                                 <Modal
                                     visible={this.state.visible}
@@ -236,18 +269,21 @@ export default class Profile extends Component {
                                             Submit
                                         </Button>,
                                     ]}
-                                >
+                                    >
+
                                     <Input
                                         placeholder="GitHub"
                                         name="gitHubInput"
                                         prefix={<Icon type="link"
                                             style={{ color: 'rgba(0,0,0,.25)' }} />}
+
                                         onChange={this.handleChange}>
                                     </Input>
                                     <Input
                                         placeholder="LinkedIn"
                                         name="linkedInInput"
                                         prefix={<Icon type="link"
+
                                             style={{ color: 'rgba(0,0,0,.25)' }} />}
                                         onChange={this.handleChange}>
                                     </Input>
@@ -269,18 +305,8 @@ export default class Profile extends Component {
                                         <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange} />
                                         <Button size="small" onClick={this.handleClick}> + </Button>
                                     </Form>
+                                      {this.renderCompleted()}
 
-                                    {this.state.todoList.map((todo) => {
-                                        return (
-                                            <Card style={{ marginTop: 8 }} >
-                                                <Checkbox> {todo.task}</Checkbox>
-                                                <br />
-                                                Hours: {todo.hours}
-                                                <br />
-                                                <Button onClick={() => this.removeItem(todo.id)}>Remove Contract</Button>
-                                            </Card>
-                                        )
-                                    })}
                                 </Card>
                             </Card>
                         </Col>
