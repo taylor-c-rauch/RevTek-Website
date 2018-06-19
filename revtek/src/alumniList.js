@@ -39,6 +39,7 @@ export default class AlumniList extends React.Component {
             <div style={{ background: '#ECECEC', padding: '30px'}}>
                 <Card className="alumniCards" title={i.fullname} bordered={false}>
                     GitHub: <a href={i.gitHub}> {i.gitHub} </a>
+                    <br/>
                     LinkedIn: <a href={i.linkedIn}> {i.linkedIn} </a>
                 </Card>
             </div>
