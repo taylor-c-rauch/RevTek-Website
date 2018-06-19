@@ -24,6 +24,19 @@ export default class ContractEditor extends React.Component {
         }
       };
 
+      handleClick = e => {
+        const usersRef = fire.database().ref('users');
+        usersRef.on('value', (snapshot) => {
+        let userVals = snapshot.val();
+        var curUser = fire.auth().currentUser;
+        console.log(curUser.email)
+        for (let user in userVals) {
+            if(userVals[user].email == curUser.email)
+                this.state.data.bidders.push[userVals[user].fullname]
+        }
+        }
+    )};
+
     componentDidMount() {
         const contractsRef = fire.database().ref('contracts');
         contractsRef.on('value', (snapshot) => {
@@ -40,7 +53,8 @@ export default class ContractEditor extends React.Component {
                 skills: contractVals[info].skills,
                 payRate: "",
                 estHours: "",
-                onDisabled: false
+                onDisabled: false,
+                bidders: []
               };
               newState.push(contract);
           }
@@ -89,6 +103,7 @@ export default class ContractEditor extends React.Component {
         <p>{x.email}</p>
         <p>{x.numinterns}</p>
         <p>{x.skills}</p>
+        <p>{x.bidders}</p>
         <Dropdown overlay={menu} trigger={['click']}>
         <a className="ant-dropdown-link" href="#">
          Options <Icon type="down" />

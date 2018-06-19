@@ -1,7 +1,10 @@
 import React from 'react'; 
 import ReactDom from 'react-dom'; 
-import { Row, Col, Card, Button } from 'antd';
+import { Row, Col, Card, Button, Select} from 'antd';
 import fire from "./fire.js";
+
+
+const Option = Select.Option
 
 export default class UserList extends React.Component {
     constructor(props) {
@@ -18,72 +21,67 @@ export default class UserList extends React.Component {
         })
     }
 
-    removeItem(itemId) {
-        const itemRef = fire.database().ref('users/' + this.props.userID);
-        itemRef.remove();
+    handleSelect = (userID, value) => {
+        let hopperRef = fire.database().ref(`/users/${userID}`);
+        hopperRef.update({
+            status: value, 
+        }); 
+      };
+    
+
+    removeItem(userID) {
+        const userRef = fire.database().ref(`/users/${userID}`);
+        userRef.remove();
     }
 
     componentDidMount(){
         let usersRef = fire.database().ref('users');
-        let users = {};
-        let allUsers = [];
         usersRef.on('value', (snapshot) => {
-            users = snapshot.val();
-          });
-        Object.keys(users).forEach((key) => {
-            let status = users[key].status;
-            allUsers.push(users[key])
+            let users = snapshot.val();
+            let allUsers = []; 
+            for (let user in users) {
+                allUsers.push({
+                  id: user, 
+                  name: users[user].fullname, 
+                  email: users[user].email, 
+                  username: users[user].username,
+                }); 
+            }
+            this.setState({
+                allUsers: allUsers
+              });
         });
-        this.setState({allUsers: allUsers});
     }
 
-
     render() {
-        if (this.state.clicked == true) {
-            return (
-               <div>
-                     <Row gutter={16}>
-                     <Col span={8}>
-                     <h1> User Profiles </h1> 
-                         <Button size="medium" onClick={this.handleClick}>Done</Button>
-                         {this.state.allUsers.map((user) => {
-                             return (
-                                 <div style={{ background: '#ECECEC', padding: '30px' }}>
-                                 <Card title={user.fullname} bordered={false} style={{ width: 200 }}>
-                                     <p>Username: {user.username}</p>
-                                     <p>Email: {user.email}</p>
-                                     <Button size="medium" onClick={() => this.removeItem(user.id)}>Remove User</Button>
-                                 </Card>
-                                 </div> 
-                             )
-                         })}
-                     </Col> 
-                     </Row> 
-                 </div> 
-            )
-        }
-        else {
-            return (
-                <div>
-                     <Row gutter={16}>
-                     <Col span={8}>
-                     <h1> User Profiles </h1> 
-                         <Button size="medium" onClick={this.handleClick}>Edit</Button>
-                         {this.state.allUsers.map((user) => {
-                             return (
-                                 <div style={{ background: '#ECECEC', padding: '30px' }}>
-                                 <Card title={user.fullname} bordered={false} style={{ marginTop: 8 }}>
-                                     <p>Username: {user.username}</p>
-                                     <p>Email: {user.email}</p>
-                                 </Card>
-                                 </div> 
-                             )
-                         })}
-                     </Col> 
-                     </Row> 
-                 </div> 
-             ); 
-
-        }
+        const isClicked = this.state.clicked; 
+        return (
+            <div>
+                 <Row gutter={16}>
+                 <Col span={8}>
+                 <h1> User Profiles </h1> 
+                     {isClicked ? <Button size="medium" onClick={this.handleClick}>Done</Button> : <Button size="medium" onClick={this.handleClick}>Edit</Button>} 
+                     <div style={{ background: '#ECECEC', padding: '30px' }}>
+                        {this.state.allUsers.map((user) => {
+                            return (
+                                <Card title={user.fullname} bordered={false} style={{ marginTop: 8 }}>
+                                    <p>Username: {user.username}</p>
+                                    <p>Email: {user.email}</p>
+                                    {isClicked ?  <div> <Button size="medium" onClick={() => this.removeItem(user.id)}>Remove User</Button> 
+                                        <br/> 
+                                        <Select placeholder="Status" style={{ width: "60%" }} onChange={value => this.handleSelect(user.id, value)}>
+                                            <Option value="intern">Intern</Option>
+                                            <Option value="alumni">Alumni</Option>
+                                            <Option value="administrator">Administrator</Option>
+                                        </Select> 
+                                    </div>: null}
+                                </Card>
+                            )
+                        })}
+                     </div> 
+                 </Col> 
+                 </Row> 
+             </div> 
+         ); 
     }
 }
