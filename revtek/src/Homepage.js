@@ -27,16 +27,16 @@ export default class Homepage extends Component {
             </p2>
           </section>
           <div className="Footer">
-            <h2> Who are we? </h2>
+            <h2 className="Who"> Who are we? </h2>
             <Row type="flex" justify="center">
-              <p color="FFFFFF">
+              <p color="FFFFFF" className="Description">
                 {" "}
                 At RevTek, we want to empower our employees to make meaningful
                 change in the world around them through the implementation of
                 world-class software.
               </p>
             </Row>
-            <p>
+            <p className="Description">
               We have built a community of developers with the expertise to
               flawlessly carry out your projects and ideas. We are excited to
               see what we can accomplish together.
