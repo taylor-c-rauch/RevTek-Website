@@ -27,11 +27,17 @@ export default class UserList extends React.Component {
             status: value, 
         }); 
       };
-    
 
     removeItem(userID) {
         const userRef = fire.database().ref(`/users/${userID}`);
         userRef.remove();
+    }
+
+    handleCreate = (userID) => {
+        let approvalRef = fire.database().ref(`/users/${userID}`);
+        approvalRef.update({
+            approved: true, 
+        })
     }
 
     componentDidMount(){
@@ -45,6 +51,7 @@ export default class UserList extends React.Component {
                   name: users[user].fullname, 
                   email: users[user].email, 
                   username: users[user].username,
+                  approved: users[user].approved, 
                 }); 
             }
             this.setState({
@@ -67,7 +74,7 @@ export default class UserList extends React.Component {
                                 <Card title={user.fullname} bordered={false} style={{ marginTop: 8 }}>
                                     <p>Username: {user.username}</p>
                                     <p>Email: {user.email}</p>
-                                    {isClicked ?  <div> <Button size="medium" onClick={() => this.removeItem(user.id)}>Remove User</Button> 
+                                    {isClicked ?  <div> <Button size="medium" onClick={() => this.removeItem(user.id)}>Remove User</Button> <Button size="medium" onClick={() => this.handleCreate(user.id)}> Approve New User </Button> 
                                         <br/> 
                                         <Select placeholder="Status" style={{ width: "60%" }} onChange={value => this.handleSelect(user.id, value)}>
                                             <Option value="intern">Intern</Option>

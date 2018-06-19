@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Input, Card, Row, Col, Button, Checkbox, InputNumber, Form, Modal, Icon, Tag } from 'antd';
+import { Popover, Input, Card, Row, Col, Button, Checkbox, InputNumber, Form, Modal, Icon } from 'antd';
 import TopBar from "./top-bar";
 import fire from './fire.js';
+import { Typography } from "@material-ui/core";
 import ToDoItem from './ToDoItem';
-
+import "./profilepage.css";
 
 const Search = Input.Search;
 const storageRef = fire.storage().ref();
@@ -28,10 +29,11 @@ export default class Profile extends Component {
             completed: false,
             profilepic: this.props.person.profilepic
         }
+        console.log(this.props.person.profilepic);
         this.renderCompleted = this.renderCompleted.bind(this);
     }
 
-    handleChange = e => {
+   handleChange=e => {
         this.setState({
             [e.target.name]: e.target.value
         });
@@ -108,8 +110,8 @@ export default class Profile extends Component {
         const usersRef = fire.database().ref('users/' + this.props.userID);
         this.setState({ loading: true });
         setTimeout(() => {
-        this.setState({ loading: false, visible: false });
-            }, 500);
+            this.setState({ loading: false, visible: false });
+        }, 500);
         usersRef.update({
             linkedIn: this.state.linkedInInput,
             gitHub: this.state.gitHubInput
@@ -128,9 +130,9 @@ export default class Profile extends Component {
 
 
     removeSkill = (skillId) => {
-      const skillRef = fire.database().ref('users/' + this.props.userID + `/skills/${skillId}` )
+        const skillRef = fire.database().ref('users/' + this.props.userID + `/skills/${skillId}`)
 
-      skillRef.remove()
+        skillRef.remove()
 
     }
 
@@ -183,14 +185,14 @@ export default class Profile extends Component {
     }
 
     onComplete = (itemId) => {
-      const currUserRef = fire.database().ref('users/' + this.props.userID + `/todo/${itemId}`)
-      currUserRef.update({
-        completed: !this.state.completed
-      })
-      this.setState({
-        completed: !this.state.completed
-      })
-      console.log(this.state.completed)
+        const currUserRef = fire.database().ref('users/' + this.props.userID + `/todo/${itemId}`)
+        currUserRef.update({
+            completed: !this.state.completed
+        })
+        this.setState({
+            completed: !this.state.completed
+        })
+        console.log(this.state.completed)
 
 
 
@@ -213,19 +215,24 @@ export default class Profile extends Component {
             <ToDoItem list={this.state.todoList} check={this.state.completed} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)}/>
           )
 
-      }
+
+    }
 
 
     render() {
+        if(this.state.approved===false){return(
+            <p> Not approved</p>
+        );}
+        else{
         let userRef = fire.database().ref('users/' + this.props.userID);
         let user = {};
         userRef.on('value', (snapshot) => {
             user = snapshot.val();
-          });
+        });
         let linkedIn = user.linkedIn;
         let gitHub = user.gitHub;
         return (
-            <div>
+            <div className="container">
 
                 <div style={{ background: '#fffff', padding: '30px' }}>
                     <Row gutter={16}>
@@ -238,10 +245,9 @@ export default class Profile extends Component {
                                     fontWeight: 500,
                                 }}
                                 />
-                                <Card style={{ marginTop: 8 }} type="inner" extra={<input type="file" onChange={this.fileChangedHandler} />} cover={<img alt="example" src={this.state.profilepic} />}>
+                                <Card style={{ marginTop: 8 }} type="inner" extra={<Popover trigger="click" placement="bottom" content={<label className="new_Btn" >Select File<input id="html_btn" type="file" accept=".jpg, .jpeg, .png" onChange={this.fileChangedHandler} /></label>}><Button size="small">Edit Picture </Button></Popover>} cover={<img src={this.props.person.profilepic} />}>
                                     {this.props.person.fullname}
                                 </Card>
-
 
                                 <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<Row><div><Button size="small" onClick={() => this.onShowInput()}> + </Button><Col span={24}>{this.renderSkill()}</Col></div></Row>}>
                                   {this.state.skills.map((skills) => {
@@ -258,13 +264,17 @@ export default class Profile extends Component {
                                     </div>
                                   )
                                   })}
+
                                 </Card>
+
                                 <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button onClick={this.showModal} size="small">Edit</Button>}>
 
-                                    GitHub: <a href={gitHub}> {gitHub} </a>
-                                <br />
-                                    LinkedIn: <a href={linkedIn}> {linkedIn} </a>
+                                    GitHub: <a href={gitHub} target="_blank"> {gitHub} </a>
+                                    <br />
+                                    LinkedIn: <a href={linkedIn} target="_blank"> {linkedIn} </a>
+
                                 </Card>
+
                                 <Modal
                                     visible={this.state.visible}
                                     title="Edit Info"
@@ -275,7 +285,7 @@ export default class Profile extends Component {
                                             Submit
                                         </Button>,
                                     ]}
-                                    >
+                                >
 
                                     <Input
                                         placeholder="GitHub"
@@ -319,14 +329,15 @@ export default class Profile extends Component {
                                         </Col>
                                       </Row>
                                     </Form>
-                                      {this.renderCompleted()}
+                                    {this.renderCompleted()}
 
                                 </Card>
                             </Card>
                         </Col>
                     </Row >
                 </div >
-            </div>
+            </div >
         );
     }
 }
+        }

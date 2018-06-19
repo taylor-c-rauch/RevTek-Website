@@ -14,6 +14,7 @@ import SignUpForm from "./SignUpForm";
 import fire from "./fire";
 import UserMessage from "./UserMessage";
 import AlumniList from "./alumniList";
+import NotApproved from "./notApproved";
 
 
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
@@ -21,9 +22,7 @@ import { BrowserRouter, Route, Redirect } from "react-router-dom";
 export default class Router extends Component {
 
     render() {
-        console.log("hello");
         return (
-
             <div>
                 <Redirect to="/home" />
                 <Route
@@ -31,37 +30,41 @@ export default class Router extends Component {
                     render={() => (<div> <Homepage updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
                 <Route
                     path="/challenge-manager"
-                    render={() => (<div><TopBar updateField={this.props.updateField} user={this.props.user} status="admin" /> <ChallengeManager person={this.props.userInfo} /></div>)} />
+                    render={() => (<div><TopBar approved={this.props.approved} updateField={this.props.updateField} user={this.props.user} status="admin" /> <ChallengeManager approved={this.props.approved} person={this.props.userInfo} /></div>)} />
                 <Route
                     path="/contract-submission"
                     render={() => (<div> <Contract updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
                 <Route
                     path="/login"
-                    render={() => (<div> <Login updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
+                    render={() => (<div> <Login approved={this.props.approved} updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
                 <Route
                     path="/sign-up"
                     render={() => (<div><SignUpForm updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
                 <Route
                     path="/daily-challenge"
-                    render={() => (<div><TopBar user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <DailyChallenge person={this.props.userInfo} userID={this.props.userID} /></div>)} />
+                    render={() => (<div><TopBar approved={this.props.approved} user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <DailyChallenge approved={this.props.approved} person={this.props.userInfo} userID={this.props.userID} /></div>)} />
                 <Route
                     path="/profile"
-                    render={() => (<div><TopBar user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <Profile person={this.props.userInfo} userID={this.props.userID} /></div>)} />
+                    render={() => (this.props.approved ? <div><TopBar approved={this.props.approved} user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <Profile approved={this.props.approved} person={this.props.userInfo} userID={this.props.userID} /></div> : <NotApproved/> )} />
                 <Route
                     path="/alumni-list"
-                    render={() => (<div><TopBar user={this.props.user} updateField={this.props.updateField} status="intern" /> <AlumniList person={this.props.userInfo} userID={this.props.userID} /></div>)} />
+                    render={() => (<div><TopBar approved={this.props.approved} user={this.props.user} updateField={this.props.updateField} status="intern" /> <AlumniList approved={this.props.approved} person={this.props.userInfo} userID={this.props.userID} /></div>)} />
                 <Route
                     path="/statistics"
                     render={() => (<div><Statistics updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
                 <Route
                     path="/user-list"
-                    render={() => (<div><TopBar user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <UserList person={this.props.userInfo} /></div>)} />
+                    render={() => (<div><TopBar approved={this.props.approved} user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <UserList approved={this.props.approved} person={this.props.userInfo} /></div>)} />
                 <Route
                     path="/signup-message"
                     render={() => (<div> <UserMessage updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
                 <Route
                     path="/contract-bidding"
-                    render={() => (<div><TopBar user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <BiddingPage person={this.props.userInfo} /></div>)} />
+                    render={() => (<div><TopBar approved={this.props.approved} user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <BiddingPage approved={this.props.approved} person={this.props.userInfo} /></div>)} />
+                    <Route
+                    path="/not-approved"
+                    render={() => (<div> <NotApproved updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
+                
             </div>
 
         );
