@@ -24,7 +24,8 @@ export default class SignUpForm extends Component {
       dailyChallenges: [],
       switch: false,
       todo: [],
-      skills: []
+      skills: [], 
+      approved: false, 
     };
   }
 
@@ -39,7 +40,7 @@ export default class SignUpForm extends Component {
         fire.auth().signOut().catch(error => {
           console.log(error);
         });
-        this.setState({ switch: true, clicked: true, email: "", username: "", fullname: "", password: "", status: "" });
+        this.setState({ switch: true, clicked: true, email: "", username: "", fullname: "", password: "", status: "", approved: false });
       })
       .catch(error => {
         console.log(error);
@@ -64,7 +65,8 @@ export default class SignUpForm extends Component {
       status: this.state.status,
       dailyChallenges: this.state.dailyChallenges,
       todo: this.state.todo,
-      skills: this.state.skills
+      skills: this.state.skills, 
+      approved: this.state.approved, 
     })
 
   };
@@ -97,7 +99,6 @@ export default class SignUpForm extends Component {
         <TopBar updateField={this.props.updateField} status="home" user={this.props.user} />
         <div class="HeaderFiller" />
         <div class="LoginBackground">
-
           <Row>
             <h1 class="RobotoTitle">Sign Up</h1>
             <Col>
@@ -148,13 +149,11 @@ export default class SignUpForm extends Component {
               <Button
                 className="SubmitButton"
                 type="primary"
-                //submit button does nothing yet
                 onClick={e => this.signup(e)}
               >
                 Submit
             </Button>
             </Link>
-            {console.log(this.state.switch)}
             {this.state.switch ? <Redirect to="/signup-message" /> : null}
 
           </Row>

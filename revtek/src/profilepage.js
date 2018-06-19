@@ -24,6 +24,8 @@ export default class Profile extends Component {
         }
     }
 
+
+
     handleChange=e => {
         this.setState({
           [e.target.name]: e.target.value
@@ -152,6 +154,10 @@ export default class Profile extends Component {
     }
 
     render() {
+        if(this.state.approved===false){return(
+            <p> Not approved</p>
+        );}
+        else{
         let userRef = fire.database().ref('users/' + this.props.userID);
         let user = {};
         userRef.on('value', (snapshot) => {
@@ -256,3 +262,4 @@ export default class Profile extends Component {
         );
     }
 }
+        }
