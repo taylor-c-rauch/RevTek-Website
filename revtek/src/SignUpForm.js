@@ -115,6 +115,7 @@ export default class SignUpForm extends Component {
             updateField={this.props.updateField}
             status="home"
             user={this.props.user}
+            person={this.props.person}
           />
           <div class="HeaderFiller" />
           <div class="LoginBackground">
