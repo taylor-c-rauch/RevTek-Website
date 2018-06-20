@@ -128,6 +128,7 @@ export default class ContractSubmission extends Component {
           <TopBar
             status="home"
             user={this.props.user}
+            person={this.props.person}
             updateField={this.props.updateField}
           />
           <div class="Filler" />

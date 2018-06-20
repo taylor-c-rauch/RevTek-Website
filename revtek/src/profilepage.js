@@ -11,7 +11,8 @@ import {
   Form,
   Modal,
   Icon,
-  Tag
+  Tag,
+  Select
 } from "antd";
 import TopBar from "./top-bar";
 import fire from "./fire.js";
@@ -21,6 +22,7 @@ import "./profilepage.css";
 
 const Search = Input.Search;
 const storageRef = fire.storage().ref();
+const Option = Select.Option;
 
 export default class Profile extends Component {
   constructor(props) {
@@ -50,6 +52,16 @@ export default class Profile extends Component {
       [e.target.name]: e.target.value
     });
   };
+
+  handleSelect(value) {
+    this.setState({ skill: value });
+  }
+
+  handleLevel(value) {
+    let skill = this.state.skill + " (" + value + ")";
+    console.log(skill);
+    this.setState({ skill: skill });
+  }
 
   // When the submit button is clicked, the user input gets put on firebase
   handleClick = e => {
@@ -82,14 +94,15 @@ export default class Profile extends Component {
           hours: todoList[todo].hours
         });
       }
-      let skillList = snapshot.val();
-      let newSkill = [];
-      for (let skill in skillList) {
-        newSkill.push({
-          id: skill,
-          skill: skillList[skill].skill
-        });
-      }
+      // let skillList = snapshot.val();
+      // let newSkill = [];
+      // for (let skill in skillList) {
+      //     newSkill.push({
+      //         id: skill,
+      //         skill: skillList[skill].skill,
+      //         level: skillList[skill].level,
+      //     })
+      // }
       this.setState({
         todoList: newState
       });
@@ -141,16 +154,12 @@ export default class Profile extends Component {
     currSkillRef.push({
       skill: this.state.skill
     });
-    this.setState({
-      skill: ""
-    });
   };
 
   removeSkill = skillId => {
     const skillRef = fire
       .database()
       .ref("users/" + this.props.userID + `/skills/${skillId}`);
-
     skillRef.remove();
   };
 
@@ -160,18 +169,38 @@ export default class Profile extends Component {
         <Row>
           <div style={{ paddingTop: 10 }}>
             <Col span={15}>
-              <Input
-                placeholder="New Skill"
-                name="skill"
-                onChange={this.handleChange}
-              />
+              <Select
+                showSearch
+                style={{ width: 200 }}
+                placeholder="Add Skill"
+                optionFilterProp="children"
+                onChange={value => this.handleSelect(value)}
+              >
+                <Option value="React.js">React.js</Option>
+                <Option value="Git/Github">Git/Github</Option>
+                <Option value="Firebase">Firebase</Option>
+                <Option value="Java">Java</Option>
+                <Option value="Javascript">Javascript</Option>
+                <Option value="Python">Python</Option>
+                <Option value="C++">C++</Option>
+                <Option value="C">C</Option>
+                <Option value="CSS">CSS</Option>
+                <Option value="Node.js">Node.js</Option>
+              </Select>
+              <Select
+                showSearch
+                style={{ width: 200 }}
+                placeholder="Level of Experience"
+                optionFilterProp="children"
+                onChange={value => this.handleLevel(value)}
+              >
+                <Option value="Beginner">Beginner</Option>
+                <Option value="Intermediate">Intermediate</Option>
+                <Option value="Advanced">Advanced</Option>
+              </Select>
             </Col>
             <Col span={9}>
-              <Button
-                onClick={() => this.onSubmitSkill()}
-                htmlType="submit"
-                type="dashed"
-              >
+              <Button onClick={() => this.onSubmitSkill()} htmlType="submit">
                 Submit
               </Button>
             </Col>
