@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TopBar from "./top-bar";
 
-export default class UserMessage extends Component {  
+export default class UserMessage extends Component {
   render() {
     return (
       <div>
