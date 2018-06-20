@@ -40,14 +40,23 @@ export default class ContractEditor extends React.Component {
     handleApproved = (xID) => {
       let contractRef = fire.database().ref(`/contracts/${xID}`); 
       contractRef.update({
-        contractApproved: true, 
+        contractApproved: true
       })
     }
 
     removeItem(contractID) {
-      console.log(contractID)
       const contractsRef = fire.database().ref(`/contracts/${contractID}`);
       contractsRef.remove();
+    }
+
+
+    assignClick = (userID) => {
+      const usersRef = fire.database().ref(`/users/${userID}`);
+      usersRef.update({
+        contracts: [],
+        todo: [],
+        numContracts: 1
+      })
     }
 
     componentDidMount() {
@@ -82,7 +91,9 @@ export default class ContractEditor extends React.Component {
           let newState2 = [];
           for (let user in userVals) {
               let userList = {
+                id: user, 
                 fullname: userVals[user].fullname,
+                numContracts: userVals[user].numContracts,
               };
               newState2.push(userList);
           }
@@ -95,10 +106,10 @@ export default class ContractEditor extends React.Component {
     render(){
         const menu = (
             <div>
-            {this.state.users.map(x => 
+            {this.state.users.map(user => 
             <Menu>
               <Menu.Item key="0">
-                <a>{x.fullname}</a>
+                <a onClick={() => this.assignClick(user.id)}>{user.fullname}</a>
               </Menu.Item>
             </Menu>
         )}
