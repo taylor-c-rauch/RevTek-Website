@@ -167,8 +167,9 @@ export default class ChallengeManager extends Component {
                                     <p>{challenge.description}</p>
                                     {data.map(submission => {
                                         return(
-                                            
-                                            <p>{submission.name + " : " + submission.gitHubLink}</p>
+                                            <div>
+                                            {submission.name}: <a href={"https://" + submission.gitHubLink}> {submission.gitHubLink} </a>
+                                            </div>
                                             )
                                         })
                                     }
