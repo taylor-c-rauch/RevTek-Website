@@ -123,9 +123,9 @@ export default class UserList extends React.Component {
                                       <br/>
                                       Email: {user.email}
                                       <br/>
-                                      GitHub: <a href={user.gitHub}> {user.gitHub} </a>
+                                      GitHub: <a href={"https://" + user.gitHub}> {user.gitHub} </a>
                                       <br/>
-                                      LinkedIn: <a href={user.linkedIn}> {user.linkedIn} </a>
+                                      LinkedIn: <a href={"https://" + user.linkedIn}> {user.linkedIn} </a>
                                       <br/>
                                       Skills: {skills.map(skill => {
                                         let theSkill = skill;

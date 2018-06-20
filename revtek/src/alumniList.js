@@ -53,9 +53,9 @@ export default class AlumniList extends React.Component {
                                 title={<h1 className="cardTitle">{i.fullname} </h1>}
                                 extra={<img width="100px" height="100px" alt="example" src={i.profilepic} />}
                                 bordered={false}>
-                                GitHub: <a href={i.gitHub}> {i.gitHub} </a>
+                                GitHub: <a href={"https://" + i.gitHub}> {i.gitHub} </a>
                                 <br />
-                                LinkedIn: <a href={i.linkedIn}> {i.linkedIn} </a>
+                                LinkedIn: <a href={"https://" + i.linkedIn}> {i.linkedIn} </a>
                                 <br />
                                 Skills: {skills.map(skill => {
                                     let theSkill = skill;
