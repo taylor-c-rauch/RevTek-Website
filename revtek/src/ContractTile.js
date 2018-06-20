@@ -9,7 +9,7 @@ export default class ContractTile extends React.Component {
             payRate: "",
             estHours: "",
             disable: true,
-            id: this.props.project.replace(" ", "-")
+            id: this.props.project.split(" ").join("-")
         };
     }
     handleUserInput(e) {
