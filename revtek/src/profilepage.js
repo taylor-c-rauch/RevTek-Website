@@ -33,7 +33,7 @@ export default class Profile extends Component {
         this.renderCompleted = this.renderCompleted.bind(this);
     }
 
-   handleChange=e => {
+    handleChange = e => {
         this.setState({
             [e.target.name]: e.target.value
         });
@@ -41,13 +41,13 @@ export default class Profile extends Component {
 
     handleSelect(value) {
         this.setState({ skill: value });
-      }
-    
+    }
+
     handleLevel(value) {
-        let skill = this.state.skill + " ("+value+")";
+        let skill = this.state.skill + " (" + value + ")";
         console.log(skill)
-        this.setState({skill: skill});
-        
+        this.setState({ skill: skill });
+
     }
 
     // When the submit button is clicked, the user input gets put on firebase
@@ -148,44 +148,44 @@ export default class Profile extends Component {
     renderSkill = () => {
         if (this.state.showSkillInput == true) {
             return (
-              <Row>
-                <div style={{paddingTop: 10}}>
-                  <Col span={15}>
-                  <Select
-                        showSearch
-                        style={{ width: 200 }}
-                        placeholder="Add Skill"
-                        optionFilterProp="children"
-                        onChange={value => this.handleSelect(value)}
-                    >
-                        <Option value="React.js">React.js</Option>
-                        <Option value="Git/Github">Git/Github</Option>
-                        <Option value="Firebase">Firebase</Option>
-                        <Option value="Java">Java</Option>
-                        <Option value="Javascript">Javascript</Option>
-                        <Option value="Python">Python</Option>
-                        <Option value="C++">C++</Option>
-                        <Option value="C">C</Option>
-                        <Option value="CSS">CSS</Option>
-                        <Option value="Node.js">Node.js</Option>
-                    </Select>
-                    <Select
-                        showSearch
-                        style={{ width: 200 }}
-                        placeholder="Level of Experience"
-                        optionFilterProp="children"
-                        onChange={value => this.handleLevel(value)}
-                    >
-                        <Option value="Beginner">Beginner</Option>
-                        <Option value="Intermediate">Intermediate</Option>
-                        <Option value="Advanced">Advanced</Option>
-                    </Select>
-                  </Col>
-                  <Col span={9}>
-                    <Button onClick={() => this.onSubmitSkill()} htmlType="submit">Submit</Button>
-                  </Col>
-                </div>
-              </Row>
+                <Row>
+                    <div style={{ paddingTop: 10 }}>
+                        <Col span={15}>
+                            <Select
+                                showSearch
+                                style={{ width: 200 }}
+                                placeholder="Add Skill"
+                                optionFilterProp="children"
+                                onChange={value => this.handleSelect(value)}
+                            >
+                                <Option value="React.js">React.js</Option>
+                                <Option value="Git/Github">Git/Github</Option>
+                                <Option value="Firebase">Firebase</Option>
+                                <Option value="Java">Java</Option>
+                                <Option value="Javascript">Javascript</Option>
+                                <Option value="Python">Python</Option>
+                                <Option value="C++">C++</Option>
+                                <Option value="C">C</Option>
+                                <Option value="CSS">CSS</Option>
+                                <Option value="Node.js">Node.js</Option>
+                            </Select>
+                            <Select
+                                showSearch
+                                style={{ width: 200 }}
+                                placeholder="Level of Experience"
+                                optionFilterProp="children"
+                                onChange={value => this.handleLevel(value)}
+                            >
+                                <Option value="Beginner">Beginner</Option>
+                                <Option value="Intermediate">Intermediate</Option>
+                                <Option value="Advanced">Advanced</Option>
+                            </Select>
+                        </Col>
+                        <Col span={9}>
+                            <Button onClick={() => this.onSubmitSkill()} htmlType="submit">Submit</Button>
+                        </Col>
+                    </div>
+                </Row>
             )
         } else if (this.state.showSkillInput == false) {
             return (<div></div>);
@@ -241,131 +241,133 @@ export default class Profile extends Component {
     }
 
     renderCompleted = () => {
-          return(
-            <ToDoItem list={this.state.todoList} check={this.state.completed} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)}/>
-          )
+        return (
+            <ToDoItem list={this.state.todoList} check={this.state.completed} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
+        )
     }
 
 
     render() {
-        if(this.state.approved===false){return(
-            <p> Not approved</p>
-        );}
-        else{
-        let userRef = fire.database().ref('users/' + this.props.userID);
-        let user = {};
-        userRef.on('value', (snapshot) => {
-            user = snapshot.val();
-        });
-        let linkedIn = user.linkedIn;
-        let gitHub = user.gitHub;
-        return (
-            <div className="container">
+        if (this.state.approved === false) {
+            return (
+                <p> Not approved</p>
+            );
+        }
+        else {
+            let userRef = fire.database().ref('users/' + this.props.userID);
+            let user = {};
+            userRef.on('value', (snapshot) => {
+                user = snapshot.val();
+            });
+            let linkedIn = user.linkedIn;
+            let gitHub = user.gitHub;
+            return (
+                <div className="container">
 
-                <div style={{ background: '#fffff', padding: '30px' }}>
-                    <Row gutter={16}>
-                        <Col span={8}>
-                            <Card title="Profile" bordered={true} style={{ background: "#C4C4C4" }}>
-                                <p style={{
-                                    fontSize: 14,
-                                    color: 'rgba(0, 0, 0, 0.85)',
-                                    marginBottom: 8,
-                                    fontWeight: 500,
-                                }}
-                                />
-                                <Card style={{ marginTop: 8 }} type="inner" extra={<Popover trigger="click" placement="bottom" content={<label className="new_Btn" >Select File<input id="html_btn" type="file" accept=".jpg, .jpeg, .png" onChange={this.fileChangedHandler} /></label>}><Button size="small">Edit Picture </Button></Popover>} cover={<img src={this.props.person.profilepic} />}>
-                                    {this.props.person.fullname}
-                                </Card>
+                    <div style={{ background: '#fffff', padding: '30px' }}>
+                        <Row gutter={16}>
+                            <Col span={8}>
+                                <Card title="Profile" bordered={true} style={{ background: "#C4C4C4" }}>
+                                    <p style={{
+                                        fontSize: 14,
+                                        color: 'rgba(0, 0, 0, 0.85)',
+                                        marginBottom: 8,
+                                        fontWeight: 500,
+                                    }}
+                                    />
+                                    <Card style={{ marginTop: 8 }} type="inner" extra={<Popover trigger="click" placement="bottom" content={<label className="new_Btn" >Select File<input id="html_btn" type="file" accept=".jpg, .jpeg, .png" onChange={this.fileChangedHandler} /></label>}><Button size="small">Edit Picture </Button></Popover>} cover={<img src={this.props.person.profilepic} />}>
+                                        {this.props.person.fullname}
+                                    </Card>
 
-                                <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<Row><div><Button size="small" onClick={() => this.onShowInput()}> + </Button><Col span={24}>{this.renderSkill()}</Col></div></Row>}>
-                                  {this.state.skills.map((skills) => {
-                                    return (
-                                    <div key={skills.id}>
-                                      <Row style={{paddingBottom: 20}}>
-                                        <Col span={20}>
-                                          <Tag style={{paddingRight: 20, paddingLeft: 20}} color="magenta">{skills.skill}</Tag>
-                                        </Col>
-                                        <Col span={4}>
-                                          <Button type="danger" onClick={() => this.removeSkill(skills.id)}>X</Button>
-                                        </Col>
-                                      </Row>
-                                    </div>
-                                  )
-                                  })}
+                                    <Card style={{ marginTop: 16 }} type="inner" title="Skills" extra={<Row><div><Button size="small" onClick={() => this.onShowInput()}> + </Button><Col span={24}>{this.renderSkill()}</Col></div></Row>}>
+                                        {this.state.skills.map((skills) => {
+                                            return (
+                                                <div key={skills.id}>
+                                                    <Row style={{ paddingBottom: 20 }}>
+                                                        <Col span={20}>
+                                                            <Tag style={{ paddingRight: 20, paddingLeft: 20 }} color="magenta">{skills.skill}</Tag>
+                                                        </Col>
+                                                        <Col span={4}>
+                                                            <Button type="danger" onClick={() => this.removeSkill(skills.id)}>X</Button>
+                                                        </Col>
+                                                    </Row>
+                                                </div>
+                                            )
+                                        })}
 
-                                </Card>
+                                    </Card>
 
-                                <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button onClick={this.showModal} size="small">Edit</Button>}>
+                                    <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button onClick={this.showModal} size="small">Edit</Button>}>
 
-                                    GitHub: <a href={gitHub} target="_blank"> {gitHub} </a>
-                                    <br />
-                                    LinkedIn: <a href={linkedIn} target="_blank"> {linkedIn} </a>
+                                        GitHub: <a href={gitHub} target="_blank"> {gitHub} </a>
+                                        <br />
+                                        LinkedIn: <a href={linkedIn} target="_blank"> {linkedIn} </a>
 
-                                </Card>
+                                    </Card>
 
-                                <Modal
-                                    visible={this.state.visible}
-                                    title="Edit Info"
-                                    onCancel={this.handleCancel}
-                                    footer={[
-                                        <Button key="back" onClick={this.handleCancel}>Cancel</Button>,
-                                        <Button key="submit" type="primary" loading={this.state.loading} onClick={this.handleModal}>
-                                            Submit
+                                    <Modal
+                                        visible={this.state.visible}
+                                        title="Edit Info"
+                                        onCancel={this.handleCancel}
+                                        footer={[
+                                            <Button key="back" onClick={this.handleCancel}>Cancel</Button>,
+                                            <Button key="submit" type="primary" loading={this.state.loading} onClick={this.handleModal}>
+                                                Submit
                                         </Button>,
-                                    ]}
-                                >
+                                        ]}
+                                    >
 
-                                    <Input
-                                        placeholder="GitHub"
-                                        name="gitHubInput"
-                                        prefix={<Icon type="link"
-                                            style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                        <Input
+                                            placeholder="GitHub"
+                                            name="gitHubInput"
+                                            prefix={<Icon type="link"
+                                                style={{ color: 'rgba(0,0,0,.25)' }} />}
 
-                                        onChange={this.handleChange}>
-                                    </Input>
-                                    <Input
-                                        placeholder="LinkedIn"
-                                        name="linkedInInput"
-                                        prefix={<Icon type="link"
+                                            onChange={this.handleChange}>
+                                        </Input>
+                                        <Input
+                                            placeholder="LinkedIn"
+                                            name="linkedInInput"
+                                            prefix={<Icon type="link"
 
-                                            style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                        onChange={this.handleChange}>
-                                    </Input>
-                                </Modal>
-                            </Card>
-                        </Col>
-                        <Col span={16}>
-                            <Card title="Task Manager" bordered={true} style={{ background: "#C4C4C4" }}>
-                                <p style={{
-                                    fontSize: 14,
-                                    color: 'rgba(0, 0, 0, 0.85)',
-                                    marginBottom: 8,
-                                    fontWeight: 500,
-                                }}
-                                />
-                                <Card style={{ marginTop: 8 }} type="inner" title="To-Do">
-                                    <Form>
-                                      <Row>
-                                        <Col span={6}>
-                                          <Input placeholder="New Task" name="task" onChange={this.handleChange} />
-                                        </Col>
-                                        <Col span={6} style={{paddingLeft:10}}>
-                                          <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange} />
-                                        </Col>
-                                        <Col span={3} style={{paddingLeft:10}}>
-                                          <Button size="medium" onClick={this.handleClick}> + </Button>
-                                        </Col>
-                                      </Row>
-                                    </Form>
-                                    {this.renderCompleted()}
-
+                                                style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                            onChange={this.handleChange}>
+                                        </Input>
+                                    </Modal>
                                 </Card>
-                            </Card>
-                        </Col>
-                    </Row >
+                            </Col>
+                            <Col span={16}>
+                                <Card title="Task Manager" bordered={true} style={{ background: "#C4C4C4" }}>
+                                    <p style={{
+                                        fontSize: 14,
+                                        color: 'rgba(0, 0, 0, 0.85)',
+                                        marginBottom: 8,
+                                        fontWeight: 500,
+                                    }}
+                                    />
+                                    <Card style={{ marginTop: 8 }} type="inner" title="To-Do">
+                                        <Form>
+                                            <Row>
+                                                <Col span={6}>
+                                                    <Input placeholder="New Task" name="task" onChange={this.handleChange} />
+                                                </Col>
+                                                <Col span={6} style={{ paddingLeft: 10 }}>
+                                                    <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange} />
+                                                </Col>
+                                                <Col span={3} style={{ paddingLeft: 10 }}>
+                                                    <Button size="medium" onClick={this.handleClick}> + </Button>
+                                                </Col>
+                                            </Row>
+                                        </Form>
+                                        {this.renderCompleted()}
+
+                                    </Card>
+                                </Card>
+                            </Col>
+                        </Row >
+                    </div >
                 </div >
-            </div >
-        );
+            );
+        }
     }
 }
-        }
