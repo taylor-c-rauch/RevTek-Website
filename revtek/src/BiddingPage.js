@@ -51,28 +51,24 @@ export default class BiddingPage extends React.Component {
     }
 
     render(){
-        console.log(this.state.data.onDisabled)
         const { Header, Footer, Sider, Content } = Layout;
         return(
           <div style={{ background: '#ECECEC' }}>
           {this.state.data.map((x) => {
           if (x.contractApproved === true) {
             return (
-            <Card title={x.client} style={{ marginLeft: 300, marginRight: 300, marginTop: 20, marginBottom: 20 }}>
-              <p><strong>Project Name: {x.project}</strong></p>
-              <p>Description: {x.description}</p>
-              <p>Email: {x.email}</p>
-              <p>Number of Interns: {x.numinterns}</p>
-              <p>Skills: {x.skills}</p>
-              <Input placeholder="Pay Rate" id="payRate" onChange={e => this.handleUserInput(e)} />
-              <Input placeholder="Estimated Hours" id="estHours" onChange={e => this.handleUserInput(e)} />
-              <Button type="primary" >Submit Bid</Button>
-            </Card>
-            )
-          }
-          else {
-            return (
-              <h2> No contracts </h2>
+              <div> 
+                <Card title={x.client} style={{ marginLeft: 300, marginRight: 300, marginTop: 20, marginBottom: 20 }}>
+                  <p><strong>Project Name: {x.project}</strong></p>
+                  <p>Description: {x.description}</p>
+                  <p>Email: {x.email}</p>
+                  <p>Number of Interns: {x.numinterns}</p>
+                  <p>Skills: {x.skills}</p>
+                  <Input placeholder="Pay Rate" id="payRate" onChange={e => this.handleUserInput(e)} />
+                  <Input placeholder="Estimated Hours" id="estHours" onChange={e => this.handleUserInput(e)} />
+                  <Button type="primary" >Submit Bid</Button>
+                </Card>
+              </div> 
             )
           }
           })}
