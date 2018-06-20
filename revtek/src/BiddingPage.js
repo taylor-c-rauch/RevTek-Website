@@ -56,7 +56,7 @@ export default class BiddingPage extends React.Component {
         return(
           <div style={{ background: '#ECECEC' }}>
           {this.state.data.map((x) => {
-          if (x.contractApproved){
+          if (x.contractApproved === true) {
             return (
             <Card title={x.client} style={{ marginLeft: 300, marginRight: 300, marginTop: 20, marginBottom: 20 }}>
               <p><strong>Project Name: {x.project}</strong></p>
@@ -68,6 +68,11 @@ export default class BiddingPage extends React.Component {
               <Input placeholder="Estimated Hours" id="estHours" onChange={e => this.handleUserInput(e)} />
               <Button type="primary" >Submit Bid</Button>
             </Card>
+            )
+          }
+          else {
+            return (
+              <h2> No contracts </h2>
             )
           }
           })}

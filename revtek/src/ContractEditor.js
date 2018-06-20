@@ -38,7 +38,7 @@ export default class ContractEditor extends React.Component {
     )};
 
     handleApproved = (xID) => {
-      let contractRef = fire.database.ref(`/contracts/${xID}`); 
+      let contractRef = fire.database().ref(`/contracts/${xID}`); 
       contractRef.update({
         contractApproved: true, 
       })
@@ -104,6 +104,7 @@ export default class ContractEditor extends React.Component {
         const { Header, Footer, Sider, Content } = Layout;
         return(
         <div style={{ background: '#ECECEC', padding: '10px' }}>
+        <h1> Contracts to Approve </h1> 
         {this.state.data.map((x)=> {
           if (x.contractApproved == false) {
             return (
@@ -124,13 +125,14 @@ export default class ContractEditor extends React.Component {
             Assign <Icon type="down" />
             </a>
             </Dropdown>
-            <Button> Approve Contract </Button>
+            <Button onClick={() => this.handleApproved(x.project)}> Approve Contract </Button>
           </Card>
           );
           }
         })}
+        <h2> Approved Contracts </h2> 
         {this.state.data.map((x)=> {
-          if (x.contractApproved) {
+          if (x.contractApproved == true) {
             return (
             <Card title={x.client} extra={<a href="#">Remove</a>} style={{ width: 1027 }}>
             <p><strong>{x.project}</strong></p>
