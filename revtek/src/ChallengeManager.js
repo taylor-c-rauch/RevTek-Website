@@ -167,14 +167,12 @@ export default class ChallengeManager extends Component {
                                     <p>{challenge.description}</p>
                                     {data.map(submission => {
                                         return(
-                                            <div>
-                                                {console.log(currName)}
+                                            
                                             <p>{submission.name + " : " + submission.gitHubLink}</p>
-                                            <Button type="primary" shape="circle" icon="delete" onClick={() => this.removeItem(currName)}/>
-                                            </div>
                                             )
                                         })
                                     }
+                                    <Button type="primary" shape="circle" icon="delete" onClick={() => this.removeItem(currName)}/>
                                 </Card>
                             </Col>
                         </Row>
