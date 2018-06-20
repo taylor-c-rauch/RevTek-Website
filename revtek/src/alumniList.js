@@ -32,19 +32,20 @@ export default class AlumniList extends React.Component {
 
     render() {
         let alum = this.state.alumni;
-        console.log("alumni: " + alum);
         return (
         <div className="alumniProfs">
             <h1 className="alumniHeader"> Alumni Profiles </h1>
         {alum.map(i => {
             let skills = [];
             let curSkills = i.skills;
+            if(curSkills) {
                 Object.keys(curSkills).forEach((key) => {
                     let skill = curSkills[key].skill;
                     skills.push(skill)
                     console.log(skill)
                     
                 });
+            }
             return (
             <div style={{ background: '#ECECEC', padding: '30px'}}>
                 <Card className="alumniCards" 
