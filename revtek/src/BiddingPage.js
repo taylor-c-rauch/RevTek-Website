@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Layout, Input, Button } from 'antd';
-import fire from './fire.js'
+import fire from './fire.js';
+import ContractTile from "./ContractTile";
 
 export default class BiddingPage extends React.Component {
   constructor(props) {
@@ -10,18 +11,6 @@ export default class BiddingPage extends React.Component {
       data: []
     };
   }
-
-  handleUserInput = e => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
-    if (this.state.data[0].payRate.length == 0 || this.data[0].estHours.length == 0) {
-      this.state.data.onDisabled = false
-    }
-    else if (this.data[0].payRate.length != 0 && this.data[0].estHours.length != 0) {
-      this.state.data.onDisabled = true
-    }
-  };
 
   componentDidMount() {
 
@@ -42,8 +31,6 @@ export default class BiddingPage extends React.Component {
         numinterns: contractVals[info].numinterns,
         project: contractVals[info].project,
         skills: contractVals[info].skills,
-        payRate: "",
-        estHours: "",
         onDisabled: false,
         contractApproved: contractVals[info].contractApproved
       };
@@ -63,16 +50,7 @@ export default class BiddingPage extends React.Component {
           if (x.contractApproved === true) {
             return (
               <div>
-                <Card title={x.client} style={{ marginLeft: 30, marginRight: 30, marginTop: 20, marginBottom: 20 }}>
-                  <p><strong>Project Name: {x.project}</strong></p>
-                  <p>Description: {x.description}</p>
-                  <p>Email: {x.email}</p>
-                  <p>Number of Interns: {x.numinterns}</p>
-                  <p>Skills: {x.skills}</p>
-                  <Input placeholder="Pay Rate" id="payRate" onChange={e => this.handleUserInput(e)} />
-                  <Input placeholder="Estimated Hours" id="estHours" onChange={e => this.handleUserInput(e)} />
-                  <Button type="primary" >Submit Bid</Button>
-                </Card>
+                <ContractTile userID={this.props.userID} person={this.props.person} email={x.email} numinterns={x.numinterns} client={x.client} project={x.project} skills={x.skills} description={x.description} />
               </div>
             )
           }

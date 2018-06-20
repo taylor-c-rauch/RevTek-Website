@@ -114,6 +114,7 @@ export default class SignUpForm extends Component {
           <TopBar
             updateField={this.props.updateField}
             status="home"
+            person={this.props.person}
             user={this.props.user}
           />
           <div class="HeaderFiller" />
