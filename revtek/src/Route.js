@@ -15,7 +15,8 @@ import fire from "./fire";
 import UserMessage from "./UserMessage";
 import AlumniList from "./alumniList";
 import NotApproved from "./notApproved";
-
+import ContractEditor from "./ContractEditor";
+import Leaderboard from "./Leaderboard";
 
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 
@@ -64,6 +65,12 @@ export default class Router extends Component {
                 <Route
                     path="/not-approved"
                     render={() => (<div> <NotApproved updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
+                <Route
+                    path="/contract-editor"
+                    render={() => (<div><TopBar approved={this.props.approved} user={this.props.user} updateField={this.props.updateField} status="administrator" /> <ContractEditor approved={this.props.approved} person={this.props.userInfo} /></div>)} />
+                <Route
+                    path="/leaderboard"
+                    render={() => (<div><TopBar approved={this.props.approved} user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <Leaderboard approved={this.props.approved} person={this.props.userInfo} /></div>)} />
 
             </div>
 

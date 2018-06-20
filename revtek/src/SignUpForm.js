@@ -32,8 +32,9 @@ export default class SignUpForm extends Component {
       dailyChallenges: [],
       switch: false,
       todo: [],
-      skills: [], 
-      approved: false, 
+      skills: [],
+      contracts: [],
+      approved: false,
       profilepic:
         "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
     };
@@ -60,8 +61,9 @@ export default class SignUpForm extends Component {
           username: "",
           fullname: "",
           password: "",
-          status: "", 
-          approved: false, 
+          status: "",
+          approved: false,
+          contracts: [],
         });
       })
       .catch(error => {
@@ -84,9 +86,10 @@ export default class SignUpForm extends Component {
       status: this.state.status,
       dailyChallenges: this.state.dailyChallenges,
       todo: this.state.todo,
-      skills: this.state.skills, 
+      skills: this.state.skills,
       profilepic: this.state.profilepic,
-      approved: this.state.approved, 
+      approved: this.state.approved,
+      contracts: this.state.contracts
     })
   };
 

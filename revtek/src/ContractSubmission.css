@@ -2,6 +2,15 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto);
 @import url(http://fonts.googleapis.com/css?family=Roboto:100);
 
+.Background {
+  background-image: url("contractSubmission.jpeg");
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+}
+
 .contract {
   background-image: url("contractSubmission.jpeg");
   background-repeat: no-repeat;
@@ -13,7 +22,6 @@
 .contractHeader {
   font-family: Roboto;
   font-weight: lighter;
-  margin-top: 20px;
   padding-top: 20px;
   font-size: 35px;
   color: rgba(0, 0, 0);
@@ -25,7 +33,17 @@
   width: 70%;
   margin: 0 auto;
   text-align: center;
-  height: 100%;
+  padding-bottom: 33px;
+}
+
+.Filler {
+  padding-top: 50px;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.BottomFiller {
+  padding-top: 40px;
+  background-color: rgba(255, 255, 255, 0);
 }
 
 .client {
@@ -50,8 +68,4 @@
 
 .skills {
   width: 50%;
-}
-
-.submitBut {
-  margin-bottom: 15px;
 }

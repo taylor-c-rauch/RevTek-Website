@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import fire from "./fire.js";
 import TopBar from "./top-bar";
 import "./ContractSubmission.css";
+import { Link } from "react-router-dom";
 
 import { Form, Input, Button } from "antd";
 const FormItem = Form.Item;
@@ -16,7 +17,8 @@ export default class ContractSubmission extends Component {
       description: "",
       numinterns: "",
       skills: "",
-      clicked: false
+      clicked: false,
+      contractApproved: false
     };
   }
 
@@ -93,7 +95,8 @@ export default class ContractSubmission extends Component {
           project: this.state.project,
           description: this.state.description,
           numinterns: this.state.numinterns,
-          skills: this.state.skills
+          skills: this.state.skills,
+          contractApproved: this.state.contractApproved
         });
       this.setState({
         client: "",
@@ -127,6 +130,7 @@ export default class ContractSubmission extends Component {
             user={this.props.user}
             updateField={this.props.updateField}
           />
+          <div class="Filler" />
           {/* renders a form where users can input their contract information */}
           <section className="add-contract">
             <h1 className="contractHeader"> Submit a Contract </h1>
@@ -228,27 +232,34 @@ export default class ContractSubmission extends Component {
               </Button>
             </Form>
           </section>
-          <br />
+          <div class="BottomFiller" />
         </div>
       );
     } else {
+      //
       return (
-        <div style={{ background: "#ECECEC", padding: "30px" }}>
-          <TopBar
-            status="home"
-            updateField={this.props.updateField}
-            user={this.props.user}
-          />
-          <h1 className="contractHeader">
-            Thank you for submitting a contract!
-          </h1>
-          <h3 font-family="Roboto">
-            {" "}
-            We will get back to you as soon as possible{" "}
-          </h3>
-          <button type="primary" onClick={this.handleClick}>
-            Submit Another Contract{" "}
-          </button>
+        <div class="Background">
+          <section>
+            <TopBar
+              status="home"
+              user={this.props.user}
+              updateField={this.props.updateField}
+            />
+            <div class="HeaderFiller" />
+            <div class="LoginBackground">
+              <h1 className="contractHeader">
+                Thank you for submitting a contract!
+              </h1>
+              <br />
+              <p2> We will get back to you as soon as possible </p2>
+              <br />
+              <br />
+              <Button onClick={this.handleClick}>
+                Submit Another Contract{" "}
+              </Button>
+              {/* <Link to="/contract-submission">Submit Another Contract</Link> */}
+            </div>
+          </section>
         </div>
       );
     }
