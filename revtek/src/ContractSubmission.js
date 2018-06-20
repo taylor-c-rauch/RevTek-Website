@@ -16,8 +16,8 @@ export default class ContractSubmission extends Component {
       description: "",
       numinterns: "",
       skills: "",
-      clicked: false, 
-      contractApproved: false, 
+      clicked: false,
+      contractApproved: false,
     };
   }
 
@@ -94,8 +94,8 @@ export default class ContractSubmission extends Component {
           project: this.state.project,
           description: this.state.description,
           numinterns: this.state.numinterns,
-          skills: this.state.skills, 
-          contractApproved: this.state.contractApproved, 
+          skills: this.state.skills,
+          contractApproved: this.state.contractApproved,
         });
       this.setState({
         client: "",
@@ -127,6 +127,7 @@ export default class ContractSubmission extends Component {
           <TopBar
             status="home"
             user={this.props.user}
+            person={this.props.person}
             updateField={this.props.updateField}
           />
           {/* renders a form where users can input their contract information */}
@@ -238,6 +239,7 @@ export default class ContractSubmission extends Component {
         <div style={{ background: "#ECECEC", padding: "30px" }}>
           <TopBar
             status="home"
+            person={this.props.person}
             updateField={this.props.updateField}
             user={this.props.user}
           />
