@@ -181,7 +181,7 @@ class TopBar extends Component {
                                     onClose={this.handleClose2}
                                 >
                                     <Link to="/login" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose2}>Profile</MenuItem></Link>
-                                    <MenuItem onClick={e => this.handleLogout(e)}>Logout</MenuItem>
+                                    <Link to="/home" style={{ textDecoration: "none" }}><MenuItem onClick={e => this.handleLogout(e)}>Logout</MenuItem></Link>
                                 </Menu>
                             </Toolbar>
                         </AppBar>
