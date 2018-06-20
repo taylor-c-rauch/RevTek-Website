@@ -3,6 +3,7 @@ import TopBar from "./top-bar";
 import "./SignUp.css";
 
 export default class UserMessage extends Component {
+  //comment
   render() {
     return (
       <div class="backdrop">
