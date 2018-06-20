@@ -45,7 +45,6 @@ export default class Profile extends Component {
 
     handleLevel(value) {
         let skill = this.state.skill + " (" + value + ")";
-        console.log(skill)
         this.setState({ skill: skill });
 
     }
@@ -77,15 +76,6 @@ export default class Profile extends Component {
                     hours: todoList[todo].hours,
                 });
             }
-            // let skillList = snapshot.val();
-            // let newSkill = [];
-            // for (let skill in skillList) {
-            //     newSkill.push({
-            //         id: skill,
-            //         skill: skillList[skill].skill, 
-            //         level: skillList[skill].level,
-            //     })
-            // }
             this.setState({
                 todoList: newState,
             });
@@ -104,6 +94,7 @@ export default class Profile extends Component {
                 skills: newSkill
             })
         })
+        
     }
 
 
@@ -133,6 +124,10 @@ export default class Profile extends Component {
     onSubmitSkill = () => {
         const currSkillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
         currSkillRef.push({
+            skill: this.state.skill,
+        });
+        const SkillRef = fire.database().ref(' skills/');
+        SkillRef.push({
             skill: this.state.skill,
         });
     }
@@ -227,7 +222,6 @@ export default class Profile extends Component {
         this.setState({
             completed: !this.state.completed
         })
-        console.log(this.state.completed)
     }
 
 
