@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Layout, Input, Button, Menu, Dropdown, Icon } from 'antd';
+import { Card, Layout, Input, Button, Menu, Dropdown, Icon, Select, message } from 'antd';
 import fire from './fire.js'
 
 export default class ContractEditor extends React.Component {
@@ -8,7 +8,8 @@ export default class ContractEditor extends React.Component {
       this.state = {
         contracts: [],
         data: [],
-        users: []
+        users: [],
+        numContracts: 0
       };
     }
 
@@ -29,7 +30,6 @@ export default class ContractEditor extends React.Component {
         usersRef.on('value', (snapshot) => {
         let userVals = snapshot.val();
         var curUser = fire.auth().currentUser;
-        console.log(curUser.email)
         for (let user in userVals) {
             if(userVals[user].email == curUser.email)
                 this.state.data.bidders.push[userVals[user].fullname]
@@ -52,10 +52,13 @@ export default class ContractEditor extends React.Component {
 
     assignClick = (userID) => {
       const usersRef = fire.database().ref(`/users/${userID}`);
+      this.setState({
+        numContracts: this.state.numContracts + 1
+      })
       usersRef.update({
         contracts: [],
         todo: [],
-        numContracts: 1
+        numContracts: this.state.numContracts
       })
     }
 
@@ -65,8 +68,9 @@ export default class ContractEditor extends React.Component {
           let contractVals = snapshot.val();
           let newState = [];
           for (let info in contractVals) {
+            let contract = contractVals[info].project
               newState.push({
-                id: contractVals[info].project.split(" ").join("-"),
+                id: contract.split(" ").join("-"),
                 client: contractVals[info].client,
                 description: contractVals[info].description,
                 email: contractVals[info].email,
@@ -95,6 +99,9 @@ export default class ContractEditor extends React.Component {
                 fullname: userVals[user].fullname,
                 numContracts: userVals[user].numContracts,
               };
+              this.setState({
+                numContracts: userVals[user].numContracts,
+              })
               newState2.push(userList);
           }
           this.setState({
@@ -104,10 +111,16 @@ export default class ContractEditor extends React.Component {
     }
 
     render(){
+      const Option = Select.Option;
+      
+      const onClick = function ({ key }) {
+        message.info(`Assigned ${key}`);
+      };
+
         const menu = (
             <div>
             {this.state.users.map(user => 
-            <Menu>
+            <Menu onClick={onClick}>
               <Menu.Item key="0">
                 <a onClick={() => this.assignClick(user.id)}>{user.fullname}</a>
               </Menu.Item>
@@ -122,24 +135,21 @@ export default class ContractEditor extends React.Component {
         {this.state.data.map((x)=> {
           if (x.contractApproved == false) {
             return (
-            <Card title={x.client} extra={<a href="#">Remove</a>} style={{ width: 1027 }}>
+            <Card title={x.client} style={{ width: 1027 }}>
             <p><strong>{x.project}</strong></p>
             <p>{x.description}</p>
             <p>{x.email}</p>
             <p>{x.numinterns}</p>
             <p>{x.skills}</p>
             <p>{x.bidders}</p>
-            <Dropdown overlay={menu} trigger={['click']}>
-            <a className="ant-dropdown-link" href="#">
-            Options <Icon type="down" />
-            </a>
-            </Dropdown>
-            <Dropdown overlay={menu} trigger={['click']}>
-            <a className="ant-dropdown-link" href="#">
-            Assign <Icon type="down" />
-            </a>
-            </Dropdown>
-            <Button onClick={() => this.handleApproved(x.project)}> Approve Contract </Button>
+            <Select defaultValue="Assign Bidder" style={{ width: 300 }}>
+            {this.state.users.map((user)=> {
+              return (
+              <Option value={user.fullname}>{user.fullname}</Option>
+              )
+            })}
+            </Select>
+            <Button onClick={() => this.handleApproved(x.id)}> Approve Contract </Button>
             <Button onClick={() => this.removeItem(x.id)}> Remove </Button>
           </Card>
           );
@@ -149,23 +159,20 @@ export default class ContractEditor extends React.Component {
         {this.state.data.map((x)=> {
           if (x.contractApproved == true) {
             return (
-            <Card title={x.client} extra={<a href="#">Remove</a>} style={{ width: 1027 }}>
+            <Card title={x.client} style={{ width: 1027 }}>
             <p><strong>{x.project}</strong></p>
             <p>{x.description}</p>
             <p>{x.email}</p>
             <p>{x.numinterns}</p>
             <p>{x.skills}</p>
             <p>{x.bidders}</p>
-            <Dropdown overlay={menu} trigger={['click']}>
-            <a className="ant-dropdown-link" href="#">
-            Options <Icon type="down" />
-            </a>
-            </Dropdown>
-            <Dropdown overlay={menu} trigger={['click']}>
-            <a className="ant-dropdown-link" href="#">
-            Assign <Icon type="down" />
-            </a>
-            </Dropdown>
+            <Select defaultValue="Assign Bidder" style={{ width: 300 }}>
+            {this.state.users.map((user)=> {
+              return (
+              <Option value={user.fullname}>{user.fullname}</Option>
+              )
+            })}
+            </Select>
             <Button onClick={() => this.removeItem(`/contracts/${x.id}`)}> Remove </Button>
           </Card>
           );

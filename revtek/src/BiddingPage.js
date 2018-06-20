@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Layout, Input, Button } from "antd";
 import fire from "./fire.js";
+import ContractTile from "./ContractTile";
 
 export default class BiddingPage extends React.Component {
   constructor(props) {
@@ -46,8 +47,6 @@ export default class BiddingPage extends React.Component {
         numinterns: contractVals[info].numinterns,
         project: contractVals[info].project,
         skills: contractVals[info].skills,
-        payRate: "",
-        estHours: "",
         onDisabled: false,
         contractApproved: contractVals[info].contractApproved
       };
