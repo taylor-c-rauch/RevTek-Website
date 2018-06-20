@@ -22,7 +22,6 @@ export default class ChallengeManager extends Component {
     }
 
     componentDidMount(){
-
         //Updates the render() with all the challenges in Firebase
         const challengesRef = fire.database().ref('challenges/');
         challengesRef.on('value', (snapshot) => {
@@ -31,6 +30,7 @@ export default class ChallengeManager extends Component {
 
            for (let challenge in challengesSnapshot){
             challengesArray.push({
+                id: challenge,
                 name: challengesSnapshot[challenge].name,
                 description: challengesSnapshot[challenge].description,
                 duedate: challengesSnapshot[challenge].duedate,
@@ -73,9 +73,7 @@ export default class ChallengeManager extends Component {
     }
 
     handleDate = (e) => {
-
         var myDate = new Date(e);
-
         this.setState({
             duedate: myDate.toLocaleString(),
             seconds: myDate.getTime()
@@ -92,8 +90,6 @@ export default class ChallengeManager extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         const currChallengeRef = fire.database().ref('challenges/');
-
-
         let challengeObject = ({name: this.state.name, description: this.state.description, duedate: this.state.duedate, seconds: this.state.seconds, submissions: this.state.submissions})
         currChallengeRef.child(this.state.name).set({ 
             name: this.state.name,
@@ -110,10 +106,10 @@ export default class ChallengeManager extends Component {
         });
     }
 
-    handleDelete = (name) => {
-        console.log(`${name}`)
-        //const currChallengeRef = fire.database().ref(`challenges/${name}`);
-        //currChallengeRef.remove()
+    removeItem(userID) {
+        {console.log(userID)}
+        const currChallengeRef = fire.database().ref(`challenges/${userID}`);
+        currChallengeRef.remove()
     }
 
     render () {
@@ -153,9 +149,7 @@ export default class ChallengeManager extends Component {
 
             {/*  Maps the challenges from database to a new card and maps interns who have submitted links */}
             {this.state.challenges.map(challenge => {
-
-                const currName = challenge.name;
-                console.log(currName)
+                const currName = challenge.name; 
                 let query = fire.database().ref('challenges/' + currName + '/submissions/');
                 let data = []
                 query.once("value", (snapshot) => {
@@ -173,11 +167,14 @@ export default class ChallengeManager extends Component {
                                     <p>{challenge.description}</p>
                                     {data.map(submission => {
                                         return(
+                                            <div>
+                                                {console.log(currName)}
                                             <p>{submission.name + " : " + submission.gitHubLink}</p>
+                                            <Button type="primary" shape="circle" icon="delete" onClick={() => this.removeItem(currName)}/>
+                                            </div>
                                             )
                                         })
                                     }
-                                    <Button type="primary" shape="circle" icon="delete" onClick={(currName) => this.handleDelete(currName)}/>
                                 </Card>
                             </Col>
                         </Row>
