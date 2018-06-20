@@ -44,14 +44,20 @@ export default class ContractEditor extends React.Component {
       })
     }
 
+    removeItem(contractID) {
+      console.log(contractID)
+      const contractsRef = fire.database().ref(`/contracts/${contractID}`);
+      contractsRef.remove();
+    }
+
     componentDidMount() {
         const contractsRef = fire.database().ref('contracts');
         contractsRef.on('value', (snapshot) => {
           let contractVals = snapshot.val();
-          let contractKeys = Object.keys(snapshot.val());
           let newState = [];
           for (let info in contractVals) {
-              let contract = {
+              newState.push({
+                id: contractVals[info].project.split(" ").join("-"),
                 client: contractVals[info].client,
                 description: contractVals[info].description,
                 email: contractVals[info].email,
@@ -63,8 +69,7 @@ export default class ContractEditor extends React.Component {
                 onDisabled: false,
                 bidders: [],
                 contractApproved: contractVals[info].contractApproved
-              };
-              newState.push(contract);
+              });
           }
           this.setState({
             data: newState
@@ -74,7 +79,6 @@ export default class ContractEditor extends React.Component {
         const usersRef = fire.database().ref('users');
         usersRef.on('value', (snapshot) => {
           let userVals = snapshot.val();
-          console.log(snapshot.val())
           let newState2 = [];
           for (let user in userVals) {
               let userList = {
@@ -89,7 +93,6 @@ export default class ContractEditor extends React.Component {
     }
 
     render(){
-        console.log(this.state.users.fullname)
         const menu = (
             <div>
             {this.state.users.map(x => 
@@ -126,6 +129,7 @@ export default class ContractEditor extends React.Component {
             </a>
             </Dropdown>
             <Button onClick={() => this.handleApproved(x.project)}> Approve Contract </Button>
+            <Button onClick={() => this.removeItem(x.id)}> Remove </Button>
           </Card>
           );
           }
@@ -151,6 +155,7 @@ export default class ContractEditor extends React.Component {
             Assign <Icon type="down" />
             </a>
             </Dropdown>
+            <Button onClick={() => this.removeItem(`/contracts/${x.id}`)}> Remove </Button>
           </Card>
           );
           }
