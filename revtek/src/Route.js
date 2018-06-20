@@ -45,7 +45,7 @@ export default class Router extends Component {
                     render={() => (<div><TopBar approved={this.props.approved} user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <DailyChallenge approved={this.props.approved} person={this.props.userInfo} userID={this.props.userID} /></div>)} />
                 <Route
                     path="/profile"
-                    render={() => (this.props.approved ? <div><TopBar approved={this.props.approved} user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <Profile approved={this.props.approved} person={this.props.userInfo} userID={this.props.userID} /></div> : <NotApproved/> )} />
+                    render={() => (this.props.approved ? <div><TopBar approved={this.props.approved} user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <Profile approved={this.props.approved} person={this.props.userInfo} userID={this.props.userID} /></div> : <NotApproved updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} />)} />
                 <Route
                     path="/alumni-list"
                     render={() => (<div><TopBar approved={this.props.approved} user={this.props.user} updateField={this.props.updateField} status="intern" /> <AlumniList approved={this.props.approved} person={this.props.userInfo} userID={this.props.userID} /></div>)} />
@@ -61,10 +61,10 @@ export default class Router extends Component {
                 <Route
                     path="/contract-bidding"
                     render={() => (<div><TopBar approved={this.props.approved} user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <BiddingPage approved={this.props.approved} person={this.props.userInfo} /></div>)} />
-                    <Route
+                <Route
                     path="/not-approved"
                     render={() => (<div> <NotApproved updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
-                
+
             </div>
 
         );
