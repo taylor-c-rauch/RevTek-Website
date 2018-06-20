@@ -1,6 +1,6 @@
-import React from 'react'; 
-import ReactDom from 'react-dom'; 
-import { Row, Col, Card, Tag} from 'antd';
+import React from 'react';
+import ReactDom from 'react-dom';
+import { Row, Col, Card, Tag } from 'antd';
 import fire from "./fire.js";
 import './alumniList.css';
 
@@ -12,21 +12,22 @@ export default class AlumniList extends React.Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         let usersRef = fire.database().ref('users');
         let users = {};
         let alums = [];
         usersRef.on('value', (snapshot) => {
             users = snapshot.val();
-          });
+        });
         Object.keys(users).forEach((key) => {
             let status = users[key].status;
-            if(status === 'alumni') {
+            let approved = users[key].approved;
+            if (status === 'alumni' && approved) {
                 alums.push(users[key])
                 console.log(users[key])
             }
         });
-        this.setState({alumni: alums});
+        this.setState({ alumni: alums });
     }
 
 
@@ -65,8 +66,5 @@ export default class AlumniList extends React.Component {
                 </Card>
             </div>
         )
-        })}
-        </div>
-    )
     }
 }
