@@ -18,7 +18,7 @@ export default class ToDoItem extends Component {
                       </Card>
                     </Col>
                     <div>
-                      <Button onClick={() => this.props.remove(todo.id)} type="danger">Remove Contract</Button>
+                      <Button onClick={() => this.props.remove(todo.id)} type="danger">Remove Task</Button>
                     </div>
                   </Row>
                 </Card>
