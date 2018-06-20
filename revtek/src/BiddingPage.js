@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Card, Layout, Input, Button } from "antd";
-import fire from "./fire.js";
+import { Card, Layout, Input, Button } from 'antd';
+import fire from './fire.js';
+import ContractTile from "./ContractTile";
 
 export default class BiddingPage extends React.Component {
   constructor(props) {
@@ -10,7 +11,6 @@ export default class BiddingPage extends React.Component {
       data: []
     };
   }
-
   handleUserInput = e => {
     this.setState({
       [e.target.id]: e.target.value
@@ -46,8 +46,6 @@ export default class BiddingPage extends React.Component {
         numinterns: contractVals[info].numinterns,
         project: contractVals[info].project,
         skills: contractVals[info].skills,
-        payRate: "",
-        estHours: "",
         onDisabled: false,
         contractApproved: contractVals[info].contractApproved
       };
@@ -93,6 +91,7 @@ export default class BiddingPage extends React.Component {
                   />
                   <Button type="primary">Submit Bid</Button>
                 </Card>
+                <ContractTile userID={this.props.userID} person={this.props.person} email={x.email} numinterns={x.numinterns} client={x.client} project={x.project} skills={x.skills} description={x.description} />
               </div>
             );
           }

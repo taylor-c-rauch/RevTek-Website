@@ -323,7 +323,6 @@ export default class Profile extends Component {
                   >
                     {this.props.person.fullname}
                   </Card>
-
                   <Card
                     style={{ marginTop: 16 }}
                     type="inner"
@@ -354,6 +353,56 @@ export default class Profile extends Component {
                               >
                                 {skills.skill}
                               </Tag>
+
+                                                 </Col>
+                                                        <Col span={4}>
+                                                            <Button type="danger" onClick={() => this.removeSkill(skills.id)}>X</Button>
+                                                        </Col>
+                                                    </Row>
+                                                </div>
+                                            )
+                                        })}
+
+                                    </Card>
+
+                                    <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button onClick={this.showModal} size="small">Edit</Button>}>
+
+                                        GitHub: <a href={gitHub} target="_blank"> {gitHub} </a>
+                                        <br />
+                                        LinkedIn: <a href={linkedIn} target="_blank"> {linkedIn} </a>
+
+                                    </Card>
+
+                                    <Modal
+                                        visible={this.state.visible}
+                                        title="Edit Info"
+                                        onCancel={this.handleCancel}
+                                        footer={[
+                                            <Button key="back" onClick={this.handleCancel}>Cancel</Button>,
+                                            <Button key="submit" type="primary" loading={this.state.loading} onClick={this.handleModal}>
+                                                Submit
+                                        </Button>,
+                                        ]}
+                                    >
+
+                                        <Input
+                                            placeholder="GitHub"
+                                            name="gitHubInput"
+                                            prefix={<Icon type="link"
+                                                style={{ color: 'rgba(0,0,0,.25)' }} />}
+
+                                            onChange={this.handleChange}>
+                                        </Input>
+                                        <Input
+                                            placeholder="LinkedIn"
+                                            name="linkedInInput"
+                                            prefix={<Icon type="link"
+
+                                                style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                            onChange={this.handleChange}>
+                                        </Input>
+                                    </Modal>
+                                </Card>
                             </Col>
                             <Col span={4}>
                               <Button

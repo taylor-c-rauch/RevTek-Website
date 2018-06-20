@@ -3,7 +3,6 @@ import TopBar from "./top-bar";
 import "./SignUp.css";
 
 export default class NotApproved extends Component {
-  //comment
   render() {
     return (
       <div class="backdrop">
@@ -11,6 +10,7 @@ export default class NotApproved extends Component {
           <TopBar
             status="home"
             user={this.props.user}
+            person={this.props.person}
             updateField={this.props.updateField}
           />
           <div class="HeaderFiller" />
@@ -24,6 +24,7 @@ export default class NotApproved extends Component {
             <p2> Please try again later. </p2>
           </div>
         </section>
+      </div>
       </div>
     );
   }

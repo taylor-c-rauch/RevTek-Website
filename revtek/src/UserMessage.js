@@ -3,12 +3,12 @@ import TopBar from "./top-bar";
 import "./SignUp.css";
 
 export default class UserMessage extends Component {
-  //comment
   render() {
     return (
       <div class="backdrop">
         <section>
           <TopBar
+            person={this.props.person}
             status="home"
             user={this.props.user}
             updateField={this.props.updateField}
@@ -23,6 +23,7 @@ export default class UserMessage extends Component {
             </p2>
           </div>
         </section>
+    </div>
       </div>
     );
   }
