@@ -16,7 +16,8 @@ export default class ContractSubmission extends Component {
       description: "",
       numinterns: "",
       skills: "",
-      clicked: false
+      clicked: false, 
+      contractApproved: false, 
     };
   }
 
@@ -93,7 +94,8 @@ export default class ContractSubmission extends Component {
           project: this.state.project,
           description: this.state.description,
           numinterns: this.state.numinterns,
-          skills: this.state.skills
+          skills: this.state.skills, 
+          contractApproved: this.state.contractApproved, 
         });
       this.setState({
         client: "",

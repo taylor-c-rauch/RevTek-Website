@@ -37,14 +37,27 @@ export default class ContractEditor extends React.Component {
         }
     )};
 
+    handleApproved = (xID) => {
+      let contractRef = fire.database().ref(`/contracts/${xID}`); 
+      contractRef.update({
+        contractApproved: true, 
+      })
+    }
+
+    removeItem(contractID) {
+      console.log(contractID)
+      const contractsRef = fire.database().ref(`/contracts/${contractID}`);
+      contractsRef.remove();
+    }
+
     componentDidMount() {
         const contractsRef = fire.database().ref('contracts');
         contractsRef.on('value', (snapshot) => {
           let contractVals = snapshot.val();
-          let contractKeys = Object.keys(snapshot.val());
           let newState = [];
           for (let info in contractVals) {
-              let contract = {
+              newState.push({
+                id: contractVals[info].project.split(" ").join("-"),
                 client: contractVals[info].client,
                 description: contractVals[info].description,
                 email: contractVals[info].email,
@@ -54,9 +67,9 @@ export default class ContractEditor extends React.Component {
                 payRate: "",
                 estHours: "",
                 onDisabled: false,
-                bidders: []
-              };
-              newState.push(contract);
+                bidders: [],
+                contractApproved: contractVals[info].contractApproved
+              });
           }
           this.setState({
             data: newState
@@ -66,7 +79,6 @@ export default class ContractEditor extends React.Component {
         const usersRef = fire.database().ref('users');
         usersRef.on('value', (snapshot) => {
           let userVals = snapshot.val();
-          console.log(snapshot.val())
           let newState2 = [];
           for (let user in userVals) {
               let userList = {
@@ -81,7 +93,6 @@ export default class ContractEditor extends React.Component {
     }
 
     render(){
-        console.log(this.state.users.fullname)
         const menu = (
             <div>
             {this.state.users.map(x => 
@@ -96,26 +107,59 @@ export default class ContractEditor extends React.Component {
         const { Header, Footer, Sider, Content } = Layout;
         return(
         <div style={{ background: '#ECECEC', padding: '10px' }}>
-        {this.state.data.map(x=>
-        <Card title={x.client} extra={<a href="#">Remove</a>} style={{ width: 1027 }}>
-        <p><strong>{x.project}</strong></p>
-        <p>{x.description}</p>
-        <p>{x.email}</p>
-        <p>{x.numinterns}</p>
-        <p>{x.skills}</p>
-        <p>{x.bidders}</p>
-        <Dropdown overlay={menu} trigger={['click']}>
-        <a className="ant-dropdown-link" href="#">
-         Options <Icon type="down" />
-        </a>
-         </Dropdown>
-         <Dropdown overlay={menu} trigger={['click']}>
-        <a className="ant-dropdown-link" href="#">
-         Assign <Icon type="down" />
-        </a>
-         </Dropdown>
-        </Card>
-        )}
+        <h1> Contracts to Approve </h1> 
+        {this.state.data.map((x)=> {
+          if (x.contractApproved == false) {
+            return (
+            <Card title={x.client} extra={<a href="#">Remove</a>} style={{ width: 1027 }}>
+            <p><strong>{x.project}</strong></p>
+            <p>{x.description}</p>
+            <p>{x.email}</p>
+            <p>{x.numinterns}</p>
+            <p>{x.skills}</p>
+            <p>{x.bidders}</p>
+            <Dropdown overlay={menu} trigger={['click']}>
+            <a className="ant-dropdown-link" href="#">
+            Options <Icon type="down" />
+            </a>
+            </Dropdown>
+            <Dropdown overlay={menu} trigger={['click']}>
+            <a className="ant-dropdown-link" href="#">
+            Assign <Icon type="down" />
+            </a>
+            </Dropdown>
+            <Button onClick={() => this.handleApproved(x.project)}> Approve Contract </Button>
+            <Button onClick={() => this.removeItem(x.id)}> Remove </Button>
+          </Card>
+          );
+          }
+        })}
+        <h2> Approved Contracts </h2> 
+        {this.state.data.map((x)=> {
+          if (x.contractApproved == true) {
+            return (
+            <Card title={x.client} extra={<a href="#">Remove</a>} style={{ width: 1027 }}>
+            <p><strong>{x.project}</strong></p>
+            <p>{x.description}</p>
+            <p>{x.email}</p>
+            <p>{x.numinterns}</p>
+            <p>{x.skills}</p>
+            <p>{x.bidders}</p>
+            <Dropdown overlay={menu} trigger={['click']}>
+            <a className="ant-dropdown-link" href="#">
+            Options <Icon type="down" />
+            </a>
+            </Dropdown>
+            <Dropdown overlay={menu} trigger={['click']}>
+            <a className="ant-dropdown-link" href="#">
+            Assign <Icon type="down" />
+            </a>
+            </Dropdown>
+            <Button onClick={() => this.removeItem(`/contracts/${x.id}`)}> Remove </Button>
+          </Card>
+          );
+          }
+        })}
         </div>
         );
     }
