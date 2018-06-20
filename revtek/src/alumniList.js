@@ -34,36 +34,39 @@ export default class AlumniList extends React.Component {
     render() {
         let alum = this.state.alumni;
         return (
-        <div className="alumniProfs">
-            <h1 className="alumniHeader"> Alumni Profiles </h1>
-        {alum.map(i => {
-            let skills = [];
-            let curSkills = i.skills;
-            if(curSkills) {
-                Object.keys(curSkills).forEach((key) => {
-                    let skill = curSkills[key].skill;
-                    skills.push(skill)
-                    console.log(skill)
-                    
-                });
-            }
-            return (
-            <div style={{ background: '#ECECEC', padding: '30px'}}>
-                <Card className="alumniCards" 
-                      title={<h1 className="cardTitle">{i.fullname} </h1>} 
-                      extra={<img width="100px" height="100px" alt="example" src={i.profilepic}/>} 
-                      bordered={false}>
-                    GitHub: <a href={i.gitHub}> {i.gitHub} </a>
-                    <br/>
-                    LinkedIn: <a href={i.linkedIn}> {i.linkedIn} </a>
-                    <br/>
-                    Skills: {skills.map(skill => {
-                        let theSkill = skill;
-                        return (
-                        <Tag> {theSkill} </Tag>
-                        )
-                    })}
-                </Card>
+            <div className="alumniProfs">
+                <h1 className="alumniHeader"> Alumni Profiles </h1>
+                {alum.map(i => {
+                    let skills = [];
+                    let curSkills = i.skills;
+                    if (curSkills) {
+                        Object.keys(curSkills).forEach((key) => {
+                            let skill = curSkills[key].skill;
+                            skills.push(skill)
+                            console.log(skill)
+
+                        });
+                    }
+                    return (
+                        <div style={{ background: '#ECECEC', padding: '30px' }}>
+                            <Card className="alumniCards"
+                                title={<h1 className="cardTitle">{i.fullname} </h1>}
+                                extra={<img width="100px" height="100px" alt="example" src={i.profilepic} />}
+                                bordered={false}>
+                                GitHub: <a href={i.gitHub}> {i.gitHub} </a>
+                                <br />
+                                LinkedIn: <a href={i.linkedIn}> {i.linkedIn} </a>
+                                <br />
+                                Skills: {skills.map(skill => {
+                                    let theSkill = skill;
+                                    return (
+                                        <Tag> {theSkill} </Tag>
+                                    )
+                                })}
+                            </Card>
+                        </div>
+                    )
+                })}
             </div>
         )
     }
