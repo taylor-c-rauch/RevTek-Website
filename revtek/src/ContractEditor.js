@@ -37,6 +37,13 @@ export default class ContractEditor extends React.Component {
         }
     )};
 
+    handleApproved = (xID) => {
+      let contractRef = fire.database.ref(`/contracts/${xID}`); 
+      contractRef.update({
+        contractApproved: true, 
+      })
+    }
+
     componentDidMount() {
         const contractsRef = fire.database().ref('contracts');
         contractsRef.on('value', (snapshot) => {
@@ -54,7 +61,8 @@ export default class ContractEditor extends React.Component {
                 payRate: "",
                 estHours: "",
                 onDisabled: false,
-                bidders: []
+                bidders: [],
+                contractApproved: contractVals[info].contractApproved
               };
               newState.push(contract);
           }
@@ -96,26 +104,55 @@ export default class ContractEditor extends React.Component {
         const { Header, Footer, Sider, Content } = Layout;
         return(
         <div style={{ background: '#ECECEC', padding: '10px' }}>
-        {this.state.data.map(x=>
-        <Card title={x.client} extra={<a href="#">Remove</a>} style={{ width: 1027 }}>
-        <p><strong>{x.project}</strong></p>
-        <p>{x.description}</p>
-        <p>{x.email}</p>
-        <p>{x.numinterns}</p>
-        <p>{x.skills}</p>
-        <p>{x.bidders}</p>
-        <Dropdown overlay={menu} trigger={['click']}>
-        <a className="ant-dropdown-link" href="#">
-         Options <Icon type="down" />
-        </a>
-         </Dropdown>
-         <Dropdown overlay={menu} trigger={['click']}>
-        <a className="ant-dropdown-link" href="#">
-         Assign <Icon type="down" />
-        </a>
-         </Dropdown>
-        </Card>
-        )}
+        {this.state.data.map((x)=> {
+          if (x.contractApproved == false) {
+            return (
+            <Card title={x.client} extra={<a href="#">Remove</a>} style={{ width: 1027 }}>
+            <p><strong>{x.project}</strong></p>
+            <p>{x.description}</p>
+            <p>{x.email}</p>
+            <p>{x.numinterns}</p>
+            <p>{x.skills}</p>
+            <p>{x.bidders}</p>
+            <Dropdown overlay={menu} trigger={['click']}>
+            <a className="ant-dropdown-link" href="#">
+            Options <Icon type="down" />
+            </a>
+            </Dropdown>
+            <Dropdown overlay={menu} trigger={['click']}>
+            <a className="ant-dropdown-link" href="#">
+            Assign <Icon type="down" />
+            </a>
+            </Dropdown>
+            <Button> Approve Contract </Button>
+          </Card>
+          );
+          }
+        })}
+        {this.state.data.map((x)=> {
+          if (x.contractApproved) {
+            return (
+            <Card title={x.client} extra={<a href="#">Remove</a>} style={{ width: 1027 }}>
+            <p><strong>{x.project}</strong></p>
+            <p>{x.description}</p>
+            <p>{x.email}</p>
+            <p>{x.numinterns}</p>
+            <p>{x.skills}</p>
+            <p>{x.bidders}</p>
+            <Dropdown overlay={menu} trigger={['click']}>
+            <a className="ant-dropdown-link" href="#">
+            Options <Icon type="down" />
+            </a>
+            </Dropdown>
+            <Dropdown overlay={menu} trigger={['click']}>
+            <a className="ant-dropdown-link" href="#">
+            Assign <Icon type="down" />
+            </a>
+            </Dropdown>
+          </Card>
+          );
+          }
+        })}
         </div>
         );
     }
