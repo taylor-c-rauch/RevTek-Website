@@ -11,7 +11,6 @@ import {
   DatePicker
 } from "antd";
 import fire from "./fire.js";
-import "./App.css";
 const Header = Layout.Header;
 const Content = Layout.Content;
 const FormItem = Form.Item;
@@ -199,19 +198,20 @@ export default class ChallengeManager extends Component {
                     {data.map(submission => {
                       return (
                         <div>
-                          {console.log(currName)}
-                          <p>
-                            {submission.name + " : " + submission.gitHubLink}
-                          </p>
-                          <Button
-                            type="primary"
-                            shape="circle"
-                            icon="delete"
-                            onClick={() => this.removeItem(currName)}
-                          />
+                          {submission.name}:{" "}
+                          <a href={"https://" + submission.gitHubLink}>
+                            {" "}
+                            {submission.gitHubLink}{" "}
+                          </a>
                         </div>
                       );
                     })}
+                    <Button
+                      type="primary"
+                      shape="circle"
+                      icon="delete"
+                      onClick={() => this.removeItem(currName)}
+                    />
                   </Card>
                 </Col>
               </Row>

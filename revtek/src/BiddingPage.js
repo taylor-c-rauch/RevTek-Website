@@ -30,28 +30,31 @@ export default class BiddingPage extends React.Component {
 
   componentDidMount() {
     const contractsRef = fire.database().ref("contracts");
+    let contractVals = [];
+    let contractKeys = [];
     contractsRef.on("value", snapshot => {
-      let contractVals = snapshot.val();
-      let contractKeys = Object.keys(snapshot.val());
-      let newState = [];
-      for (let info in contractVals) {
-        let contract = {
-          client: contractVals[info].client,
-          description: contractVals[info].description,
-          email: contractVals[info].email,
-          numinterns: contractVals[info].numinterns,
-          project: contractVals[info].project,
-          skills: contractVals[info].skills,
-          payRate: "",
-          estHours: "",
-          onDisabled: false
-        };
-        newState.push(contract);
-      }
-      this.setState({
-        data: newState
-      });
+      contractVals = snapshot.val();
+      contractKeys = Object.keys(snapshot.val());
     });
+
+    let newState = [];
+    for (let info in contractVals) {
+      let contract = {
+        client: contractVals[info].client,
+        description: contractVals[info].description,
+        email: contractVals[info].email,
+        numinterns: contractVals[info].numinterns,
+        project: contractVals[info].project,
+        skills: contractVals[info].skills,
+        payRate: "",
+        estHours: "",
+        onDisabled: false,
+        contractApproved: contractVals[info].contractApproved
+      };
+      newState.push(contract);
+    }
+
+    this.setState({ data: newState });
   }
 
   render() {
@@ -65,8 +68,8 @@ export default class BiddingPage extends React.Component {
                 <Card
                   title={x.client}
                   style={{
-                    marginLeft: 300,
-                    marginRight: 300,
+                    marginLeft: 30,
+                    marginRight: 30,
                     marginTop: 20,
                     marginBottom: 20
                   }}
