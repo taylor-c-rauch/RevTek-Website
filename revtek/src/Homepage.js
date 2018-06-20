@@ -13,6 +13,7 @@ export default class Homepage extends Component {
         <TopBar
           status="home"
           user={this.props.user}
+          person={this.props.person}
           updateField={this.props.updateField}
         />
         <section>

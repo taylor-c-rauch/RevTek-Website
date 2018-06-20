@@ -148,6 +148,9 @@ class TopBar extends Component {
                             <Toolbar>
                                 <Typography variant="display1" color="inherit" className={classes.flex}>
                                     <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                    <Typography variant="caption" color="inherit" className={classes.flex}>
+                                        Hello, {this.props.person.fullname}
+                                    </Typography>
                                 </Typography>
                                 <Button mini onClick={this.handleMenu1}><Typography><font color="white">Clients</font></Typography></Button>
                                 <Menu
@@ -197,6 +200,9 @@ class TopBar extends Component {
                             <Toolbar>
                                 <Typography variant="display1" color="inherit" className={classes.flex}>
                                     <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                    <Typography variant="caption" color="inherit" className={classes.flex}>
+                                        Hello, {this.props.person.fullname}
+                                    </Typography>
                                 </Typography>
                                 <Button mini onClick={this.handleMenu1}><Typography><font color="white">Clients</font></Typography></Button>
                                 <Menu
@@ -243,7 +249,10 @@ class TopBar extends Component {
                         <AppBar position="static" style={{ backgroundColor: "#2D9CDB" }}>
                             <Toolbar>
                                 <Typography variant="display1" color="inherit" className={classes.flex}>
-                                    <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                    <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                    <Typography variant="caption" color="inherit" className={classes.flex}>
+                                        Hello, {this.props.person.fullname}
+                                    </Typography>
                                 </Typography>
                                 {this.state.intern.map(item => <Link to={item.place}><Button mini ><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
                                 <Link to="/home" style={{ textDecoration: "none" }}><Button mini color="inherit" onClick={() => this.logout()}><Typography><font color="white">Logout</font></Typography></Button></Link>
@@ -260,7 +269,10 @@ class TopBar extends Component {
                     <AppBar position="static" style={{ backgroundColor: "#2D9CDB" }}>
                         <Toolbar>
                             <Typography variant="display1" color="inherit" className={classes.flex}>
-                                <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                <Typography variant="caption" color="inherit" className={classes.flex}>
+                                    Hello, {this.props.person.fullname}
+                                </Typography>
                             </Typography>
                             {this.state.alumni.map(item => <Link to={item.place}><Button mini color="inherit"><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
                             <Link to="/home" style={{ textDecoration: "none" }}><Button mini color="inherit" onClick={() => this.logout()}><Typography><font color="white">Logout</font></Typography></Button></Link>
@@ -275,7 +287,10 @@ class TopBar extends Component {
                     <AppBar position="static" style={{ backgroundColor: "#2D9CDB" }}>
                         <Toolbar>
                             <Typography variant="display1" color="inherit" className={classes.flex}>
-                                <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                <Typography variant="caption" color="inherit" className={classes.flex}>
+                                    Hello, {this.props.person.fullname}
+                                </Typography>
                             </Typography>
                             {this.state.admin.map(item => <Link to={item.place}><Button mini color="inherit"><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
                             <Link to="/home" style={{ textDecoration: "none" }}><Button mini color="inherit" onClick={() => this.logout()}><Typography><font color="white">Logout</font></Typography></Button></Link>
