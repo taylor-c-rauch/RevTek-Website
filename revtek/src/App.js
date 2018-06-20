@@ -7,7 +7,7 @@ import fire from "./fire";
 class App extends Component {
   constructor() {
     super();
-    this.state = { email: "", user: null, users: [], userID: "", userInfo: {}, status: "", approved:false  };
+    this.state = { email: "", user: null, users: [], userID: "", userInfo: {}, status: "", approved: false };
     this.authListener();
   }
   authListener() {
@@ -35,7 +35,7 @@ class App extends Component {
         this.setState({ userID: userID });
         this.setState({ userInfo: this.state.users[key] });
         this.setState({ status: this.state.users[key].status });
-        this.setState({approved: this.state.users[key].approved})
+        this.setState({ approved: this.state.users[key].approved });
         console.log(this.state.users[key].status)
       }
     }
