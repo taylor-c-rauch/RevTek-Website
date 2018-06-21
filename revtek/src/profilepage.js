@@ -416,13 +416,58 @@ export default class Profile extends Component {
                                 {skills.skill}
                               </Tag>
                             </Col>
-                            <Col span={4}>
-                              <Button
-                                type="danger"
-                                onClick={() => this.removeSkill(skills.id)}
+                            <Col span={16}>
+                              <Card
+                                title="Task Manager"
+                                bordered={true}
+                                style={{ background: "#C4C4C4" }}
                               >
-                                X
-                              </Button>
+                                <p
+                                  style={{
+                                    fontSize: 14,
+                                    color: "rgba(0, 0, 0, 0.85)",
+                                    marginBottom: 8,
+                                    fontWeight: 500
+                                  }}
+                                />
+                                <Card
+                                  style={{ marginTop: 8 }}
+                                  type="inner"
+                                  title="To-Do"
+                                >
+                                  <Form>
+                                    <Row>
+                                      <Col span={6}>
+                                        <Input
+                                          value={this.state.task}
+                                          placeholder="New Task"
+                                          name="task"
+                                          onChange={this.handleChange}
+                                        />
+                                      </Col>
+                                      <Col span={6} style={{ paddingLeft: 10 }}>
+                                        <Input
+                                          value={this.state.hours}
+                                          placeholder="Number of hours"
+                                          name="hours"
+                                          maxlength="5"
+                                          onChange={this.handleChange}
+                                        />
+                                      </Col>
+                                      <Col span={3} style={{ paddingLeft: 10 }}>
+                                        <Button
+                                          size="medium"
+                                          onClick={this.handleClick}
+                                        >
+                                          {" "}
+                                          +{" "}
+                                        </Button>
+                                      </Col>
+                                    </Row>
+                                  </Form>
+                                  {this.renderCompleted()}
+                                </Card>
+                              </Card>
                             </Col>
                           </Row>
                         </div>
