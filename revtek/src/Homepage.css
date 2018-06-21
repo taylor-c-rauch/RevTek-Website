@@ -18,7 +18,7 @@
   color: rgba(0, 0, 0);
 }
 
-h2 {
+.who {
   font-family: Roboto;
   font-weight: lighter;
   margin-top: 20px;
@@ -52,7 +52,7 @@ h2 {
   padding-right: 20px;
 }
 
-p {
+.Description {
   color: rgba(255, 255, 255);
   padding: 7px;
 }

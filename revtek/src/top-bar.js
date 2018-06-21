@@ -33,8 +33,8 @@ class TopBar extends Component {
         this.state = {
             status: this.props.status,
             intern: [{ label: "Profile", place: "/profile" }, { label: "Daily Challenge", place: "/daily-challenge" }, { label: "Contracts", place: "/contract-bidding" }, { label: "Alumni", place: "/alumni-list" },],
-            alumni: [{ label: "Profile", place: "/profile" }, { label: "Leaderboard", place: "/" }, { label: "Contracts", place: "/contract-bidding" },],
-            admin: [{ label: "Profile", place: "/profile" }, { label: "Challenge Manager", place: "/challenge-manager" }, { label: "Contracts", place: "/contract-bidding" }, { label: "Users", place: "/user-list" },],
+            alumni: [{ label: "Profile", place: "/profile" }, { label: "Leaderboard", place: "/leaderboard" }, { label: "Contracts", place: "/contract-bidding" },],
+            admin: [{ label: "Profile", place: "/profile" }, { label: "Challenge Manager", place: "/challenge-manager" }, { label: "Contracts", place: "/contract-editor" }, { label: "Users", place: "/user-list" },],
             anchor1: null,
             anchor2: null,
             auth1: true,
@@ -148,6 +148,9 @@ class TopBar extends Component {
                             <Toolbar>
                                 <Typography variant="display1" color="inherit" className={classes.flex}>
                                     <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                    <Typography variant="caption" color="inherit" className={classes.flex}>
+                                        Hello, {this.props.person.fullname}
+                                    </Typography>
                                 </Typography>
                                 <Button mini onClick={this.handleMenu1}><Typography><font color="white">Clients</font></Typography></Button>
                                 <Menu
@@ -181,7 +184,7 @@ class TopBar extends Component {
                                     onClose={this.handleClose2}
                                 >
                                     <Link to="/login" style={{ textDecoration: "none" }}><MenuItem onClick={this.handleClose2}>Profile</MenuItem></Link>
-                                    <MenuItem onClick={e => this.handleLogout(e)}>Logout</MenuItem>
+                                    <Link to="/home" style={{ textDecoration: "none" }}><MenuItem onClick={e => this.handleLogout(e)}>Logout</MenuItem></Link>
                                 </Menu>
                             </Toolbar>
                         </AppBar>
@@ -190,13 +193,16 @@ class TopBar extends Component {
             }
         }
         else if (this.props.status === "intern") {
-            if(this.props.approved===false){
-                return(
+            if (this.props.approved === false) {
+                return (
                     <div className={classes.root}>
                         <AppBar position="static" style={{ backgroundColor: "#2D9CDB" }}>
                             <Toolbar>
                                 <Typography variant="display1" color="inherit" className={classes.flex}>
                                     <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                    <Typography variant="caption" color="inherit" className={classes.flex}>
+                                        Hello, {this.props.person.fullname}
+                                    </Typography>
                                 </Typography>
                                 <Button mini onClick={this.handleMenu1}><Typography><font color="white">Clients</font></Typography></Button>
                                 <Menu
@@ -237,21 +243,25 @@ class TopBar extends Component {
                     </div >
                 );
             }
-            else{
-            return (
-                <div className={classes.root}>
-                    <AppBar position="static" style={{ backgroundColor: "#2D9CDB" }}>
-                        <Toolbar>
-                            <Typography variant="display1" color="inherit" className={classes.flex}>
-                                <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
-                            </Typography>
-                            {this.state.intern.map(item => <Link to={item.place}><Button mini ><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
-                            <Link to="/home" style={{ textDecoration: "none" }}><Button mini color="inherit" onClick={() => this.logout()}><Typography><font color="white">Logout</font></Typography></Button></Link>
+            else {
+                return (
+                    <div className={classes.root}>
+                        <AppBar position="static" style={{ backgroundColor: "#2D9CDB" }}>
+                            <Toolbar>
+                                <Typography variant="display1" color="inherit" className={classes.flex}>
+                                    <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                    <Typography variant="caption" color="inherit" className={classes.flex}>
+                                        Hello, {this.props.person.fullname}
+                                    </Typography>
+                                </Typography>
+                                {this.state.intern.map(item => <Link to={item.place}><Button mini ><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
+                                <Link to="/home" style={{ textDecoration: "none" }}><Button mini color="inherit" onClick={() => this.logout()}><Typography><font color="white">Logout</font></Typography></Button></Link>
 
-                        </Toolbar>
-                    </AppBar>
-                </div>
-            );}
+                            </Toolbar>
+                        </AppBar>
+                    </div>
+                );
+            }
         }
         else if (this.props.status === "alumni") {
             return (
@@ -259,7 +269,10 @@ class TopBar extends Component {
                     <AppBar position="static" style={{ backgroundColor: "#2D9CDB" }}>
                         <Toolbar>
                             <Typography variant="display1" color="inherit" className={classes.flex}>
-                                <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                <Typography variant="caption" color="inherit" className={classes.flex}>
+                                    Hello, {this.props.person.fullname}
+                                </Typography>
                             </Typography>
                             {this.state.alumni.map(item => <Link to={item.place}><Button mini color="inherit"><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
                             <Link to="/home" style={{ textDecoration: "none" }}><Button mini color="inherit" onClick={() => this.logout()}><Typography><font color="white">Logout</font></Typography></Button></Link>
@@ -274,7 +287,10 @@ class TopBar extends Component {
                     <AppBar position="static" style={{ backgroundColor: "#2D9CDB" }}>
                         <Toolbar>
                             <Typography variant="display1" color="inherit" className={classes.flex}>
-                                <Link to="/home" style={{ testDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                <Link to="/home" style={{ textDecoration: "none", color: "#fff" }}><i>RevTek</i></Link>
+                                <Typography variant="caption" color="inherit" className={classes.flex}>
+                                    Hello, {this.props.person.fullname}
+                                </Typography>
                             </Typography>
                             {this.state.admin.map(item => <Link to={item.place}><Button mini color="inherit"><Typography><font color="white">{item.label}</font></Typography></Button></Link>)}
                             <Link to="/home" style={{ textDecoration: "none" }}><Button mini color="inherit" onClick={() => this.logout()}><Typography><font color="white">Logout</font></Typography></Button></Link>

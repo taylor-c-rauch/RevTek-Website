@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Layout, Input, Button, Menu, Dropdown, Icon } from 'antd';
+import { Card, Layout, Input, Button, Menu, Dropdown, Icon, Select, message } from 'antd';
 import fire from './fire.js'
 
 export default class ContractEditor extends React.Component {
@@ -8,7 +8,8 @@ export default class ContractEditor extends React.Component {
       this.state = {
         contracts: [],
         data: [],
-        users: []
+        users: [],
+        numContracts: 0
       };
     }
 
@@ -29,7 +30,6 @@ export default class ContractEditor extends React.Component {
         usersRef.on('value', (snapshot) => {
         let userVals = snapshot.val();
         var curUser = fire.auth().currentUser;
-        console.log(curUser.email)
         for (let user in userVals) {
             if(userVals[user].email == curUser.email)
                 this.state.data.bidders.push[userVals[user].fullname]
@@ -37,14 +37,40 @@ export default class ContractEditor extends React.Component {
         }
     )};
 
+    handleApproved = (xID) => {
+      let contractRef = fire.database().ref(`/contracts/${xID}`); 
+      contractRef.update({
+        contractApproved: true
+      })
+    }
+
+    removeItem(contractID) {
+      const contractsRef = fire.database().ref(`/contracts/${contractID}`);
+      contractsRef.remove();
+    }
+
+
+    assignClick = (userID) => {
+      const usersRef = fire.database().ref(`/users/${userID}`);
+      this.setState({
+        numContracts: this.state.numContracts + 1
+      })
+      usersRef.update({
+        contracts: [],
+        todo: [],
+        numContracts: this.state.numContracts
+      })
+    }
+
     componentDidMount() {
         const contractsRef = fire.database().ref('contracts');
         contractsRef.on('value', (snapshot) => {
           let contractVals = snapshot.val();
-          let contractKeys = Object.keys(snapshot.val());
           let newState = [];
           for (let info in contractVals) {
-              let contract = {
+            let contract = contractVals[info].project
+              newState.push({
+                id: contract.split(" ").join("-"),
                 client: contractVals[info].client,
                 description: contractVals[info].description,
                 email: contractVals[info].email,
@@ -54,9 +80,9 @@ export default class ContractEditor extends React.Component {
                 payRate: "",
                 estHours: "",
                 onDisabled: false,
-                bidders: []
-              };
-              newState.push(contract);
+                bidders: [],
+                contractApproved: contractVals[info].contractApproved
+              });
           }
           this.setState({
             data: newState
@@ -66,12 +92,16 @@ export default class ContractEditor extends React.Component {
         const usersRef = fire.database().ref('users');
         usersRef.on('value', (snapshot) => {
           let userVals = snapshot.val();
-          console.log(snapshot.val())
           let newState2 = [];
           for (let user in userVals) {
               let userList = {
+                id: user, 
                 fullname: userVals[user].fullname,
+                numContracts: userVals[user].numContracts,
               };
+              this.setState({
+                numContracts: userVals[user].numContracts,
+              })
               newState2.push(userList);
           }
           this.setState({
@@ -81,13 +111,18 @@ export default class ContractEditor extends React.Component {
     }
 
     render(){
-        console.log(this.state.users.fullname)
+      const Option = Select.Option;
+      
+      const onClick = function ({ key }) {
+        message.info(`Assigned ${key}`);
+      };
+
         const menu = (
             <div>
-            {this.state.users.map(x => 
-            <Menu>
+            {this.state.users.map(user => 
+            <Menu onClick={onClick}>
               <Menu.Item key="0">
-                <a>{x.fullname}</a>
+                <a onClick={() => this.assignClick(user.id)}>{user.fullname}</a>
               </Menu.Item>
             </Menu>
         )}
@@ -96,26 +131,53 @@ export default class ContractEditor extends React.Component {
         const { Header, Footer, Sider, Content } = Layout;
         return(
         <div style={{ background: '#ECECEC', padding: '10px' }}>
-        {this.state.data.map(x=>
-        <Card title={x.client} extra={<a href="#">Remove</a>} style={{ width: 1027 }}>
-        <p><strong>{x.project}</strong></p>
-        <p>{x.description}</p>
-        <p>{x.email}</p>
-        <p>{x.numinterns}</p>
-        <p>{x.skills}</p>
-        <p>{x.bidders}</p>
-        <Dropdown overlay={menu} trigger={['click']}>
-        <a className="ant-dropdown-link" href="#">
-         Options <Icon type="down" />
-        </a>
-         </Dropdown>
-         <Dropdown overlay={menu} trigger={['click']}>
-        <a className="ant-dropdown-link" href="#">
-         Assign <Icon type="down" />
-        </a>
-         </Dropdown>
-        </Card>
-        )}
+        <h1> Contracts to Approve </h1> 
+        {this.state.data.map((x)=> {
+          if (x.contractApproved == false) {
+            return (
+            <Card title={x.client} style={{ width: 1027 }}>
+            <p><strong>{x.project}</strong></p>
+            <p>{x.description}</p>
+            <p>{x.email}</p>
+            <p>{x.numinterns}</p>
+            <p>{x.skills}</p>
+            <p>{x.bidders}</p>
+            <Select defaultValue="Assign Bidder" style={{ width: 300 }}>
+            {this.state.users.map((user)=> {
+              return (
+              <Option value={user.fullname}>{user.fullname}</Option>
+              )
+            })}
+            </Select>
+            <Button onClick={() => this.handleApproved(x.id)}> Approve Contract </Button>
+            <Button onClick={() => this.removeItem(x.id)}> Remove </Button>
+          </Card>
+          );
+          }
+        })}
+        <h2> Approved Contracts </h2> 
+        {this.state.data.map((x)=> {
+          if (x.contractApproved == true) {
+            return (
+            <Card title={x.client} style={{ width: 1027 }}>
+            <p><strong>{x.project}</strong></p>
+            <p>{x.description}</p>
+            <p>{x.email}</p>
+            <p>{x.numinterns}</p>
+            <p>{x.skills}</p>
+            <p>{x.bidders}</p>
+            <Select defaultValue="Assign Bidder" style={{ width: 300 }}>
+            {this.state.users.map((user)=> {
+              return (
+              <Option value={user.fullname}>{user.fullname}</Option>
+              )
+            })}
+            </Select>
+            <Button onClick={() => this.removeItem(`/contracts/${x.id}`)}> Remove </Button>
+          </Card>
+          );
+          }
+        })}
         </div>
         );
     }
