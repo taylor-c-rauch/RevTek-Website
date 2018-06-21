@@ -61,7 +61,7 @@ export default class Router extends Component {
                     render={() => (<div> <UserMessage updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />
                 <Route
                     path="/contract-bidding"
-                    render={() => (<div><TopBar person={this.props.userInfo} approved={this.props.approved} user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <BiddingPage approved={this.props.approved} person={this.props.userInfo} /></div>)} />
+                    render={() => (<div><TopBar person={this.props.userInfo} approved={this.props.approved} user={this.props.user} updateField={this.props.updateField} status={this.props.status} /> <BiddingPage approved={this.props.approved} person={this.props.userInfo} userID={this.props.userID} /></div>)} />
                 <Route
                     path="/not-approved"
                     render={() => (<div> <NotApproved updateField={this.props.updateField} user={this.props.user} person={this.props.userInfo} /></div>)} />

@@ -12,6 +12,15 @@ const data = [
 ]
 
 export default class Statistics extends React.Component {
+
+
+    // componentDidMount(){
+    //   const skillsRef = fire.database().ref('users/' + this.props.userID + '/skills/');
+    //   skillsRef.on('value', (snapshot) => {
+    //     let skillsList
+    //   })
+    // }
+
     render() {
 
         return (

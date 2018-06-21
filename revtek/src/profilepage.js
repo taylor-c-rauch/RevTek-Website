@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Popover, Input, Card, Row, Col, Button, Checkbox, InputNumber, Form, Modal, Icon, Tag, Select } from 'antd';
+
 import TopBar from "./top-bar";
 import fire from './fire.js';
 import { Typography } from "@material-ui/core";
@@ -31,6 +32,7 @@ export default class Profile extends Component {
         }
         console.log(this.props.person.profilepic);
         this.renderCompleted = this.renderCompleted.bind(this);
+
     }
 
     handleChange = e => {
@@ -45,7 +47,6 @@ export default class Profile extends Component {
 
     handleLevel(value) {
         let skill = this.state.skill + " (" + value + ")";
-        console.log(skill)
         this.setState({ skill: skill });
 
     }
@@ -64,6 +65,45 @@ export default class Profile extends Component {
         })
     }
 
+
+
+    componentDidUpdate(prevProps) {
+
+        if (this.props.userID !== prevProps.userID) {
+          const todoRef = fire.database().ref('users/' + this.props.userID + '/todo/');
+          todoRef.on('value', (snapshot) => {
+              let todoList = snapshot.val();
+              let newState = [];
+              for (let todo in todoList) {
+                  newState.push({
+                      id: todo,
+                      task: todoList[todo].task,
+                      hours: todoList[todo].hours,
+                      completed: todoList[todo].completed
+                  });
+              }
+              this.setState({
+                  todoList: newState,
+              });
+
+          });
+          const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
+          skillRef.on('value', (snapshot) => {
+              let skillList = snapshot.val();
+              let newSkill = [];
+              for (let skill in skillList) {
+                  newSkill.push({
+                      id: skill,
+                      skill: skillList[skill].skill,
+                  })
+              }
+              this.setState({
+                  skills: newSkill
+              })
+          })
+        }
+    }
+
     // retrieves the information from firebase so it can be rendered on the screen
     componentDidMount() {
         const todoRef = fire.database().ref('users/' + this.props.userID + '/todo/');
@@ -75,21 +115,16 @@ export default class Profile extends Component {
                     id: todo,
                     task: todoList[todo].task,
                     hours: todoList[todo].hours,
+                    completed: todoList[todo].completed
                 });
             }
-            // let skillList = snapshot.val();
-            // let newSkill = [];
-            // for (let skill in skillList) {
-            //     newSkill.push({
-            //         id: skill,
-            //         skill: skillList[skill].skill, 
-            //         level: skillList[skill].level,
-            //     })
-            // }
             this.setState({
                 todoList: newState,
             });
+
         });
+        console.log("it works" + this.state.todoList)
+
         const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
         skillRef.on('value', (snapshot) => {
             let skillList = snapshot.val();
@@ -104,6 +139,7 @@ export default class Profile extends Component {
                 skills: newSkill
             })
         })
+
     }
 
 
@@ -135,12 +171,22 @@ export default class Profile extends Component {
         currSkillRef.push({
             skill: this.state.skill,
         });
+        const currSkill2Ref = fire.database().ref(' skills/');
+        currSkill2Ref.push({
+            skill: this.state.skill,
+        });
+        this.setState({
+            skill: '',
+        })
     }
 
 
     removeSkill = (skillId) => {
         const skillRef = fire.database().ref('users/' + this.props.userID + `/skills/${skillId}`)
         skillRef.remove()
+        const skill2Ref = fire.database().ref(`skills/${skillId}`)
+        skill2Ref.remove()
+
     }
 
 
@@ -148,44 +194,48 @@ export default class Profile extends Component {
     renderSkill = () => {
         if (this.state.showSkillInput == true) {
             return (
-                <Row>
-                    <div style={{ paddingTop: 10 }}>
-                        <Col span={15}>
-                            <Select
-                                showSearch
-                                style={{ width: 200 }}
-                                placeholder="Add Skill"
-                                optionFilterProp="children"
-                                onChange={value => this.handleSelect(value)}
-                            >
-                                <Option value="React.js">React.js</Option>
-                                <Option value="Git/Github">Git/Github</Option>
-                                <Option value="Firebase">Firebase</Option>
-                                <Option value="Java">Java</Option>
-                                <Option value="Javascript">Javascript</Option>
-                                <Option value="Python">Python</Option>
-                                <Option value="C++">C++</Option>
-                                <Option value="C">C</Option>
-                                <Option value="CSS">CSS</Option>
-                                <Option value="Node.js">Node.js</Option>
-                            </Select>
-                            <Select
-                                showSearch
-                                style={{ width: 200 }}
-                                placeholder="Level of Experience"
-                                optionFilterProp="children"
-                                onChange={value => this.handleLevel(value)}
-                            >
-                                <Option value="Beginner">Beginner</Option>
-                                <Option value="Intermediate">Intermediate</Option>
-                                <Option value="Advanced">Advanced</Option>
-                            </Select>
-                        </Col>
-                        <Col span={9}>
-                            <Button onClick={() => this.onSubmitSkill()} htmlType="submit">Submit</Button>
-                        </Col>
-                    </div>
-                </Row>
+                <div>
+
+                    <Row>
+                        <div style={{ paddingTop: 10 }}>
+
+                            <Col span={15}>
+                                <Select
+                                    showSearch
+                                    style={{ width: 200 }}
+                                    placeholder="Add Skill"
+                                    optionFilterProp="children"
+                                    onChange={value => this.handleSelect(value)}
+                                >
+                                    <Option value="React.js">React.js</Option>
+                                    <Option value="Git/Github">Git/Github</Option>
+                                    <Option value="Firebase">Firebase</Option>
+                                    <Option value="Java">Java</Option>
+                                    <Option value="Javascript">Javascript</Option>
+                                    <Option value="Python">Python</Option>
+                                    <Option value="C++">C++</Option>
+                                    <Option value="C">C</Option>
+                                    <Option value="CSS">CSS</Option>
+                                    <Option value="Node.js">Node.js</Option>
+                                </Select>
+                                <Select
+                                    showSearch
+                                    style={{ width: 200 }}
+                                    placeholder="Level of Experience"
+                                    optionFilterProp="children"
+                                    onChange={value => this.handleLevel(value)}
+                                >
+                                    <Option value="Beginner">Beginner</Option>
+                                    <Option value="Intermediate">Intermediate</Option>
+                                    <Option value="Advanced">Advanced</Option>
+                                </Select>
+                            </Col>
+                            <Col span={9}>
+                                <Button onClick={() => this.onSubmitSkill()} htmlType="submit">Submit</Button>
+                            </Col>
+                        </div>
+                    </Row>
+                </div>
             )
         } else if (this.state.showSkillInput == false) {
             return (<div></div>);
@@ -227,7 +277,6 @@ export default class Profile extends Component {
         this.setState({
             completed: !this.state.completed
         })
-        console.log(this.state.completed)
     }
 
 
@@ -241,9 +290,18 @@ export default class Profile extends Component {
     }
 
     renderCompleted = () => {
-        return (
-            <ToDoItem list={this.state.todoList} check={this.state.completed} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
-        )
+        if (this.state.completed === false) {
+          return (
+              <ToDoItem list={this.state.todoList} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
+          )
+        } else if (this.state.completed === true) {
+          return (
+            <div>
+              <h1>hello</h1>
+              <ToDoItem list={this.state.todoList} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
+            </div>
+          )
+        }
     }
 
 
@@ -349,10 +407,10 @@ export default class Profile extends Component {
                                         <Form>
                                             <Row>
                                                 <Col span={6}>
-                                                    <Input placeholder="New Task" name="task" onChange={this.handleChange} />
+                                                    <Input value={this.state.task} placeholder="New Task" name="task" onChange={this.handleChange} />
                                                 </Col>
                                                 <Col span={6} style={{ paddingLeft: 10 }}>
-                                                    <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange} />
+                                                    <Input value={this.state.hours} placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange} />
                                                 </Col>
                                                 <Col span={3} style={{ paddingLeft: 10 }}>
                                                     <Button size="medium" onClick={this.handleClick}> + </Button>
@@ -370,4 +428,5 @@ export default class Profile extends Component {
             );
         }
     }
+
 }

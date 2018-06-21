@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import TopBar from "./top-bar";
 
-export default class UserMessage extends Component {  
+export default class UserMessage extends Component {
   render() {
     return (
       <div>
-        <TopBar status="home" user={this.props.user} updateField={this.props.updateField} />
+        <TopBar person={this.props.person} status="home" user={this.props.user} updateField={this.props.updateField} />
         <div style={{ background: "#ECECEC", padding: "30px" }}>
 
           <h1>Thank you for signing up!</h1>

@@ -18,6 +18,7 @@ export default class ContractSubmission extends Component {
       skills: "",
       clicked: false,
       contractApproved: false,
+      bids: []
     };
   }
 
@@ -96,6 +97,7 @@ export default class ContractSubmission extends Component {
           numinterns: this.state.numinterns,
           skills: this.state.skills,
           contractApproved: this.state.contractApproved,
+          bids: this.state.bids
         });
       this.setState({
         client: "",
@@ -120,6 +122,7 @@ export default class ContractSubmission extends Component {
       });
     }
   };
+
   render() {
     if (this.state.clicked === false) {
       return (
