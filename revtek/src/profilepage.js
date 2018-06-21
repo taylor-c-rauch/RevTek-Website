@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Popover, Input, Card, Row, Col, Button, Checkbox, InputNumber, Form, Modal, Icon, Tag, Select } from 'antd';
+
 import TopBar from "./top-bar";
 import fire from './fire.js';
 import { Typography } from "@material-ui/core";
@@ -94,7 +95,6 @@ export default class Profile extends Component {
                 skills: newSkill
             })
         })
-        
     }
 
 
@@ -126,7 +126,7 @@ export default class Profile extends Component {
         currSkillRef.push({
             skill: this.state.skill,
         });
-        const SkillRef = fire.database().ref('skills/');
+        const SkillRef = fire.database().ref(' skills/');
         SkillRef.push({
             skill: this.state.skill,
         });
@@ -136,6 +136,9 @@ export default class Profile extends Component {
     removeSkill = (skillId) => {
         const skillRef = fire.database().ref('users/' + this.props.userID + `/skills/${skillId}`)
         skillRef.remove()
+        const skill2Ref = fire.database().ref(`skills/${skillId}`)
+        skill2Ref.remove()
+
     }
 
 
@@ -143,6 +146,18 @@ export default class Profile extends Component {
     renderSkill = () => {
         if (this.state.showSkillInput == true) {
             return (
+              <div>
+              <Row>
+                <div style={{paddingTop: 10}}>
+                  <Col span={15}>
+                    <Input placeholder="New Skill" name="skill" onChange={this.handleChange} />
+                  </Col>
+                  <Col span={9}>
+                    <Button onClick={() => this.onSubmitSkill()} htmlType="submit" type="dashed" >Submit</Button>
+                  </Col>
+                </div>
+
+              </Row>
                 <Row>
                     <div style={{ paddingTop: 10 }}>
                         <Col span={15}>
@@ -181,6 +196,7 @@ export default class Profile extends Component {
                         </Col>
                     </div>
                 </Row>
+              </div>
             )
         } else if (this.state.showSkillInput == false) {
             return (<div></div>);
@@ -364,4 +380,6 @@ export default class Profile extends Component {
             );
         }
     }
+
 }
+        
