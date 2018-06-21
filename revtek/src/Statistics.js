@@ -2,18 +2,48 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import * as V from 'victory';
 import TopBar from "./top-bar";
+import fire from "./fire.js";
 import { VictoryBar, VictoryChart, VictoryAxis } from 'victory';
 
-const data = [
-    { quarter: 1, earnings: 13000 },
-    { quarter: 2, earnings: 16500 },
-    { quarter: 3, earnings: 14250 },
-    { quarter: 4, earnings: 19000 }
-]
-
 export default class Statistics extends React.Component {
-    render() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            skills: []
+        }
+    }
 
+    componentDidMount() {
+        const skillsRef = fire.database().ref(' skills');
+        //let theSkills = {};
+        //let allSkills = [];
+        skillsRef.on('value', (snapshot) => {
+            console.log(snapshot.val());
+        });
+        /*
+        if(theSkills){
+            Object.keys(theSkills).forEach((key) => {
+                allSkills.push(theSkills[key])
+                console.log(theSkills[key])
+            });
+        }
+        this.setState({ skills: allSkills });*/
+    }
+
+    render() {
+        const data = [
+            { skill: "ReactJS (Beginner)", numUsers: this.state.ReactJSB },
+            { skill: 2, numUsers: 16500 },
+            { skill: 3, numUsers: 14250 },
+            { skill: 4, numUsers: 19000 }
+        ]
+        /*
+        skills.map(skill => {
+            let theSkill = skill;
+            return (
+                console.log(theSkill)
+            )
+        })*/
         return (
             <div>
                 <TopBar person={this.props.person} updateField={this.props.updateField} status="home" user={this.props.user} />
@@ -34,11 +64,11 @@ export default class Statistics extends React.Component {
                     />
                     <VictoryBar
                         data={data}
-                        x="quarter"
-                        y="earnings"
+                        x="skill"
+                        y="numUsers"
                     />
                 </VictoryChart>
             </div>
-        )
+        );
     }
 }
