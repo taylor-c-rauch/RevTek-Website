@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Popover, Input, Card, Row, Col, Button, Checkbox, InputNumber, Form, Modal, Icon } from 'antd';
+import { Popover, Input, Card, Row, Col, Button, Checkbox, InputNumber, Tag, Form, Modal, Icon, Select } from 'antd';
 import TopBar from "./top-bar";
 import fire from './fire.js';
 import { Typography } from "@material-ui/core";
@@ -92,6 +92,7 @@ export default class Profile extends Component {
                 skills: newSkill
             })
         })
+
     }
 
 
@@ -126,6 +127,10 @@ export default class Profile extends Component {
         this.setState({
             skill: '',
         })
+        const currSkill2Ref = fire.database().ref('/skills/');
+        currSkill2Ref.push({
+            skill: this.state.skill,
+        });
     }
 
 
@@ -133,6 +138,9 @@ export default class Profile extends Component {
         const skillRef = fire.database().ref('users/' + this.props.userID + `/skills/${skillId}`)
 
         skillRef.remove()
+
+        const skill2Ref = fire.database().ref(`skills/${skillId}`)
+        skill2Ref.remove()
 
     }
 
@@ -150,6 +158,7 @@ export default class Profile extends Component {
                     <Button onClick={() => this.onSubmitSkill()} htmlType="submit" type="dashed" >Submit</Button>
                   </Col>
                 </div>
+                
               </Row>
             )
         } else if (this.state.showSkillInput == false) {

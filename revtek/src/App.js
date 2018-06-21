@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Router from "./Route";
 import './App.css';
 import fire from "./fire";
-
+import Statistics from './Statistics';
 
 class App extends Component {
   constructor() {
