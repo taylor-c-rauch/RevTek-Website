@@ -32,6 +32,7 @@ export default class Profile extends Component {
         }
         console.log(this.props.person.profilepic);
         this.renderCompleted = this.renderCompleted.bind(this);
+
     }
 
     handleChange = e => {
@@ -64,6 +65,44 @@ export default class Profile extends Component {
         })
     }
 
+
+
+    componentDidUpdate(prevProps) {
+
+        if (this.props.userID !== prevProps.userID) {
+          const todoRef = fire.database().ref('users/' + this.props.userID + '/todo/');
+          todoRef.on('value', (snapshot) => {
+              let todoList = snapshot.val();
+              let newState = [];
+              for (let todo in todoList) {
+                  newState.push({
+                      id: todo,
+                      task: todoList[todo].task,
+                      hours: todoList[todo].hours,
+                  });
+              }
+              this.setState({
+                  todoList: newState,
+              });
+
+          });
+          const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
+          skillRef.on('value', (snapshot) => {
+              let skillList = snapshot.val();
+              let newSkill = [];
+              for (let skill in skillList) {
+                  newSkill.push({
+                      id: skill,
+                      skill: skillList[skill].skill,
+                  })
+              }
+              this.setState({
+                  skills: newSkill
+              })
+          })
+        }
+      }
+
     // retrieves the information from firebase so it can be rendered on the screen
     componentDidMount() {
         const todoRef = fire.database().ref('users/' + this.props.userID + '/todo/');
@@ -80,7 +119,10 @@ export default class Profile extends Component {
             this.setState({
                 todoList: newState,
             });
+
         });
+        console.log("it works" + this.state.todoList)
+
         const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
         skillRef.on('value', (snapshot) => {
             let skillList = snapshot.val();
@@ -385,4 +427,3 @@ export default class Profile extends Component {
     }
 
 }
-        
