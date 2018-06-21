@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Layout, Form, Input, Icon, Card, Button, Col, Row, DatePicker } from 'antd';
-import fire from "./fire.js"
+import fire from "./fire.js"; 
+import "./ChallengeManager.css"
+
 const Header = Layout.Header;
 const Content = Layout.Content;
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
 export default class ChallengeManager extends Component {
-
     constructor(props) {
         super(props);
         this.state = ({
@@ -169,7 +170,9 @@ export default class ChallengeManager extends Component {
                 <Row>
                     <Col span={16} offset={4}>
                         <Content className="submission">
-                            <Card bordered={true} title="Challenge Manager">
+                            <h1 className="submission-title">Challenge Manager </h1> 
+                            <div style={{background: "#c4c4c4", padding: "20px", width: "90%", margin: "0 auto"}}>
+                            <Card bordered={true}>
                                 <Form layout="inline" onSubmit={this.handleSubmit}>
                                     <FormItem>
                                         <Input
@@ -204,6 +207,7 @@ export default class ChallengeManager extends Component {
                                     </FormItem>
                                 </Form>
                             </Card>
+                        </div>
                         </Content>
                     </Col>
                 </Row>
@@ -211,7 +215,6 @@ export default class ChallengeManager extends Component {
                 {/*  Maps the challenges from database to a new card and maps interns who have submitted links */}
                 {this.state.challenges.map(challenge => {
                     const currName = challenge.name;
-                    console.log(challenge.link123);
                     let query = fire.database().ref('challenges/' + currName + '/submissions/');
                     let data = []
                     query.once("value", (snapshot) => {
@@ -225,7 +228,8 @@ export default class ChallengeManager extends Component {
                         <div>
                             <Row>
                                 <Col span={20} offset={2}>
-                                    <Card title={challenge.name + "  Due Date: " + challenge.duedate}>
+                                <div classname="card" style={{background: "#c4c4c4", padding: "20px", width: "90%", margin: "0 auto"}}>
+                                    <Card className="card-content" title={challenge.name + "  Due Date: " + challenge.duedate}>
                                         <p>{challenge.description} </p>
                                         <a href={challenge.link123} target="_blank">{challenge.link123} </a>
                                         <br />
@@ -237,8 +241,10 @@ export default class ChallengeManager extends Component {
                                             )
                                         })
                                         }
+                                        <br/>
                                         <Button type="primary" shape="circle" icon="delete" onClick={() => this.removeItem(currName)} />
                                     </Card>
+                                </div>
                                 </Col>
                             </Row>
                             <br />
