@@ -245,6 +245,7 @@ export default class ContractSubmission extends Component {
         <div class="Background">
           <section>
             <TopBar
+              person={this.props.person}
               status="home"
               user={this.props.user}
               updateField={this.props.updateField}

@@ -8,6 +8,7 @@ export default class NotApproved extends Component {
       <div class="backdrop">
         <section>
           <TopBar
+            person={this.props.person}
             status="home"
             user={this.props.user}
             updateField={this.props.updateField}
