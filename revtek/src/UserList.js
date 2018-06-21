@@ -103,7 +103,7 @@ export default class UserList extends React.Component {
                         width: "100%",
                         margin: "0 auto"
                       }}
-                      title={<h1 className="cardTitle">{user.name}</h1>}
+                      title={<h1 className="Title">{user.name}</h1>}
                       bordered={false}
                     >
                       Username: {user.username}

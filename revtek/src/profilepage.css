@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   word-wrap: break-word;
-  background: #ececec;
+  padding: 20px;
 }
 .new_Btn {
   border: 1px solid #ccc;
@@ -14,4 +14,12 @@
 
 #html_btn {
   display: none;
+}
+
+.Title {
+  font-family: Roboto;
+  font-weight: lighter;
+  font-size: 35px;
+  color: rgba(0, 0, 0);
+  padding-top: 5px;
 }
