@@ -134,12 +134,12 @@ export default class ContractEditor extends React.Component {
     };
     const { Header, Footer, Sider, Content } = Layout;
     return (
-      <div style={{ background: '#ECECEC', padding: '10px', textAlign: 'center' }}>
-        <h1> Contracts to Approve </h1>
+      <div style={{ background: '#ECECEC', padding: '10px' }}>
+        <h1 class="HeaderApproval"> Contracts to Approve </h1>
         {this.state.data.map((x) => {
           if (x.contractApproved == false) {
             return (
-              <Card title={x.client} style={{ width: 1027 }} className="CardStyle">
+              <Card title={x.client} style={{ marginBottom: 30, marginLeft: 30, marginRight: 30 }} className="CardStyle">
                 <p><strong>{x.project}</strong></p>
                 <p>{x.description}</p>
                 <p>{x.email}</p>
@@ -152,7 +152,7 @@ export default class ContractEditor extends React.Component {
             );
           }
         })}
-        <h2> Approved Contracts </h2>
+        <h1 class="HeaderApproved" style= {{ marginTop: 15 }}> Approved Contracts </h1>
         {this.state.data.map((x) => {
           if (x.contractApproved == true) {
             let project = x.project;
@@ -161,7 +161,7 @@ export default class ContractEditor extends React.Component {
             let description = x.description;
             console.log(project, client, email, description);
             return (
-              <Card key={x.project.split(" ").join("-")} title={x.client} style={{ width: 1027 }} className="CardStyle">
+              <Card key={x.project.split(" ").join("-")} title={x.client} style={{ marginBottom: 30, marginLeft: 30, marginRight: 30 }} className="CardStyle">
                 <p><strong>{x.project}</strong></p>
                 <p>{x.description}</p>
                 <p>{x.email}</p>

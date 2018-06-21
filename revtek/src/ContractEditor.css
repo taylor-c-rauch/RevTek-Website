@@ -1,9 +1,11 @@
-.CardStyle{
-  margin-left: auto;
-  margin-right: auto;
+.HeaderApproval {
   text-align: center;
-  background-color: purple;
 }
+
+.HeaderApproved {
+  text-align: center;
+}
+
 .test {
   background: red
 }

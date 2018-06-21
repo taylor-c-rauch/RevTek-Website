@@ -87,7 +87,7 @@ export default class BiddingPage extends React.Component {
           if (x.contractApproved === true) {
             return (
               <div style={{ background: '#ECECEC', marginBottom: 30 }}>
-                <ContractTile userID={this.props.userID} person={this.props.person} email={x.email} numinterns={x.numinterns} client={x.client} project={x.project} skills={x.skills} description={x.description} />
+                <ContractTile style={{ marginLeft: 30, marginRight: 30}} userID={this.props.userID} person={this.props.person} email={x.email} numinterns={x.numinterns} client={x.client} project={x.project} skills={x.skills} description={x.description} />
               </div>
             )
           }
