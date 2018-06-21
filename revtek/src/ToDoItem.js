@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Input, Card, Row, Col, Button, Checkbox, InputNumber, Form, Modal, Icon } from 'antd';
 
 export default class ToDoItem extends Component {
   render() {
-    return(
+    return (
       <div>
         {this.props.list.map((todo) => {
             return (
@@ -25,6 +25,6 @@ export default class ToDoItem extends Component {
             )
         })}
       </div>
-      )
+    )
   }
 }
