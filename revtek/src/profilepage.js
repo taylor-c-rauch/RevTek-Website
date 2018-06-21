@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Popover, Input, Card, Row, Col, Button, Checkbox, InputNumber, Form, Modal, Icon, Tag, Select } from 'antd';
+
 import TopBar from "./top-bar";
 import fire from './fire.js';
 import { Typography } from "@material-ui/core";
@@ -31,6 +32,7 @@ export default class Profile extends Component {
         }
         console.log(this.props.person.profilepic);
         this.renderCompleted = this.renderCompleted.bind(this);
+
     }
 
     handleChange = e => {
@@ -63,6 +65,44 @@ export default class Profile extends Component {
         })
     }
 
+
+
+    componentDidUpdate(prevProps) {
+
+        if (this.props.userID !== prevProps.userID) {
+          const todoRef = fire.database().ref('users/' + this.props.userID + '/todo/');
+          todoRef.on('value', (snapshot) => {
+              let todoList = snapshot.val();
+              let newState = [];
+              for (let todo in todoList) {
+                  newState.push({
+                      id: todo,
+                      task: todoList[todo].task,
+                      hours: todoList[todo].hours,
+                  });
+              }
+              this.setState({
+                  todoList: newState,
+              });
+
+          });
+          const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
+          skillRef.on('value', (snapshot) => {
+              let skillList = snapshot.val();
+              let newSkill = [];
+              for (let skill in skillList) {
+                  newSkill.push({
+                      id: skill,
+                      skill: skillList[skill].skill,
+                  })
+              }
+              this.setState({
+                  skills: newSkill
+              })
+          })
+        }
+      }
+
     // retrieves the information from firebase so it can be rendered on the screen
     componentDidMount() {
         const todoRef = fire.database().ref('users/' + this.props.userID + '/todo/');
@@ -79,7 +119,10 @@ export default class Profile extends Component {
             this.setState({
                 todoList: newState,
             });
+
         });
+        console.log("it works" + this.state.todoList)
+
         const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
         skillRef.on('value', (snapshot) => {
             let skillList = snapshot.val();
@@ -126,8 +169,11 @@ export default class Profile extends Component {
         currSkillRef.push({
             skill: this.state.skill,
         });
-        const SkillRef = fire.database().ref(' skills/');
-        SkillRef.push({
+        this.setState({
+            skill: '',
+        })
+        const currSkill2Ref = fire.database().ref('/skills/');
+        currSkill2Ref.push({
             skill: this.state.skill,
         });
     }
@@ -136,6 +182,9 @@ export default class Profile extends Component {
     removeSkill = (skillId) => {
         const skillRef = fire.database().ref('users/' + this.props.userID + `/skills/${skillId}`)
         skillRef.remove()
+        const skill2Ref = fire.database().ref(`skills/${skillId}`)
+        skill2Ref.remove()
+
     }
 
 
@@ -143,6 +192,18 @@ export default class Profile extends Component {
     renderSkill = () => {
         if (this.state.showSkillInput == true) {
             return (
+              <div>
+              <Row>
+                <div style={{paddingTop: 10}}>
+                  <Col span={15}>
+                    <Input placeholder="New Skill" name="skill" onChange={this.handleChange} />
+                  </Col>
+                  <Col span={9}>
+                    <Button onClick={() => this.onSubmitSkill()} htmlType="submit" type="dashed" >Submit</Button>
+                  </Col>
+                </div>
+
+              </Row>
                 <Row>
                     <div style={{ paddingTop: 10 }}>
                         <Col span={15}>
@@ -181,6 +242,7 @@ export default class Profile extends Component {
                         </Col>
                     </div>
                 </Row>
+              </div>
             )
         } else if (this.state.showSkillInput == false) {
             return (<div></div>);
@@ -364,4 +426,5 @@ export default class Profile extends Component {
             );
         }
     }
+
 }
