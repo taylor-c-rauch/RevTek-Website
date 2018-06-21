@@ -453,6 +453,13 @@ class TopBar extends Component {
                 >
                   <i>RevTek</i>
                 </Link>
+                <Typography
+                  variant="caption"
+                  color="inherit"
+                  className={classes.flex}
+                >
+                  Hello, {this.props.person.fullname}
+                </Typography>
               </Typography>
               {this.state.admin.map(item => (
                 <Link to={item.place}>
