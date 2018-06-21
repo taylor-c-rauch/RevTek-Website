@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Card, Layout, Input, Button, Menu, Dropdown, Icon, Select, message } from 'antd';
-import fire from './fire.js'
-
+import fire from './fire.js';
+import './ContractEditor.css';
 export default class ContractEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -13,7 +13,6 @@ export default class ContractEditor extends React.Component {
       peep: ""
     };
   }
-
   handleUserInput = e => {
     this.setState({
       [e.target.id]: e.target.value
@@ -25,7 +24,6 @@ export default class ContractEditor extends React.Component {
       this.state.data.onDisabled = true
     }
   };
-
   handleClick = e => {
     const usersRef = fire.database().ref('users');
     usersRef.on('value', (snapshot) => {
@@ -38,23 +36,19 @@ export default class ContractEditor extends React.Component {
     }
     )
   };
-
   handleApproved = (xID) => {
     let contractRef = fire.database().ref(`/contracts/${xID}`);
     contractRef.update({
       contractApproved: true
     })
   }
-
   removeItem(ref1) {
     const contractsRef = fire.database().ref(ref1);
     contractsRef.remove();
   }
-
   handleSelect(value) {
     this.setState({ peep: value });
   }
-
   assignClick = (id, project, client, email, description) => {
     console.log(project, client, email, description);
     let phrase = `CONTRACT: ${project}, ${client}, ${email}, ${description}`
@@ -73,7 +67,6 @@ export default class ContractEditor extends React.Component {
     userRef.update({ numContracts: num });
     this.removeItem("/contracts/" + id);
   }
-
   componentDidMount() {
     const contractsRef = fire.database().ref('contracts');
     contractsRef.on('value', (snapshot) => {
@@ -114,7 +107,6 @@ export default class ContractEditor extends React.Component {
         data: newState
       });
     });
-
     const usersRef = fire.database().ref('users');
     usersRef.on('value', (snapshot) => {
       let userVals = snapshot.val();
@@ -135,22 +127,19 @@ export default class ContractEditor extends React.Component {
       });
     });
   }
-
   render() {
     const Option = Select.Option;
-
     const onClick = function ({ key }) {
       message.info(`Assigned ${key}`);
     };
-
     const { Header, Footer, Sider, Content } = Layout;
     return (
-      <div style={{ background: '#ECECEC', padding: '10px' }}>
+      <div style={{ background: '#ECECEC', padding: '10px', textAlign: 'center' }}>
         <h1> Contracts to Approve </h1>
         {this.state.data.map((x) => {
           if (x.contractApproved == false) {
             return (
-              <Card title={x.client} style={{ width: 1027 }}>
+              <Card title={x.client} style={{ width: 1027 }} className="CardStyle">
                 <p><strong>{x.project}</strong></p>
                 <p>{x.description}</p>
                 <p>{x.email}</p>
@@ -172,7 +161,7 @@ export default class ContractEditor extends React.Component {
             let description = x.description;
             console.log(project, client, email, description);
             return (
-              <Card key={x.project.split(" ").join("-")} title={x.client} style={{ width: 1027 }}>
+              <Card key={x.project.split(" ").join("-")} title={x.client} style={{ width: 1027 }} className="CardStyle">
                 <p><strong>{x.project}</strong></p>
                 <p>{x.description}</p>
                 <p>{x.email}</p>
@@ -181,13 +170,11 @@ export default class ContractEditor extends React.Component {
                 <p>{x.bidders}</p>
                 {x.bids.length > 0 ? <Select placeholder="Assign Bidder" style={{ width: 300 }} onChange={(value, project, client, email, description) => this.handleSelect(value, project, client, email, description)}>
                   {x.bids.map((bid) => {
-
                     return (
                       <Option value={bid.userID}>{bid.fullname}, Pay: {bid.payRate}, Hours: {bid.estHours}</Option>
                     );
                   })}
                 </Select> : <Select placeholder="No Submitted Bids" style={{ width: 300 }}>
-
                   </Select>}
                 <Button onClick={() => this.assignClick(x.project.split(" ").join("-"), project, client, email, description)}> Submit </Button>
                 <Button onClick={() => this.removeItem(`/contracts/${x.project.split(" ").join("-")}`)}> Remove </Button>

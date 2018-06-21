@@ -1,0 +1,9 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:100);
+
+.statsHeader {
+    font-family: Roboto;
+    font-weight: lighter;
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 0;
+}
