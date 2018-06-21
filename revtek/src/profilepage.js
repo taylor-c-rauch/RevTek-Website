@@ -70,36 +70,37 @@ export default class Profile extends Component {
     componentDidUpdate(prevProps) {
 
         if (this.props.userID !== prevProps.userID) {
-            const todoRef = fire.database().ref('users/' + this.props.userID + '/todo/');
-            todoRef.on('value', (snapshot) => {
-                let todoList = snapshot.val();
-                let newState = [];
-                for (let todo in todoList) {
-                    newState.push({
-                        id: todo,
-                        task: todoList[todo].task,
-                        hours: todoList[todo].hours,
-                    });
-                }
-                this.setState({
-                    todoList: newState,
-                });
+          const todoRef = fire.database().ref('users/' + this.props.userID + '/todo/');
+          todoRef.on('value', (snapshot) => {
+              let todoList = snapshot.val();
+              let newState = [];
+              for (let todo in todoList) {
+                  newState.push({
+                      id: todo,
+                      task: todoList[todo].task,
+                      hours: todoList[todo].hours,
+                      completed: todoList[todo].completed
+                  });
+              }
+              this.setState({
+                  todoList: newState,
+              });
 
-            });
-            const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
-            skillRef.on('value', (snapshot) => {
-                let skillList = snapshot.val();
-                let newSkill = [];
-                for (let skill in skillList) {
-                    newSkill.push({
-                        id: skill,
-                        skill: skillList[skill].skill,
-                    })
-                }
-                this.setState({
-                    skills: newSkill
-                })
-            })
+          });
+          const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
+          skillRef.on('value', (snapshot) => {
+              let skillList = snapshot.val();
+              let newSkill = [];
+              for (let skill in skillList) {
+                  newSkill.push({
+                      id: skill,
+                      skill: skillList[skill].skill,
+                  })
+              }
+              this.setState({
+                  skills: newSkill
+              })
+          })
         }
     }
 
@@ -114,6 +115,7 @@ export default class Profile extends Component {
                     id: todo,
                     task: todoList[todo].task,
                     hours: todoList[todo].hours,
+                    completed: todoList[todo].completed
                 });
             }
             this.setState({
@@ -288,9 +290,18 @@ export default class Profile extends Component {
     }
 
     renderCompleted = () => {
-        return (
-            <ToDoItem list={this.state.todoList} check={this.state.completed} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
-        )
+        if (this.state.completed === false) {
+          return (
+              <ToDoItem list={this.state.todoList} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
+          )
+        } else if (this.state.completed === true) {
+          return (
+            <div>
+              <h1>hello</h1>
+              <ToDoItem list={this.state.todoList} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
+            </div>
+          )
+        }
     }
 
 
