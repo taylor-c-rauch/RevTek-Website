@@ -57,7 +57,7 @@ export default class ContractEditor extends React.Component {
 
   assignClick = (id, project, client, email, description) => {
     console.log(project, client, email, description);
-    let phrase = `CONTRACT: ${project} /n ${client} /n ${email} /n ${description}`
+    let phrase = `CONTRACT: ${project}, ${client}, ${email}, ${description}`
     const todoRef = fire.database().ref('users/' + this.state.peep + '/todo/').push({
       task: phrase,
       hours: "",
