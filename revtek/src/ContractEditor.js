@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Layout, Input, Button, Menu, Dropdown, Icon, Select, message } from 'antd';
-import fire from './fire.js'
+import fire from './fire.js';
+import './ContractEditor.css';
 export default class ContractEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -133,12 +134,12 @@ export default class ContractEditor extends React.Component {
     };
     const { Header, Footer, Sider, Content } = Layout;
     return (
-      <div style={{ background: '#ECECEC', padding: '10px' }}>
+      <div style={{ background: '#ECECEC', padding: '10px', textAlign: 'center' }}>
         <h1> Contracts to Approve </h1>
         {this.state.data.map((x) => {
           if (x.contractApproved == false) {
             return (
-              <Card title={x.client} style={{ width: 1027 }}>
+              <Card title={x.client} style={{ width: 1027 }} className="CardStyle">
                 <p><strong>{x.project}</strong></p>
                 <p>{x.description}</p>
                 <p>{x.email}</p>
@@ -160,7 +161,7 @@ export default class ContractEditor extends React.Component {
             let description = x.description;
             console.log(project, client, email, description);
             return (
-              <Card key={x.project.split(" ").join("-")} title={x.client} style={{ width: 1027 }}>
+              <Card key={x.project.split(" ").join("-")} title={x.client} style={{ width: 1027 }} className="CardStyle">
                 <p><strong>{x.project}</strong></p>
                 <p>{x.description}</p>
                 <p>{x.email}</p>
