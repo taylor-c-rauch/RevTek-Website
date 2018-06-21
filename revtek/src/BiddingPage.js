@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Card, Layout, Input, Button } from 'antd';
-import fire from './fire.js';
+import fire from './fire.js'
+import "./BiddingPage.css"
 import ContractTile from "./ContractTile";
+
 
 export default class BiddingPage extends React.Component {
   constructor(props) {
@@ -10,6 +12,38 @@ export default class BiddingPage extends React.Component {
       contracts: [],
       data: []
     };
+  }
+
+  componentDidUpdate(prevProps) {
+
+    if (this.props.userID !== prevProps.userID) {
+      const contractsRef = fire.database().ref('contracts');
+      let contractVals = [];
+      let contractKeys = [];
+      contractsRef.on('value', (snapshot) => {
+        contractVals = snapshot.val();
+        contractKeys = Object.keys(snapshot.val());
+      });
+
+      let newState = [];
+      for (let info in contractVals) {
+        let contract = {
+          client: contractVals[info].client,
+          description: contractVals[info].description,
+          email: contractVals[info].email,
+          numinterns: contractVals[info].numinterns,
+          project: contractVals[info].project,
+          skills: contractVals[info].skills,
+          onDisabled: false,
+          contractApproved: contractVals[info].contractApproved
+        };
+        newState.push(contract);
+
+      }
+
+      this.setState({ data: newState });
+
+    }
   }
 
   componentDidMount() {
@@ -45,17 +79,22 @@ export default class BiddingPage extends React.Component {
 
     const { Header, Footer, Sider, Content } = Layout;
     return (
-      <div style={{ background: '#ECECEC' }}>
+
+      <div class="Overall" style={{ background: '#ECECEC' }}>
+        <h1 style={{ background: '#ECECEC' }} className="Header1"> Available Contracts </h1>
+        <div style={{ background: '#ECECEC', marginBottom: 30}}>
         {this.state.data.map((x) => {
           if (x.contractApproved === true) {
             return (
-              <div>
+              <div style={{ background: '#ECECEC', marginBottom: 30 }}>
                 <ContractTile userID={this.props.userID} person={this.props.person} email={x.email} numinterns={x.numinterns} client={x.client} project={x.project} skills={x.skills} description={x.description} />
               </div>
             )
           }
         })}
+        </div>
       </div>)
+
   }
 
 }
