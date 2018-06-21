@@ -50,7 +50,6 @@ export default class LoginForm extends Component {
           <TopBar
             updateField={this.props.updateField}
             status="home"
-            person={this.props.person}
             user={this.props.user}
           />
           <div className="HeaderFiller" />
