@@ -134,11 +134,24 @@ export default class ContractEditor extends React.Component {
     };
     const { Header, Footer, Sider, Content } = Layout;
     return (
-      <div style={{ background: '#ECECEC', padding: '10px' }}>
-        <h1 class="HeaderApproval"> Contracts to Approve </h1>
+      <div style={{ padding: '10px' }}>
+        <h1 class="HeaderTitle" style={{ paddingTop: 20 }}> Contract Manager </h1>
+        <h2 class="HeaderApproval" style={{ paddingTop: 10 }}> Contracts to Approve </h2>
         {this.state.data.map((x) => {
           if (x.contractApproved == false) {
             return (
+              <div>
+              <br/>
+              <div
+                    style={{
+                      background: "#c4c4c4",
+                      padding: "5px",
+                      padding: "5px",
+                      width: "90%",
+                      margin: "0 auto",
+                    }}
+                  >
+                  <br/>
               <Card title={x.client} style={{ marginBottom: 30, marginLeft: 30, marginRight: 30 }} className="CardStyle">
                 <p><strong>{x.project}</strong></p>
                 <p>{x.description}</p>
@@ -146,13 +159,15 @@ export default class ContractEditor extends React.Component {
                 <p>{x.numinterns}</p>
                 <p>{x.skills}</p>
                 <p>{x.bidders}</p>
-                <Button onClick={() => this.handleApproved(x.id)}> Approve Contract </Button>
-                <Button onClick={() => this.removeItem(x.id)}> Remove </Button>
+                <Button style={{ marginLeft: 10 }} type="primary" onClick={() => this.handleApproved(x.id)}> Approve Contract </Button>
+                <Button style={{ marginLeft: 10 }} type="danger" onClick={() => this.removeItem(x.id)}> Remove </Button>
               </Card>
+              </div>
+              </div>
             );
           }
         })}
-        <h1 class="HeaderApproved" style= {{ marginTop: 15 }}> Approved Contracts </h1>
+        <h2 class="HeaderApproved" style= {{ marginTop: 55 }}> Approved Contracts </h2>
         {this.state.data.map((x) => {
           if (x.contractApproved == true) {
             let project = x.project;
@@ -161,7 +176,18 @@ export default class ContractEditor extends React.Component {
             let description = x.description;
             console.log(project, client, email, description);
             return (
-              <Card key={x.project.split(" ").join("-")} title={x.client} style={{ marginBottom: 30, marginLeft: 30, marginRight: 30 }} className="CardStyle">
+              <div>
+              <br/>
+              <div
+                    style={{
+                      background: "#c4c4c4",
+                      padding: "5px",
+                      padding: "5px",
+                      width: "90%",
+                      margin: "0 auto",
+                    }}
+                  >
+              <Card key={x.project.split(" ").join("-")} title={x.client} style={{ marginBottom: 30, marginLeft: 30, marginRight: 30, marginTop: 30 }} className="CardStyle">
                 <p><strong>{x.project}</strong></p>
                 <p>{x.description}</p>
                 <p>{x.email}</p>
@@ -176,9 +202,11 @@ export default class ContractEditor extends React.Component {
                   })}
                 </Select> : <Select placeholder="No Submitted Bids" style={{ width: 300 }}>
                   </Select>}
-                <Button onClick={() => this.assignClick(x.project.split(" ").join("-"), project, client, email, description)}> Submit </Button>
-                <Button onClick={() => this.removeItem(`/contracts/${x.project.split(" ").join("-")}`)}> Remove </Button>
+                <Button style={{ marginLeft: 10 }} type="primary" onClick={() => this.assignClick(x.project.split(" ").join("-"), project, client, email, description)}> Submit </Button>
+                <Button style={{ marginLeft: 10 }} type="danger" onClick={() => this.removeItem(`/contracts/${x.project.split(" ").join("-")}`)}> Remove </Button>
               </Card>
+              </div>
+              </div>
             );
           }
         })}
