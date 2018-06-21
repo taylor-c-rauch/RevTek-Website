@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { notification, Input, Button, Row, Col } from "antd";
+import { Input, Button, Row, Col, notification } from "antd";
 import fire from "./fire";
 import App from "./App";
 import Background from "./assets/homePhoto.jpg";

@@ -70,37 +70,37 @@ export default class Profile extends Component {
     componentDidUpdate(prevProps) {
 
         if (this.props.userID !== prevProps.userID) {
-          const todoRef = fire.database().ref('users/' + this.props.userID + '/todo/');
-          todoRef.on('value', (snapshot) => {
-              let todoList = snapshot.val();
-              let newState = [];
-              for (let todo in todoList) {
-                  newState.push({
-                      id: todo,
-                      task: todoList[todo].task,
-                      hours: todoList[todo].hours,
-                      completed: todoList[todo].completed
-                  });
-              }
-              this.setState({
-                  todoList: newState,
-              });
+            const todoRef = fire.database().ref('users/' + this.props.userID + '/todo/');
+            todoRef.on('value', (snapshot) => {
+                let todoList = snapshot.val();
+                let newState = [];
+                for (let todo in todoList) {
+                    newState.push({
+                        id: todo,
+                        task: todoList[todo].task,
+                        hours: todoList[todo].hours,
+                        completed: todoList[todo].completed
+                    });
+                }
+                this.setState({
+                    todoList: newState,
+                });
 
-          });
-          const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
-          skillRef.on('value', (snapshot) => {
-              let skillList = snapshot.val();
-              let newSkill = [];
-              for (let skill in skillList) {
-                  newSkill.push({
-                      id: skill,
-                      skill: skillList[skill].skill,
-                  })
-              }
-              this.setState({
-                  skills: newSkill
-              })
-          })
+            });
+            const skillRef = fire.database().ref('users/' + this.props.userID + '/skills/');
+            skillRef.on('value', (snapshot) => {
+                let skillList = snapshot.val();
+                let newSkill = [];
+                for (let skill in skillList) {
+                    newSkill.push({
+                        id: skill,
+                        skill: skillList[skill].skill,
+                    })
+                }
+                this.setState({
+                    skills: newSkill
+                })
+            })
         }
     }
 
@@ -291,16 +291,16 @@ export default class Profile extends Component {
 
     renderCompleted = () => {
         if (this.state.completed === false) {
-          return (
-              <ToDoItem list={this.state.todoList} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
-          )
+            return (
+                <ToDoItem list={this.state.todoList} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
+            )
         } else if (this.state.completed === true) {
-          return (
-            <div>
-              <h1>hello</h1>
-              <ToDoItem list={this.state.todoList} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
-            </div>
-          )
+            return (
+                <div>
+                    <h1>hello</h1>
+                    <ToDoItem list={this.state.todoList} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
+                </div>
+            )
         }
     }
 
@@ -357,9 +357,9 @@ export default class Profile extends Component {
 
                                     <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button onClick={this.showModal} size="small">Edit</Button>}>
 
-                                        GitHub: <a href={"https://" + gitHub} target="_blank"> {gitHub} </a>
+                                        GitHub: <a href={gitHub} target="_blank"> {gitHub} </a>
                                         <br />
-                                        LinkedIn: <a href={"https://" + linkedIn} target="_blank"> {linkedIn} </a>
+                                        LinkedIn: <a href={linkedIn} target="_blank"> {linkedIn} </a>
 
                                     </Card>
 
@@ -428,5 +428,4 @@ export default class Profile extends Component {
             );
         }
     }
-
 }
