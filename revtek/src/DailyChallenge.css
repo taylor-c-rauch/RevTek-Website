@@ -11,3 +11,9 @@
 	padding: 3%;
 	text-align: center;
 }
+
+.RobotoFont {
+	font-family: "Roboto";
+  font-weight: 100;
+  font-size: 35px;
+}
