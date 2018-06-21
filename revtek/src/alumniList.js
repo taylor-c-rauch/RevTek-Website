@@ -35,7 +35,7 @@ export default class AlumniList extends React.Component {
         let alum = this.state.alumni;
         return (
             <div className="alumniProfs">
-                <h1 className="alumniHeader"> Alumni Profiles </h1>
+                <div className="alumniHeader"> Alumni Profiles </div>
                 {alum.map(i => {
                     let skills = [];
                     let curSkills = i.skills;
@@ -48,22 +48,29 @@ export default class AlumniList extends React.Component {
                         });
                     }
                     return (
-                        <div style={{ background: '#ECECEC', padding: '30px' }}>
-                            <Card className="alumniCards"
-                                title={<h1 className="cardTitle">{i.fullname} </h1>}
-                                extra={<img width="100px" height="100px" alt="example" src={i.profilepic} />}
-                                bordered={false}>
-                                GitHub: <a href={"https://" + i.gitHub}> {i.gitHub} </a>
-                                <br />
-                                LinkedIn: <a href={"https://" + i.linkedIn}> {i.linkedIn} </a>
-                                <br />
-                                Skills: {skills.map(skill => {
-                                    let theSkill = skill;
-                                    return (
-                                        <Tag> {theSkill} </Tag>
-                                    )
-                                })}
-                            </Card>
+                        <div>
+                            <Row>
+                                <Col span={20} offset={2}>
+                                    <Card style={{ background: "#C4C4C4", marginTop: "20px", padding: "5px" }}>
+                                        <Card className="alumniCards"
+
+                                            title={<p className="cardTitle">{i.fullname} </p>}
+                                            extra={<img width="100px" height="100px" alt="example" src={i.profilepic} />}
+                                            bordered={true}>
+                                            GitHub: <a href={"https://" + i.gitHub}> {i.gitHub} </a>
+                                            <br />
+                                            LinkedIn: <a href={"https://" + i.linkedIn}> {i.linkedIn} </a>
+                                            <br />
+                                            Skills: {skills.map(skill => {
+                                                let theSkill = skill;
+                                                return (
+                                                    <Tag> {theSkill} </Tag>
+                                                )
+                                            })}
+                                        </Card>
+                                    </Card>
+                                </Col>
+                            </Row>
                         </div>
                     )
                 })}
