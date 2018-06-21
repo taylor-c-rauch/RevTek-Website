@@ -137,6 +137,7 @@ export default class Profile extends Component {
                 skills: newSkill
             })
         })
+
     }
 
 
@@ -404,10 +405,10 @@ export default class Profile extends Component {
                                         <Form>
                                             <Row>
                                                 <Col span={6}>
-                                                    <Input placeholder="New Task" name="task" onChange={this.handleChange} />
+                                                    <Input value={this.state.task} placeholder="New Task" name="task" onChange={this.handleChange} />
                                                 </Col>
                                                 <Col span={6} style={{ paddingLeft: 10 }}>
-                                                    <Input placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange} />
+                                                    <Input value={this.state.hours} placeholder="Number of hours" name="hours" maxlength="5" onChange={this.handleChange} />
                                                 </Col>
                                                 <Col span={3} style={{ paddingLeft: 10 }}>
                                                     <Button size="medium" onClick={this.handleClick}> + </Button>
