@@ -1,9 +1,17 @@
 .HeaderApproval {
-  text-align: center;
+  text-align: left;
+  padding-left: 55px;
 }
 
 .HeaderApproved {
+  text-align: left;
+  padding-left: 55px;
+}
+
+.HeaderTitle {
   text-align: center;
+  font-weight: lighter;
+  font-size: 35px;
 }
 
 .test {
