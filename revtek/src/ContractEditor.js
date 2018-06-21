@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Layout, Input, Button, Menu, Dropdown, Icon, Select, message } from 'antd';
-import fire from './fire.js'
+import fire from './fire.js';
+import './ContractEditor.css';
 
 export default class ContractEditor extends React.Component {
     constructor(props) {
@@ -19,7 +20,7 @@ export default class ContractEditor extends React.Component {
         })
         if (this.state.data[0].payRate.length == 0 || this.data[0].estHours.length == 0) {
                 this.state.data.onDisabled = false
-        } 
+        }
         else if (this.data[0].payRate.length != 0 && this.data[0].estHours.length != 0 ) {
                 this.state.data.onDisabled = true
         }
@@ -38,7 +39,7 @@ export default class ContractEditor extends React.Component {
     )};
 
     handleApproved = (xID) => {
-      let contractRef = fire.database().ref(`/contracts/${xID}`); 
+      let contractRef = fire.database().ref(`/contracts/${xID}`);
       contractRef.update({
         contractApproved: true
       })
@@ -95,7 +96,7 @@ export default class ContractEditor extends React.Component {
           let newState2 = [];
           for (let user in userVals) {
               let userList = {
-                id: user, 
+                id: user,
                 fullname: userVals[user].fullname,
                 numContracts: userVals[user].numContracts,
               };
@@ -112,14 +113,14 @@ export default class ContractEditor extends React.Component {
 
     render(){
       const Option = Select.Option;
-      
+
       const onClick = function ({ key }) {
         message.info(`Assigned ${key}`);
       };
 
         const menu = (
             <div>
-            {this.state.users.map(user => 
+            {this.state.users.map(user =>
             <Menu onClick={onClick}>
               <Menu.Item key="0">
                 <a onClick={() => this.assignClick(user.id)}>{user.fullname}</a>
@@ -130,32 +131,34 @@ export default class ContractEditor extends React.Component {
           );
         const { Header, Footer, Sider, Content } = Layout;
         return(
-        <div style={{ background: '#ECECEC', padding: '10px' }}>
-        <h1> Contracts to Approve </h1> 
+        <div style={{ padding: '10px', textAlign: 'center' }} className="test">
+        <h1> Contracts to Approve </h1>
         {this.state.data.map((x)=> {
           if (x.contractApproved == false) {
             return (
-            <Card title={x.client} style={{ width: 1027 }}>
-            <p><strong>{x.project}</strong></p>
-            <p>{x.description}</p>
-            <p>{x.email}</p>
-            <p>{x.numinterns}</p>
-            <p>{x.skills}</p>
-            <p>{x.bidders}</p>
-            <Select defaultValue="Assign Bidder" style={{ width: 300 }}>
-            {this.state.users.map((user)=> {
-              return (
-              <Option value={user.fullname}>{user.fullname}</Option>
-              )
-            })}
-            </Select>
-            <Button onClick={() => this.handleApproved(x.id)}> Approve Contract </Button>
-            <Button onClick={() => this.removeItem(x.id)}> Remove </Button>
-          </Card>
+              <div className="CardStyle">
+                <Card title={x.client} className="CardStyle">
+                <p><strong>{x.project}</strong></p>
+                <p>{x.description}</p>
+                <p>{x.email}</p>
+                <p>{x.numinterns}</p>
+                <p>{x.skills}</p>
+                <p>{x.bidders}</p>
+                <Select defaultValue="Assign Bidder" style={{ width: 300 }}>
+                {this.state.users.map((user)=> {
+                  return (
+                  <Option value={user.fullname}>{user.fullname}</Option>
+                  )
+                })}
+                </Select>
+                <Button onClick={() => this.handleApproved(x.id)}> Approve Contract </Button>
+                <Button onClick={() => this.removeItem(x.id)}> Remove </Button>
+              </Card>
+            </div>
           );
           }
         })}
-        <h2> Approved Contracts </h2> 
+        <h2> Approved Contracts </h2>
         {this.state.data.map((x)=> {
           if (x.contractApproved == true) {
             return (

@@ -79,6 +79,7 @@ export default class Profile extends Component {
                       id: todo,
                       task: todoList[todo].task,
                       hours: todoList[todo].hours,
+                      completed: todoList[todo].completed
                   });
               }
               this.setState({
@@ -114,6 +115,7 @@ export default class Profile extends Component {
                     id: todo,
                     task: todoList[todo].task,
                     hours: todoList[todo].hours,
+                    completed: todoList[todo].completed
                 });
             }
             this.setState({
@@ -296,9 +298,18 @@ export default class Profile extends Component {
     }
 
     renderCompleted = () => {
-        return (
-            <ToDoItem list={this.state.todoList} check={this.state.completed} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
-        )
+        if (this.state.completed === false) {
+          return (
+              <ToDoItem list={this.state.todoList} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
+          )
+        } else if (this.state.completed === true) {
+          return (
+            <div>
+              <h1>hello</h1>
+              <ToDoItem list={this.state.todoList} remove={(itemId) => this.removeItem(itemId)} complete={(itemId) => this.onComplete(itemId)} />
+            </div>
+          )
+        }
     }
 
 
