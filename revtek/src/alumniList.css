@@ -10,17 +10,17 @@
 .alumniHeader {
     margin-top: 10px;
     font-weight: lighter;
-    font-size: 40px;
+    font-size: 35px;
 }
 
 .alumniCards {
     text-align: center;
-    width: 75%;
-    margin-left: 12.5%;
+    width: 90%;
+    margin-left: 5%;
 }
 
 .cardTitle {
-    font-size: 40px;
+    font-size: 20px;
     font-weight: lighter;
     font-family: Roboto;
     margin-left: 8%;
