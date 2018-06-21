@@ -357,9 +357,9 @@ export default class Profile extends Component {
 
                                     <Card style={{ marginTop: 16 }} type="inner" title="Links" extra={<Button onClick={this.showModal} size="small">Edit</Button>}>
 
-                                        GitHub: <a href={gitHub} target="_blank"> {gitHub} </a>
+                                        GitHub: <a href={"https://" + gitHub} target="_blank"> {gitHub} </a>
                                         <br />
-                                        LinkedIn: <a href={linkedIn} target="_blank"> {linkedIn} </a>
+                                        LinkedIn: <a href={"https://" + linkedIn} target="_blank"> {linkedIn} </a>
 
                                     </Card>
 
