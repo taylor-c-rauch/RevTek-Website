@@ -102,7 +102,7 @@ export default class Profile extends Component {
               })
           })
         }
-      }
+    }
 
     // retrieves the information from firebase so it can be rendered on the screen
     componentDidMount() {
@@ -171,13 +171,13 @@ export default class Profile extends Component {
         currSkillRef.push({
             skill: this.state.skill,
         });
-        this.setState({
-            skill: '',
-        })
-        const currSkill2Ref = fire.database().ref('/skills/');
+        const currSkill2Ref = fire.database().ref(' skills/');
         currSkill2Ref.push({
             skill: this.state.skill,
         });
+        this.setState({
+            skill: '',
+        })
     }
 
 
@@ -194,57 +194,48 @@ export default class Profile extends Component {
     renderSkill = () => {
         if (this.state.showSkillInput == true) {
             return (
-              <div>
-              <Row>
-                <div style={{paddingTop: 10}}>
-                  <Col span={15}>
-                    <Input placeholder="New Skill" name="skill" onChange={this.handleChange} />
-                  </Col>
-                  <Col span={9}>
-                    <Button onClick={() => this.onSubmitSkill()} htmlType="submit" type="dashed" >Submit</Button>
-                  </Col>
-                </div>
+                <div>
 
-              </Row>
-                <Row>
-                    <div style={{ paddingTop: 10 }}>
-                        <Col span={15}>
-                            <Select
-                                showSearch
-                                style={{ width: 200 }}
-                                placeholder="Add Skill"
-                                optionFilterProp="children"
-                                onChange={value => this.handleSelect(value)}
-                            >
-                                <Option value="React.js">React.js</Option>
-                                <Option value="Git/Github">Git/Github</Option>
-                                <Option value="Firebase">Firebase</Option>
-                                <Option value="Java">Java</Option>
-                                <Option value="Javascript">Javascript</Option>
-                                <Option value="Python">Python</Option>
-                                <Option value="C++">C++</Option>
-                                <Option value="C">C</Option>
-                                <Option value="CSS">CSS</Option>
-                                <Option value="Node.js">Node.js</Option>
-                            </Select>
-                            <Select
-                                showSearch
-                                style={{ width: 200 }}
-                                placeholder="Level of Experience"
-                                optionFilterProp="children"
-                                onChange={value => this.handleLevel(value)}
-                            >
-                                <Option value="Beginner">Beginner</Option>
-                                <Option value="Intermediate">Intermediate</Option>
-                                <Option value="Advanced">Advanced</Option>
-                            </Select>
-                        </Col>
-                        <Col span={9}>
-                            <Button onClick={() => this.onSubmitSkill()} htmlType="submit">Submit</Button>
-                        </Col>
-                    </div>
-                </Row>
-              </div>
+                    <Row>
+                        <div style={{ paddingTop: 10 }}>
+
+                            <Col span={15}>
+                                <Select
+                                    showSearch
+                                    style={{ width: 200 }}
+                                    placeholder="Add Skill"
+                                    optionFilterProp="children"
+                                    onChange={value => this.handleSelect(value)}
+                                >
+                                    <Option value="React.js">React.js</Option>
+                                    <Option value="Git/Github">Git/Github</Option>
+                                    <Option value="Firebase">Firebase</Option>
+                                    <Option value="Java">Java</Option>
+                                    <Option value="Javascript">Javascript</Option>
+                                    <Option value="Python">Python</Option>
+                                    <Option value="C++">C++</Option>
+                                    <Option value="C">C</Option>
+                                    <Option value="CSS">CSS</Option>
+                                    <Option value="Node.js">Node.js</Option>
+                                </Select>
+                                <Select
+                                    showSearch
+                                    style={{ width: 200 }}
+                                    placeholder="Level of Experience"
+                                    optionFilterProp="children"
+                                    onChange={value => this.handleLevel(value)}
+                                >
+                                    <Option value="Beginner">Beginner</Option>
+                                    <Option value="Intermediate">Intermediate</Option>
+                                    <Option value="Advanced">Advanced</Option>
+                                </Select>
+                            </Col>
+                            <Col span={9}>
+                                <Button onClick={() => this.onSubmitSkill()} htmlType="submit">Submit</Button>
+                            </Col>
+                        </div>
+                    </Row>
+                </div>
             )
         } else if (this.state.showSkillInput == false) {
             return (<div></div>);
