@@ -38,11 +38,12 @@ export default class Profile extends Component {
       gitHubCurrent: "",
       linkedInCurrent: "",
       loading: false,
-      skill: "",
+      skill: "Add Skill",
       skills: [],
       showSkillInput: false,
       completed: false,
-      profilepic: this.props.person.profilepic
+      profilepic: this.props.person.profilepic,
+      level: "Level of Experience"
     };
     console.log(this.props.person.profilepic);
     this.renderCompleted = this.renderCompleted.bind(this);
@@ -60,7 +61,7 @@ export default class Profile extends Component {
 
   handleLevel(value) {
     let skill = this.state.skill + " (" + value + ")";
-    this.setState({ skill: skill });
+    this.setState({ skill: skill, level: value });
   }
 
   // When the submit button is clicked, the user input gets put on firebase
@@ -192,7 +193,7 @@ export default class Profile extends Component {
       skill: this.state.skill
     });
     this.setState({
-      skill: ""
+      skill: "Add Skill", level: "Level of Experience"
     });
   };
 
@@ -218,6 +219,7 @@ export default class Profile extends Component {
                   placeholder="Add Skill"
                   optionFilterProp="children"
                   onChange={value => this.handleSelect(value)}
+                  value={this.state.skill}
                 >
                   <Option value="React.js">React.js</Option>
                   <Option value="Git/Github">Git/Github</Option>
@@ -236,6 +238,7 @@ export default class Profile extends Component {
                   placeholder="Level of Experience"
                   optionFilterProp="children"
                   onChange={value => this.handleLevel(value)}
+                  value={this.state.level}
                 >
                   <Option value="Beginner">Beginner</Option>
                   <Option value="Intermediate">Intermediate</Option>
@@ -261,6 +264,7 @@ export default class Profile extends Component {
       showSkillInput: !this.state.showSkillInput
     });
   };
+
   fileChangedHandler = event => {
     const pic = event.target.files[0];
     console.log(pic);
@@ -504,7 +508,7 @@ export default class Profile extends Component {
                     style={{ marginTop: 8 }}
                     type="inner"
                     bordered={false}
-                    /* title="To-Do" */
+                  /* title="To-Do" */
                   >
                     <Form>
                       <Row>

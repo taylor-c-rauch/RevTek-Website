@@ -52,7 +52,7 @@ export default class Leaderboard extends React.Component {
                         {this.state.alumni.map(person =>
                             <Row type="flex" justify="space-around" >
                                 <Col span={4}>
-                                    <Card style={{ marginTop: 8, height: 183 }}>{(this.state.alumni.indexOf(person) + 1)}</Card>
+                                    <Card style={{ marginTop: 8, height: 181 }}>{(this.state.alumni.indexOf(person) + 1)}</Card>
                                 </Col>
                                 <Col span={20}>
                                     <Card style={{ marginTop: 8 }} title={<h1 className="cardTitle">{person.name} </h1>}
